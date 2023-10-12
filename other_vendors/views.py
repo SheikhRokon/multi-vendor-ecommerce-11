@@ -30,7 +30,7 @@ def vendor_login(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         user = authenticate(request, email = email, password=password)
-        if user is not None and user.is_vendor == True:
+        if user is not None and user.is_vendor == True: 
             login(request, user)
             return redirect('dashboard-home')
         return render(request, 'other_vendors/vendor_login.html', {"form": form})
