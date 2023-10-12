@@ -263,7 +263,7 @@ class Order(models.Model):
     
     
     def __str__(self):
-        return self.user.username   
+        return self.user.email   
 
     def get_purchase_price_total(self):
         total = 0
@@ -351,7 +351,7 @@ class WhishLIst(models.Model):
 
 
     def __str__(self):
-        return self.user.username + ' ' + self.wish_product.product_name
+        return self.user.email + ' ' + self.wish_product.product_name
 
     def save(self, *args, **kwargs):
         try:
@@ -420,7 +420,7 @@ class ProductReview(models.Model):
     approve_status = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user.username
+        return self.user.email
 
 
 class ConductData(models.Model):

@@ -16,20 +16,17 @@ class RegisterForm(UserCreationForm):
 
 
 
-# class UpdateRegisterForm(forms.ModelForm):
-#     class Meta:
-#         model=User
-#         fields =[ 'username', 'first_name', 'last_name', 'email']
+class UpdateRegisterForm(forms.ModelForm):
+    class Meta:
+        model=User
+        fields =[ 'first_name', 'last_name', 'email','phone']
 
-# class UpdateProfileForm(forms.ModelForm):
-#     date_of_birthday = forms.DateField(required=False,
-#         widget=forms.TextInput( attrs={
-#         "type":"date",
-#     })
-#     )
-#     class Meta:
-#         model = Profile
-#         fields = ['image','date_of_birthday','phone','permanent_address','present_address']
+class UpdateProfileForm(forms.ModelForm):
+    date_of_birthday = forms.DateField(required=False,widget=forms.TextInput( attrs={ "type":"date",}))
+    
+    class Meta:
+        model = Profile
+        fields = ['image','date_of_birthday','phone','permanent_address','present_address']
 
 
 

@@ -42,29 +42,29 @@ def customer_login(request):
 def profile(request):
     return render(request, 'userapp/profile.html')
 
-# @login_required
-# def profileupdate(request):
+@login_required
+def profileupdate(request):
 
-#     if request.method == 'POST':
-#         u_form = UpdateRegisterForm(request.POST, instance=request.user)
-#         p_form = UpdateProfileForm(request.POST,request.FILES,instance=request.user.profile)
-#         if u_form.is_valid() and p_form.is_valid():
-#             u_form.save()
-#             p_form.save()
-#             messages.success(request, f'Your account has been updated!')
-#             return redirect('profile-update')
+    if request.method == 'POST':
+        u_form = UpdateRegisterForm(request.POST, instance=request.user)
+        p_form = UpdateProfileForm(request.POST,request.FILES,instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect('profile')
 
-#     else:
-#         u_form =  UpdateRegisterForm(instance=request.user)
-#         p_form = UpdateProfileForm(instance=request.user.profile)
+    else:
+        u_form =  UpdateRegisterForm(instance=request.user)
+        p_form = UpdateProfileForm(instance=request.user.profile)
 
-#     context = {
+    context = {
 
-#         'u_form': u_form,
-#         'p_form': p_form,
-#     }
+        'u_form': u_form,
+        'p_form': p_form,
+    }
 
-#     return render(request, 'userapp/profileupdate.html', context)
+    return render(request, 'userapp/profileupdate.html', context)
 
 
 

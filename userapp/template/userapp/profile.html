@@ -2,34 +2,28 @@
 
 {% block content %}
 <style>
-.profile p{
-    color:black;
-}
-.profile a{
-    color:black;
-    background-color: white;
-}
-.profile a:hover{
-    color:white;
-}
+    .profile p {
+        color: black;
+    }
+
+    .profile a {
+        color: black;
+        background-color: white;
+    }
+
+    .profile a:hover {
+        color: white;
+    }
 </style>
 
 <div class="container my-4 ">
     <div class="card col-12 col-md-6  p-2 mx-auto border shadow">
         <div class="mx-auto">
-        <img class="rounded-circle account-img mx-auto" src="{{ user.profile.image.url }}" style="height: 300px;">           
+            <img class="rounded-circle account-img mx-auto" src="{{ user.profile.image.url }}" style="height: 300px;">
         </div>
         <div class="card-body profile">
             <h5 class="text-center">{{ user.first_name }} {{ user.last_name }}</h5>
-            <div class="row mt-2 mx-auto">
-                <div class="col-6 ">
-                    <label>Username  </label>
-                </div>
-                <div class="col-6">
-                    <p>: {{ user.username }}</p>
-                </div>
-            </div>
-            <div class="row  mx-auto">
+            <div class="row  mx-auto mt-4">
                 <div class="col-6 ">
                     <label>Email </label>
                 </div>
@@ -69,18 +63,17 @@
                     <p>: {{ user.profile.present_address }}</p>
                 </div>
             </div>
-           
-           {% comment %}
-           <div class="d-flex">
-            <a class="btn btn-warning btn-sm " href="{% url 'profile-update' %}">Update Profile</a>
-            <a class="btn btn-warning btn-sm " href="{% url 'password_change' %}">Change Password</a>
 
-        </div>
-           {% endcomment %}
-            
+            {% comment %}
+            <div class="d-flex">
+                <a class="btn btn-warning btn-sm " href="{% url 'profile-update' %}">Update Profile</a>
+                <a class="btn btn-warning btn-sm " href="{% url 'password_change' %}">Change Password</a>
+
+            </div>
+            {% endcomment %}
+
         </div>
     </div>
 </div>
 
 {% endblock content %}
-
