@@ -1,0 +1,297 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+
+{% block content %}
+<section class="bg-light">
+  <div class="container">
+    <div class="mb-5">
+      <div class="my-5">
+        <div class="row justify-content-center">
+          <div class="col-md-8 col-lg-6 card text-black mt-2 rounded shadow">
+            <form method="POST" id="registration" enctype="multipart/form-data">
+              {% csrf_token %}
+              <nav class="mt-3">
+                <div class="nav nav-pills nav-fill" id="nav-tab" role="tablist">
+                  <a class="nav-link rounded active" id="step1-tab" data-bs-toggle="tab"
+                    href="#step1">Business Address</a>
+                  <a class="nav-link rounded" id="step2-tab" data-bs-toggle="tab" href="#step2">Verify ID
+                    Information</a>
+                  <a class="nav-link rounded" id="step3-tab" data-bs-toggle="tab" href="#step3">Bannk Information</a>
+                </div>
+              </nav>
+              <div class="tab-content py-5">
+                <div class="tab-pane fade show active" id="step1">
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-4 col-form-label">Address</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="address" class="form-control is-invalid"
+                        placeholder="Write name according to National Card" required>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-4 col-form-label">Country</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="country" class="form-control is-invalid" placeholder="Country name"
+                        required>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-4 col-form-label">Division</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="division" class="form-control is-invalid" placeholder="Division">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-4 col-form-label">District</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="district" class="form-control is-invalid" placeholder="Foradpur">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-4 col-form-label">Upazila</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="upazila" class="form-control is-invalid" placeholder="Faridpur Sadar">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-4 col-form-label">Shop Name</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="shop_name" class="form-control is-invalid">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-4 col-form-label">Warehouse Address</label>
+                    <div class="col-sm-8">
+                      <div class="form-check">
+                        <input class="form-check-input" name="warehouse_address" type="checkbox"
+                          id="sameAsWareHouseAddress" style="margin-top: 7.5px;" value="True" checked>
+                        <label class="form-check-label ml-3" for="sameAsWareHouseAddress">Same as Business Address</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="wareHouseAddress" style="display: none;">
+                    <div class="form-group row">
+                      <label for="from_division" class="col-sm-4 col-form-label">Address</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="w_address" class="form-control is-invalid" placeholder="Country name"
+                          required>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="from_division" class="col-sm-4 col-form-label">Division</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="w_division" class="form-control" placeholder="Division">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="from_division" class="col-sm-4 col-form-label">District</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="w_district" class="form-control" placeholder="Foradpur">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="from_division" class="col-sm-4 col-form-label">Upazila</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="w_upazila" class="form-control" placeholder="Faridpur Sadar">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-4 col-form-label">Return Address</label>
+                    <div class="col-sm-8">
+                      <div class="form-check">
+                        <input class="form-check-input" name="return_address" type="checkbox"
+                          id="sameAsReturnAddress" style="margin-top: 7.5px;" value="True" checked>
+                        <label class="form-check-label ml-3" for="sameAsReturnAddress">Same as Warehouse Address</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="returnAddress" style="display: none;">
+                    <div class="form-group row">
+                      <label for="from_division" class="col-sm-4 col-form-label">Address</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="r_address" class="form-control is-invalid" placeholder="Country name" 
+                          required>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="from_division" class="col-sm-4 col-form-label">Division</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="r_division" class="form-control" placeholder="Division">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="from_division" class="col-sm-4 col-form-label">District</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="r_district" class="form-control" placeholder="Foradpur">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="from_division" class="col-sm-4 col-form-label">Upazila</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="r_upazila" class="form-control" placeholder="Faridpur Sadar">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="step2">
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-5 col-form-label">ID Type :</label>
+                    <div class="col-sm-7">
+                      <select name="id_type" class="form-control is-invalid">
+                        <!-- <option selected value=""> -- select id type --</option> -->
+                        {% for x in id_types %}
+                          <option value="{{ x.0 }}">{{ x.1 }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-5 col-form-label">First & Last Name</label>
+                    <div class="col-sm-7">
+                      <input type="text" name="first_and_last_name" class="form-control is-invalid"
+                        placeholder="Enter Your Full Name">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-5 col-form-label">Phone Number</label>
+                    <div class="col-sm-7">
+                      <input type="text" name="phone" class="form-control is-invalid"
+                        placeholder="Enter Your Phone Number">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-5 col-form-label">Profile Image</label>
+                    <div class="col-sm-7">
+                      <input type="file" name="vendor_image" class="form-control is-invalid" >
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-5 col-form-label">ID Number(NID/Passport)</label>
+                    <div class="col-sm-7">
+                      <input type="text" name="Nid_number" class="form-control is-invalid" placeholder="xxxxxxxxx">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-5 col-form-label">Upload Id copy-Font Side</label>
+                    <div class="col-sm-7">
+                      <input type="file" name="NID_copy_1" class="form-control is-invalid" >
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-5 col-form-label">Upload Id copy-Back Side</label>
+                    <div class="col-sm-7">
+                      <input type="file" name="NID_copy_2" class="form-control is-invalid">
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="step3">
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-4 col-form-label">Account Title</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="account_title" class="form-control is-invalid"
+                        placeholder="Write name according to National Card" aria-label="default input example">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-4 col-form-label">Account Number</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="account_number" class="form-control is-invalid" placeholder="xxxxxxxxx">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-4 col-form-label">Bank Name</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="bank_name" class="form-control is-invalid" placeholder="Enter Bank  Name">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-4 col-form-label">Branch Name</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="bank_branch_name" class="form-control is-invalid"
+                        placeholder="Enter Bank branch Name">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-4 col-form-label">Routing Number</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="routing_number" class="form-control is-invalid" placeholder="xxxxxxxxx">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="from_division" class="col-sm-4 col-form-label">Upload cheque copy</label>
+                    <div class="col-sm-8">
+                      <input type="file" name="cheque_copy" class="form-control is-invalid" placeholder="xxxxxxxxx">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row justify-content-between">
+                <div class="col-auto"><button type="button" class="btn btn-secondary rounded"
+                    data-enchanter="previous">Previous</button></div>
+                <div class="col-auto mb-5 ">
+                  <button type="button" class="btn btn-primary rounded" data-enchanter="next">Next</button>
+                  <button type="submit" class="btn btn-primary rounded" data-enchanter="finish">Finish</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
+
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+<script src="{% static 'store/enchanter.js' %}"></script>
+
+<script>
+  var registrationForm = $('#registration');
+  var formValidate = registrationForm.validate({
+    errorClass: 'is-invalid',
+    errorPlacement: () => false
+  });
+
+  const wizard = new Enchanter('registration', {}, {
+    onNext: () => {
+      if (!registrationForm.valid()) {
+        formValidate.focusInvalid();
+        return false;
+      }
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var sameAsWareHouseAddress = document.getElementById('sameAsWareHouseAddress');
+    var wareHouseAddress = document.querySelector('.wareHouseAddress');
+
+    sameAsWareHouseAddress.addEventListener("change", function () {
+      if (sameAsWareHouseAddress.checked) {
+        wareHouseAddress.style.display = "none";
+      } else {
+        wareHouseAddress.style.display = "block";
+      }
+    });
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var sameAsReturnAddress = document.getElementById('sameAsReturnAddress');
+    var returnAddress = document.querySelector('.returnAddress');
+
+    sameAsReturnAddress.addEventListener("change", function () {
+      if (sameAsReturnAddress.checked) {
+        returnAddress.style.display = "none";
+      } else {
+        returnAddress.style.display = "block";
+      }
+    });
+  });
+</script>
+{% endblock script %}

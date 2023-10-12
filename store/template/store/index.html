@@ -1,0 +1,444 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .load-product{
+            display: none;
+        }
+    .loadMore {
+        width: 150px;
+        color: #fff;
+        display: block;
+        text-align: center;
+        margin: 20px auto;
+        padding: 5px;
+        border-radius: 10px;
+        border: 1px solid transparent;
+        background-color:#eb5525;
+        transition: .3s;
+        }
+    .loadMore:hover {
+        color: #eb5525;
+        background-color: #fff;
+        border: 1px solid #eb5525;
+        text-decoration: none;
+        }
+    .noContent {
+        color: #000 !important;
+        background-color: transparent !important;
+        pointer-events: none;
+    }
+    .product{
+        box-shadow: 0 8px 16px 0 rgba(167, 165, 165, 0.2);
+    }
+    .product:hover{
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+
+.product-flex {
+  display:flex;
+  flex-wrap:wrap;
+}
+
+.product-flex .product {
+    flex: 1 1 calc(20% - 20px);
+    }
+
+
+@media only screen and (max-width: 992px) {
+.product-flex .product {
+    flex: 1 1 calc(25% - 20px);
+    }
+}
+@media only screen and (max-width: 768px) {
+.product-flex .product {
+  flex: 1 1 calc(33.33% - 20px);
+    }
+}
+
+@media only screen and (max-width: 600px) {
+.product-flex .product {
+    flex: 1 1 calc(50% - 20px);
+    }
+}
+.nav-item li{
+    padding-bottom: -30px;
+}
+</style>
+<main class="main">
+    <div class="container-fluid" style="padding-left: 0px !important; padding-right: 0px !important;">
+        <!--desktop-view-->
+            <div class="row ">
+                <div class="col-md-3 d-none d-md-block"></div>
+                <div class="col-md-9 d-none d-md-block">
+                    <div class="intro-slider owl-carousel owl-simple owl-nav-inside" data-toggle="owl" data-owl-options='{
+                        "nav": false,
+                        "responsive": {
+                            "992": {
+                                "nav": true
+                            }
+                        }
+                    }'>
+                    {% for b in banner %}           
+                    <div class="intro-slide">
+                        
+                        {% if b.http_url_link %}
+                        <a href="{{ b.http_url_link }}">
+                            <img src="{{ b.image.url }}" alt="" style="width: 100% ;">
+                        </a>
+                        {% else %}
+                        <img src="{{ b.image.url }}" alt="" style="width: 100% ;">
+                        {% endif %}                 
+                        
+                    </div><!-- End .intro-slide -->
+                    {% endfor %}
+                </div><!-- End .owl-carousel owl-simple -->
+        
+                </div>
+            </div>
+         
+         <!--mobile view  -->
+        <div class="intro-slider owl-carousel owl-simple owl-nav-inside d-md-none" data-toggle="owl" data-owl-options='{
+                        "nav": false,
+                        "responsive": {
+                            "992": {
+                                "nav": true
+                            }
+                        }
+                    }'>
+                    {% for b in banner %}           
+                    <div class="intro-slide">
+                        
+                        {% if b.http_url_link %}
+                        <a href="{{ b.http_url_link }}">
+                            <img src="{{ b.image.url }}" alt="" style="width: 100% ;">
+                        </a>
+                        {% else %}
+                        <img src="{{ b.image.url }}" alt="" style="width: 100% ;">
+                        {% endif %}                 
+                        
+                    </div><!-- End .intro-slide -->
+                    {% endfor %}
+                </div><!-- End .owl-carousel owl-simple -->
+        
+    </div><!-- End .intro-slider-container -->
+  
+ 
+        {% if flashsale %}
+        <div class="container pt-3">
+            <div class="row mb-2" style='border-bottom: 0.1rem solid #ebebeb'>
+                <div class="col-9">
+                    <ul class="nav nav-pills nav-border-anim justify-content-start" role="tablist">
+                        <h2 class="title mr-2">Flash Sale</h2>
+                        <li class="nav-item">
+                            <!-- <li class="px-3 mx-1" style="background-color:#eb5525; color: white;"><span id="days"></span></li> -->
+                            <li class="px-2 mx-1" style="background-color:#eb5525; color: white; height: 27px;"><span id="hours"></span></li>
+                            <li class="px-2 mx-1" style="background-color:#eb5525; color: white; height: 27px;"><span id="minutes"></span></li>
+                            <li class="px-2 mx-1" style="background-color:#eb5525; color: white; height: 27px;"><span id="seconds"></span></li>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-3 text-right ">
+                        <a style="font-weight: 500;" href="{% url 'flash-sale' %}">Show more ></a>
+                    </div>
+            </div>
+            <div class="tab-content tab-content-carousel">
+                <div class="tab-pane p-0 fade show active" id="hot-all-tab" role="tabpanel" aria-labelledby="hot-all-link">
+                    <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                        data-owl-options='{
+                            "nav": false, 
+                            "dots": true,
+                            "margin": 20,
+                            "loop": false,
+                            "responsive": {
+                                "0": {
+                                    "items":2
+                                },
+                                "480": {
+                                    "items":2
+                                },
+                                "768": {
+                                    "items":3
+                                },
+                                "992": {
+                                    "items":4
+                                },
+                                "1280": {
+                                    "items":5,
+                                    "nav": true
+                                }
+                            }
+                        }'>
+                        
+                        {% for p in flashsale_products %}
+                        <div class="product">
+                            <figure class="product-media">
+                                {% if p.stock_quantity %}
+                                {% if p.discount_price %}
+                                <span class="product-label label-sale" style="background-color: #eb5525; color:#fff">{{ p.saving_percent|floatformat:"0" }}% Off</span>
+                                {% endif %}
+                                {% else %}
+                                <span class="product-label label-sale" style="background-color: #e70f0f; color:#fff">out of stock</span>
+                                {% endif %}
+                                <a href="{% url 'product-detail' p.slug %}">
+                                    <img src="{{  p.image.url }}" alt="Product image" class="product-image">
+                                </a>
+
+                                <div class="product-action-vertical">
+                                    <a href="{% url 'add-to-wishlist' p.slug %}" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                </div><!-- End .product-action-vertical -->
+                            </figure><!-- End .product-media -->
+
+                            <div class="product-body">
+                                <h3 class="product-title text-center"><a href="{% url 'product-detail' p.slug %}">{{ p.product_name }}</a></h3><!-- End .product-title -->
+                                <div class="product-price pt-1 justify-content-center">
+                                    {% if p.discount_price %}
+                                    <span class="new-price">৳{{ p.discount_price }} </span>
+                                    <span class="old-price"><del>৳{{ p.price }} </del></span>
+                                    {% else %}
+                                    ৳{{ p.price }} 
+                                    {% endif %}
+                                </div><!-- End .product-price -->
+                                <div class="ratings-container justify-content-center">
+                                    <div class="ratings">       
+                                        {% if p.get_avg_rating %}
+                                        <div class="ratings-val" style="width:{{p.get_avg_rating}}%;"></div><!-- End .ratings-val -->           
+                                        {% endif %}
+                                        <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->                                  
+                                    </div><!-- End .ratings -->
+                                    {% if p.get_rating_count %}
+                                    <span class="ratings-text">( {{ p.get_rating_count }} )</span>
+                                    {% else %}
+                                    <span class="ratings-text">(0)</span>
+                                {% endif %}
+                                </div><!-- End .rating-container -->
+                            </div><!-- End .product-body -->
+                        </div><!-- End .product -->
+                        {% endfor %}
+                            
+                    </div><!-- End .owl-carousel -->
+                </div><!-- .End .tab-pane -->
+            </div><!-- End .tab-content -->
+        </div><!-- End .container -->
+        {% endif %}
+    
+
+
+    <div class="mb-3"></div><!-- End .mb-3 -->
+
+    <div class="container">
+        <div class="row mb-2" style='border-bottom: 0.1rem solid #ebebeb'>
+            <div class="col-7">
+                <h2 class="title text-left">Deal Of The Day</h2><!-- End .title -->
+            </div>
+            <div class="col-5 text-right">
+                <a style="font-weight: 500;" href="{% url 'deal-of-the-day' %}">Show more ></a><!-- End .title -->
+            </div>
+        </div>
+        <div class="tab-content tab-content-carousel">
+            <div class="tab-pane p-0 fade show active" id="hot-all-tab" role="tabpanel" aria-labelledby="hot-all-link">
+                <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                    data-owl-options='{
+                        "nav": false, 
+                        "dots": true,
+                        "margin": 20,
+                        "loop": false,
+                        "responsive": {
+                            "0": {
+                                "items":2
+                            },
+                            "480": {
+                                "items":2
+                            },
+                            "768": {
+                                "items":3
+                            },
+                            "992": {
+                                "items":4
+                            },
+                            "1280": {
+                                "items":5,
+                                "nav": true
+                            }
+                        }
+                    }'>
+                    
+                    {% for p in deal_product %}
+                    <div class="product">
+                        <figure class="product-media">
+                            {% if p.product.stock_quantity %}
+                            {% if p.product.discount_price %}
+                            <span class="product-label label-sale" style="background-color: #eb5525; color:#fff">{{ p.product.saving_percent|floatformat:"0" }}% Off</span>
+                            {% endif %}
+                            {% else %}
+                            <span class="product-label label-sale" style="background-color: #e70f0f; color:#fff">out of stock</span>
+                            {% endif %}
+                            <a href="{% url 'product-detail' p.product.slug %}">
+                                <img src="{{  p.product.image.url }}" alt="Product image" class="product-image">
+                            </a>
+
+                            <div class="product-action-vertical">
+                                <a href="{% url 'add-to-wishlist' p.product.slug %}" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                            </div><!-- End .product-action-vertical -->
+                        </figure><!-- End .product-media -->
+
+                        <div class="product-body">
+                            <h3 class="product-title text-center"><a href="{% url 'product-detail' p.product.slug %}">{{ p.product.product_name }}</a></h3><!-- End .product-title -->
+                            <div class="product-price pt-1 justify-content-center">
+                                {% if p.product.discount_price %}
+                                <span class="new-price">৳{{ p.product.discount_price }} </span>
+                                <span class="old-price"><del> ৳{{ p.product.price }} </del></span>
+                                {% else %}
+                                ৳{{ p.product.price }} 
+                                {% endif %}
+                            </div><!-- End .product-price -->
+                            <div class="ratings-container justify-content-center">
+                                <div class="ratings">       
+                                    {% if p.product.get_avg_rating %}
+                                    <div class="ratings-val" style="width:{{p.product.get_avg_rating}}%;"></div><!-- End .ratings-val -->           
+                                    {% endif %}
+                                    <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->                                  
+                                </div><!-- End .ratings -->
+                                {% if p.product.get_rating_count %}
+                                <span class="ratings-text">( {{ p.product.get_rating_count }} )</span>
+                                    {% else %}
+                                <span class="ratings-text">(0)</span>
+                            {% endif %}
+                            </div><!-- End .rating-container -->
+                        </div><!-- End .product-body -->
+                    </div><!-- End .product -->
+                    {% endfor %}
+                        
+                </div><!-- End .owl-carousel -->
+            </div><!-- .End .tab-pane -->
+        </div><!-- End .tab-content -->
+    </div><!-- End .container -->
+
+    <div class="mb-3"></div><!-- End .mb-3 -->
+
+
+    <div class="container electronics">
+        <div class="heading heading-flex heading-border mb-3">
+            <div class="heading-left">
+                <h2 class="title text-left mb-1">Just For You</h2><!-- End .title -->
+            </div><!-- End .heading-left -->
+        </div><!-- End .heading -->
+        <div class="product-flex">
+            {% for p in all_product %}
+            <div class="product mx-2 load-product">
+                <figure class="product-media">
+                    
+                    {% if p.stock_quantity %}
+                    {% if p.discount_price %}
+                    <span class="product-label label-sale" style="background-color: #eb5525; color:#fff">{{ p.saving_percent|floatformat:"0" }}% Off</span>
+                    {% endif %}
+                    {% else %}
+                    <span class="product-label label-sale" style="background-color: #e70f0f; color:#fff">out of stock</span>
+                    {% endif %}
+                        
+
+                    <a href="{% url 'product-detail' p.slug %}">
+                        <img src="{{  p.image.url }}" alt="Product image" class="product-image">
+                    </a>
+
+                    <div class="product-action-vertical">
+                        <a href="{% url 'add-to-wishlist' p.slug %}" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                    </div><!-- End .product-action-vertical -->
+                </figure><!-- End .product-media -->
+
+                <div class="product-body">
+                    <h3 class="product-title text-center"><a href="{% url 'product-detail' p.slug %}">{{ p.product_name }}</a></h3><!-- End .product-title -->
+                    <div class="product-price pt-1 justify-content-center">
+                        {% if p.discount_price %}
+                        <span class="new-price">৳{{ p.discount_price }} </span>
+                        <span class="old-price"><del>৳{{ p.price }} </del></span>
+                        {% else %}
+                        ৳{{ p.price }} 
+                        {% endif %}
+                    </div><!-- End .product-price -->
+                    <div class="ratings-container justify-content-center">
+                        <div class="ratings">       
+                            {% if p.get_avg_rating %}
+                            <div class="ratings-val" style="width:{{p.get_avg_rating}}%;"></div><!-- End .ratings-val -->           
+                            {% endif %}
+                            <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->                                  
+                        </div><!-- End .ratings -->
+                        
+                        {% if p.get_rating_count %}
+                            <span class="ratings-text">( {{ p.get_rating_count }} )</span>
+                                {% else %}
+                            <span class="ratings-text">(0)</span>
+                        {% endif %}
+                            
+                    </div><!-- End .rating-container -->
+                </div><!-- End .product-body -->
+            </div><!-- End .product -->
+            {% endfor %}
+        </div>
+        <a href="" class="loadMore">Load More</a>
+    </div><!-- End .container -->
+</main><!-- End .main -->
+{% endblock %}
+
+
+{% block script %}
+<script>
+    $(document).ready(function(){
+    $(".load-product").slice(0, 15).show();
+    $(".loadMore").on("click", function(e){
+      e.preventDefault();
+      $(".load-product:hidden").slice(0, 5).slideDown();
+      if($(".load-product:hidden").length == 0) {
+        $(".loadMore").text("No Content").addClass("noContent");
+      }
+    });
+    
+  })
+</script>
+
+<script>
+    var countDownDate = new Date({{ flashsale.FlashSale_expire_date|date:"U" }} * 1000);
+                            // date and time to end above
+    var x = setInterval(function() {
+  var now = new Date();
+  var distance = countDownDate - now;
+
+//   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+
+    // document.getElementById("days").innerHTML = days + " D ";
+    document.getElementById("hours").innerHTML = hours + "" ;
+    document.getElementById("minutes").innerHTML = minutes + "";
+    document.getElementById("seconds").innerHTML = seconds + "";
+
+  if (distance < 0) {
+    clearInterval(x);
+    location.reload();
+  }
+}, 1000);
+</script>
+
+
+<!-- <script>
+    $(document).ready(function(){
+  $(".content").slice(0, 4).show();
+  $("#loadMore").on("click", function(e){
+    e.preventDefault();
+    $(".content:hidden").slice(0, 4).slideDown();
+    if($(".content:hidden").length == 0) {
+      $("#loadMore").text("No Content").addClass("noContent");
+    }
+  });
+  
+})
+</script> -->
+
+{% endblock script %}
+    
+
+
+

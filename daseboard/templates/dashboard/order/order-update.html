@@ -1,0 +1,47 @@
+{% extends 'dashboard/base.html' %}
+{% load crispy_forms_tags %}
+{% block dashboard %}
+    
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+	  <div class="container-full">
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+			  <div class="col-12">
+				<div class="box">
+				  <div class="box-body">
+					<form method="POST" enctype="multipart/form-data">
+                        <div class="content-header d-flex">
+                            <div class="me-auto mt-2">
+                                <h4 class="page-title">Edit Order( OrderID {{ order.id}} )</h4>
+                            </div>
+							
+                            <div class="form-actions mt-10">
+                                <button type="submit" class="btn btn-primary col-12"> <i class="fa fa-check"></i> Save</button>
+                            </div>
+                        </div>
+                        {% csrf_token %}
+						<div class="form-body">
+							<a class="btn btn-info" href="{% url 'shippingaddress-update' order.pk %}">Shiping Address</a>
+							<div class="form-group my-2">
+								{{ form|crispy }}
+							</div>
+                        
+						</div>
+					</form>
+				  </div>
+				</div>
+			  </div>		  
+		  </div>
+		</section>
+		<!-- /.content -->
+	  
+	  </div>
+  </div>
+  <!-- /.content-wrapper -->
+
+  {% endblock dashboard %}
+
+

@@ -1,0 +1,279 @@
+﻿{% extends 'dashboard/base.html' %}
+
+{% block dashboard %}
+
+<div class="wrapper">
+	<div id="loader"></div>
+
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<div class="container-full">
+			<!-- Main content -->
+			<section class="content">
+
+				{% if request.user.is_vendor and request.user.is_active %}
+				<div class="row">
+					<div class="col-xxxl-3 col-md-6 col-12">
+						<div class="box box-body py-5">
+							<div class="d-flex align-items-center justify-content-between my-4">
+								<div class="text-start">
+									<h5>Total Product</h5>
+									<h3 class="mb-0 fw-500">{{ all_product_count }}</h3>
+								</div>
+								<div>
+									<div class="mx-auto w-100 position-relative"> <i style="font-size: 30px;"
+											class="fa fa-shopping-basket" aria-hidden="true"></i></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xxxl-3 col-md-6 col-12">
+						<div class="box box-body py-5">
+							<div class="d-flex align-items-center justify-content-between my-4">
+								<div class="text-start">
+									<h5>Total Revenue</h5>
+									<h3 class="mb-0 fw-500">৳ {{ total_revenue }}</h3>
+								</div>
+								<div>
+									<div class="mx-auto w-100 position-relative"><i style="font-size: 30px;"
+											class="fa fa-industry" aria-hidden="true"></i></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xxxl-3 col-md-6 col-12">
+						<div class="box box-body py-5">
+							<div class="d-flex align-items-center justify-content-between my-4">
+								<div class="text-start">
+									<h5>Total Customers</h5>
+									<h3 class="mb-0 fw-500">{{ total_customer }}</h3>
+								</div>
+								<div>
+									<div class="mx-auto w-100 position-relative"><i style="font-size: 30px;"
+											class="fa fa-users" aria-hidden="true"></i></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xxxl-3 col-md-6 col-12">
+						<div class="box box-body py-5">
+							<div class="d-flex align-items-center justify-content-between my-4">
+								<div class="text-start">
+									<h5>Total Orders</h5>
+									<h3 class="mb-0 fw-500">{{ total_order }}</h3>
+								</div>
+								<div>
+									<div class="mx-auto w-100 position-relative"><i style="font-size: 30px;"
+											class="fa fa-th-list" aria-hidden="true"></i></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xxxl-3 col-md-6 col-12">
+						<div class="box box-body py-5">
+							<div class="d-flex align-items-center justify-content-between my-4">
+								<div class="text-start">
+									<h5>Total Pending Orders</h5>
+									<h3 class="mb-0 fw-500">{{ pending_order }}</h3>
+								</div>
+								<div>
+									<div class="mx-auto w-100 position-relative"><i style="font-size: 30px;"
+											class="fa fa-list-alt" aria-hidden="true"></i></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xxxl-3 col-md-6 col-12">
+						<div class="box box-body py-5">
+							<div class="d-flex align-items-center justify-content-between my-4">
+								<div class="text-start">
+									<h5>Total Complate Orders</h5>
+									<h3 class="mb-0 fw-500">{{ complete_order }}</h3>
+								</div>
+								<div>
+									<div class="mx-auto w-100 position-relative"><i style="font-size: 30px;"
+											class="fa fa-book" aria-hidden="true"></i></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xxxl-6 col-12">
+						<div class="box">
+							<div class="box-header">
+								<h4 class="box-title">Customer Review</h4>
+							</div>
+							<div class="box-body">
+								<div class="table-responsive">
+									<table class="table table-hover no-wrap product-order" data-page-size="10">
+										<thead>
+											<tr>
+												<th>Product Name</th>
+												<th>Review</th>
+												<th>Rating</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											{% for c in rating_review %}
+											<tr>
+												<td>{{ c.product.product_name }}</td>
+												<td>{{ c.review }}</td>
+												<td>{{ c.rating }}</td>
+												<td><a href="{% url 'rating-update' c.pk %}" class="text-info me-10"
+														data-bs-toggle="tooltip" data-bs-original-title="Edit">
+														<i class="ti-marker-alt"></i>
+													</a>
+													<a href="{% url 'rating-delete' c.pk %}" class="text-danger"
+														data-bs-original-title="Delete" data-bs-toggle="tooltip">
+														<i class="ti-trash"></i>
+													</a>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% else %}
+				<div class="row">
+					<div class="col-xxxl-3 col-md-6 col-12">
+						<div class="box box-body py-5">
+							<div class="d-flex align-items-center justify-content-between my-4">
+								<div class="text-start">
+									<h5>Total Product</h5>
+									<h3 class="mb-0 fw-500">{{ all_product_count }}</h3>
+								</div>
+								<div>
+									<div class="mx-auto w-100 position-relative"> <i style="font-size: 30px;"
+											class="fa fa-shopping-basket" aria-hidden="true"></i></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xxxl-3 col-md-6 col-12">
+						<div class="box box-body py-5">
+							<div class="d-flex align-items-center justify-content-between my-4">
+								<div class="text-start">
+									<h5>Total Revenue</h5>
+									<h3 class="mb-0 fw-500">৳ {{ total_revenue }}</h3>
+								</div>
+								<div>
+									<div class="mx-auto w-100 position-relative"><i style="font-size: 30px;"
+											class="fa fa-industry" aria-hidden="true"></i></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xxxl-3 col-md-6 col-12">
+						<div class="box box-body py-5">
+							<div class="d-flex align-items-center justify-content-between my-4">
+								<div class="text-start">
+									<h5>Total Customers</h5>
+									<h3 class="mb-0 fw-500">{{ total_customer }}</h3>
+								</div>
+								<div>
+									<div class="mx-auto w-100 position-relative"><i style="font-size: 30px;"
+											class="fa fa-users" aria-hidden="true"></i></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xxxl-3 col-md-6 col-12">
+						<div class="box box-body py-5">
+							<div class="d-flex align-items-center justify-content-between my-4">
+								<div class="text-start">
+									<h5>Total Orders</h5>
+									<h3 class="mb-0 fw-500">{{ total_order }}</h3>
+								</div>
+								<div>
+									<div class="mx-auto w-100 position-relative"><i style="font-size: 30px;"
+											class="fa fa-th-list" aria-hidden="true"></i></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xxxl-3 col-md-6 col-12">
+						<div class="box box-body py-5">
+							<div class="d-flex align-items-center justify-content-between my-4">
+								<div class="text-start">
+									<h5>Total Pending Orders</h5>
+									<h3 class="mb-0 fw-500">{{ pending_order }}</h3>
+								</div>
+								<div>
+									<div class="mx-auto w-100 position-relative"><i style="font-size: 30px;"
+											class="fa fa-list-alt" aria-hidden="true"></i></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xxxl-3 col-md-6 col-12">
+						<div class="box box-body py-5">
+							<div class="d-flex align-items-center justify-content-between my-4">
+								<div class="text-start">
+									<h5>Total Complate Orders</h5>
+									<h3 class="mb-0 fw-500">{{ complete_order }}</h3>
+								</div>
+								<div>
+									<div class="mx-auto w-100 position-relative"><i style="font-size: 30px;"
+											class="fa fa-book" aria-hidden="true"></i></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xxxl-6 col-12">
+						<div class="box">
+							<div class="box-header">
+								<h4 class="box-title">Customer Review</h4>
+							</div>
+							<div class="box-body">
+								<div class="table-responsive">
+									<table class="table table-hover no-wrap product-order" data-page-size="10">
+										<thead>
+											<tr>
+												<th>Product Name</th>
+												<th>Review</th>
+												<th>Rating</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											{% for c in rating_review %}
+											<tr>
+												<td>{{ c.product.product_name }}</td>
+												<td>{{ c.review }}</td>
+												<td>{{ c.rating }}</td>
+												<td><a href="{% url 'rating-update' c.pk %}" class="text-info me-10"
+														data-bs-toggle="tooltip" data-bs-original-title="Edit">
+														<i class="ti-marker-alt"></i>
+													</a>
+													<a href="{% url 'rating-delete' c.pk %}" class="text-danger"
+														data-bs-original-title="Delete" data-bs-toggle="tooltip">
+														<i class="ti-trash"></i>
+													</a>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+			</section>
+			<!-- /.content -->
+		</div>
+	</div>
+	<!-- /.content-wrapper -->
+
+	{% endblock dashboard %}

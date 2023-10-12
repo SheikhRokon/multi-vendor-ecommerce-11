@@ -1,0 +1,200 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+.profile-dashboard h4,p{
+    color: white;
+}
+.cart-product{
+    background: linear-gradient(-45deg, #00a000, #5ddf51, #23d5ab, #04ff3a);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+    height: 140px;
+    color: white;
+    padding-top: 30px;
+    text-align: center;
+    border-radius: 3%;
+}
+.wishlist-product{
+    background: linear-gradient(-45deg, #e558f8, #a800b8, #e42695, #6b1a60);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+    height: 140px;
+    color: white;
+    padding-top: 30px;
+    text-align: center;
+    border-radius: 3%;
+}
+.ordered-product{
+    background: linear-gradient(-45deg, #2fff1c, #ff1b1b, #ff2525, #009b0d);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+    height: 140px;
+    color: white;
+    padding-top: 30px;
+    text-align: center;
+    border-radius: 3%;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+
+	50% {
+		background-position: 100% 50%;
+	}
+
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.card-profile{
+    height: 200px;
+    background-color: #eb5525;
+}
+
+.m-active a{
+    color: #eb5525 !important;
+}
+</style>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3 d-none d-md-block">
+            <div class="card border rounded">
+                <div class="card-profile ">
+                    <img class="mx-auto mt-4 rounded-circle" src="{{ user.profile.image.url }}" alt="" style="height: 70px ; width: 70px;">
+                    <p style="text-align:center ; font-size: 16px; font-weight: 500;">{{ user.first_name }} {{ user.last_name }}</p>
+                    <p style="text-align:center ;">{{ user.username }}</p>
+                </div>
+                <div class="card-body">
+                    <nav class="mobile-cats-nav">
+                        <ul class="mobile-cats-menu dashboard-menu">
+							<ul class="mobile-cats-menu dashboard-menu">
+								<li ><a href="{% url 'profile-dashboard' %}"><i class="fa-solid fa-house"></i>Dashboard</a></li>
+								<li class="m-active"><a href="{% url 'cart-summary' %}"><i class="fa-solid fa-cart-shopping"></i>Cart History</a></li>
+								<li><a href="{% url 'order-summary' %}"><i class="fa-solid fa-book"></i>Purchase History</a></li>
+								<li><a href="{% url 'wish-list' %}"><i class="fa-solid fa-heart"></i>Wishlist</a></li>
+								<li><a href="{% url 'my-review' %}"><i class="fa-solid fa-list"></i>My Review</a></li>
+								
+								{% comment %}
+								<li ><a href="{% url 'profile-update' %}"><i class="fa-solid fa-circle-user"></i>Manage Profile</a></li>
+								{% endcomment %}
+									
+								
+							</ul><!-- End .mobile-cats-menu -->
+                        </ul><!-- End .mobile-cats-menu -->
+                    </nav><!-- End .mobile-cats-nav -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <h5>Cart Summary</h5>
+			{% if order.items.all %}
+			<div class="row">
+				<div class="col-12">
+					<table class="table table-cart table-mobile">
+						<thead>
+							<tr>
+								<th>Product</th>
+								<th>Price</th>
+								<th>Quantity</th>
+								<th>Total</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+
+						<tbody>
+						{% for p in order.items.all %}
+						<tr>
+							<td class="product-col">
+								<div class="product">
+									<figure class="product-media">
+										<a href="{% url 'product-detail' p.item.slug %}">
+											<img src="{{ p.item.image.url }}" alt="Product image">
+										</a>
+									</figure>
+
+									<h3 class="product-title">
+										<a href="{% url 'product-detail' p.item.slug %}">{{ p.item.product_name }}</a>
+									</h3><!-- End .product-title -->
+								</div><!-- End .product -->
+							</td>										
+								<td style="color:rgb(0 0 0);">
+									{% if p.item.discount_price %}
+									৳{{ p.item.discount_price }} 
+									{% else %}
+									৳{{ p.item.price }} 
+									{% endif %}	
+								</td>										
+								<td class="quantity-col">
+									<div class="cart-product-quantity">
+										<a href="{% url 'Prduct-Quantity-Decrementr' p.item.slug %}"><i class="fa-solid fa-minus"></i></a>
+										<p style='color:black;'>{{ p.quantity }}</p>
+										<a style="font-size: 15px;" href="{% url 'Prduct-Quantity-Increment' p.item.slug %}"><i class="fa-solid fa-plus"></i></a>
+									</div><!-- End .cart-product-quantity -->
+								</td>
+								<td style="color:rgb(0 0 0);">৳{{ p.get_subtotal }} <span>
+									 {% if p.item.discount_price %}
+									  saving(৳{{ p.saving_price }} )<br>{{ p.saving_percent|floatformat:"2" }}% 
+									 {% endif %}</span></td>
+								<td class="remove-col"><a href="{% url 'remove-form-cart' p.item.slug %}" class="btn-remove"><i class="icon-close"></i></a></td>
+						</tr>                                        
+						{% endfor %}
+
+
+						</tbody>
+					</table><!-- End .table table-wishlist -->
+
+					<div class="cart-bottom">
+						<div class="cart-discount">
+							<form action="{% url 'add-coupon' %}" method="POST">
+								{% csrf_token %}
+								
+								<div class="input-group">
+									{{ form.code }}
+									<div class="input-group-append">
+										<button style="background-color:#eb5525 ;color: white;" class="btn" type="submit"><i class="icon-long-arrow-right"></i></button>
+									</div><!-- .End .input-group-append -->
+								</div><!-- End .input-group -->
+							</form>
+						</div><!-- End .cart-discount -->
+					</div><!-- End .cart-bottom -->
+				</div><!-- End .col-lg-9 -->
+				<aside class="col-12">
+					<div class="summary summary-cart">
+						<table class="table table-summary">
+							<tbody>											
+								<tr class="summary-subtotal">
+									<td>Total Item Price:</td>
+									<td>৳{{ order.get_total }} </td>
+								</tr>
+																
+								{% if order.coupon %}
+								<tr class="summary-shipping-row">
+									<td>									
+										<label class="custom-control-label" for="express-shipping">Coupon : {{order.coupon.code}}</label>
+									</td>
+									<td>- ৳{{ order.coupon.amount }} </td>
+								</tr>
+
+								{% endif %}
+							</tbody>
+						</table><!-- End .table table-summary -->
+
+						<a style="background-color:#eb5525 ;color: white;" href="{% url 'address' %}" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
+					</div><!-- End .summary -->
+
+					<a style="background-color:white ;color: #eb5525;" href="{% url 'shop' %}" class="shadow btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
+				</aside><!-- End .col-lg-3 -->
+			</div><!-- End .row -->
+			{% else %}
+			<h2 class="text-center text-warning">You have no active order</h2>
+			{% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+    

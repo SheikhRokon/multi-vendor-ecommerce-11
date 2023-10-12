@@ -1,0 +1,470 @@
+
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block fb_meta %}
+
+<meta property="og:url"           content="https://evazu.com/product/detail/{{object.slug}}" />
+<meta property="og:type"          content="website" />
+<meta property="og:title"         content="{{ object.product_name }}" />
+<meta property="og:description"   content="{{object.discription|striptags}}" />
+<meta property="og:image"         content="{{object.image.url}}" />
+
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials.css" />
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials-theme-flat.css" />
+{% endblock fb_meta %}
+
+{% block content %}
+
+<style>
+    .size-label{
+        border: 1px solid #bdbdbd;
+        width: 40px;
+    }
+    .color-label{
+        border: 1px solid #bdbdbd;
+        width: 70px;
+    }
+    .size-variation:checked + .size-label{
+    border: 1px solid #eb5525;
+    border-radius: 10%;
+    color:rgb(0, 0, 0);
+    }
+    .color-variation:checked + .color-label{
+    border: 1px solid #eb5525;
+    border-radius: 10%;
+    color:rgb(0, 0, 0);
+    }
+    html {
+    scroll-behavior: smooth;
+    }
+</style>
+
+<style>
+    .copy-text {
+    	padding: 10px;
+    	border-radius: 10px;
+    	display: flex;
+    }
+    .copy-text input.text {
+    	/*padding: 10px;*/
+    	/*font-size: 18px;*/
+    	color: #555;
+    	border: none;
+    	outline: none;
+    }
+    .copy-text button {
+    	/*padding: 5px;*/
+    	background: #5784f5;
+    	color: #fff;
+    	/*font-size: 18px;*/
+    	border: none;
+    	outline: none;
+    	border-radius: 10px;
+    	cursor: pointer;
+    }
+    
+    .copy-text button:active {
+    	background: #809ce2;
+    }
+    .copy-text button:before {
+    	content: "Copied";
+    	position: absolute;
+    	top: -45px;
+    	right: 0px;
+    	background: #5c81dc;
+    	padding: 3px 5px;
+    	border-radius: 20px;
+    	/*font-size: 15px;*/
+    	display: none;
+    }
+    .copy-text button:after {
+    	content: "";
+    	position: absolute;
+    	top: -20px;
+    	right: 25px;
+    	width: 10px;
+    	height: 10px;
+    	background: #5c81dc;
+    	transform: rotate(45deg);
+    	display: none;
+    }
+    .copy-text.active button:before,
+    .copy-text.active button:after {
+    	display: block;
+    }
+</style>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<main class="main my-5">
+    <div class="page-content">
+        <div class="container">
+            <div class="product-details-top">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="product-gallery product-gallery-vertical">
+                            <div class="row">
+                                <figure class="product-main-image">
+                                    <img id="product-zoom" src="{{ object.image.url }}" data-zoom-image="{{ object.image.url }}" alt="product image">
+
+                                    <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                        <i class="icon-arrows"></i>
+                                    </a>
+                                </figure><!-- End .product-main-image -->
+
+                                <div id="product-zoom-gallery" class="product-image-gallery">
+                                    <a class="product-gallery-item active" href="#" data-image="{{ object.image.url }}">
+                                        <img src="{{ object.image.url }}" alt="product side">
+                                    </a>
+                                    
+                                    {% for im in img %}
+                                    <a class="product-gallery-item" href="#" data-image="{{ im.image.url }}" data-zoom-image="{{ im.image.url }}">
+                                        <img src="{{ im.image.url }}" alt="product cross">
+                                    </a>
+                                    {% endfor %}
+
+                                </div><!-- End .product-image-gallery -->
+                            </div><!-- End .row -->
+                        </div><!-- End .product-gallery -->
+                    </div><!-- End .col-md-6 -->
+
+                    <div class="col-md-6">
+                        <div class="product-details">
+                            <h1 class="product-title">{{ object.product_name }}</h1><!-- End .product-title -->
+                            <div class="ratings-container justify-content-start">
+                                <div class="ratings">
+                                    {% if object.get_avg_rating %}
+                                    <a href="#rate_id"><div class="ratings-val" style="width: {{object.get_avg_rating}}%;"></div>
+                                        <span class="ratings-text">( {{ object.get_rating_count }} Reviews )</span>
+                                    </a>
+                                     
+                                     {% else %}
+                                    <div  class="ratings-val" style="width:0%;"></div><!-- End .ratings-val -->
+                                    <span class="ratings-text">( 0 Reviews )</span>
+                                    {% endif %} 
+                                </div><!-- End .ratings -->
+                            </div><!-- End .rating-container -->
+
+
+
+                            <b >{% if object.discount_price %}
+                                <span class="new-price" style="font-size:30px ;color:#eb5525;">৳{{ object.discount_price }} </span>
+                                <br>
+                                <span class="old-price"><del>Was ৳{{ object.price }} </del></span><span> saving({{ object.saving_price }} ) {{ object.saving_percent|floatformat:"2" }}%</span>
+                                {% else %}
+                                <span style="font-size:30px ;color:#eb5525;" >৳{{ object.price }} </span>
+                                {% endif %} 
+                                </b>
+
+                            <!-- End .product-price -->
+                            {% if object.sort_discription %}
+                            <div class="product-content">
+                                <p>{{ object.sort_discription|safe }}</p>
+                            </div><!-- End .product-content -->
+                            {% endif %}
+
+                    {% if not object.stock_quantity %}
+                    <div class="mb-3">
+                        <span style="font-size:15px ;" class=" badge badge-danger">out of stock</span>
+                    </div>
+                    {% else %}                               
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {% if object.variation_set.all %}
+                        {% if object.variation_set.sizes %}
+                        <div class="details-filter-row details-row-size">
+                            <label for="size">Size:</label>
+                            {% for p_variation  in object.variation_set.sizes %}
+                            {% if forloop.counter == 1 %}
+                              <input type="radio" class="size-variation" id="size{{ forloop.counter }}" hidden name="size" value="{{ p_variation.title|capfirst }}" checked>
+                              {% else %}
+                                <input type="radio" class="size-variation" id="size{{ forloop.counter }}" hidden name="size" value="{{ p_variation.title|capfirst }}">
+                            {% endif %}
+                              <label class="size-label text-center" for="size{{ forloop.counter }}">{{ p_variation.title|capfirst }}</label><br>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        {% if object.variation_set.colors %}
+                        <div class="details-filter-row details-row-size">
+                            <label  for="size">Color:</label>
+                            {% for p_variation  in object.variation_set.colors %}
+                            {% if forloop.counter == 1 %}
+                              <input type="radio" name="color" class="color-variation" id="color{{ forloop.counter }}" hidden name="color" value="{{ p_variation.title|capfirst }}" checked>
+                              {% else %}
+                                <input type="radio" name="color" class="color-variation" id="color{{ forloop.counter }}" hidden name="color" value="{{ p_variation.title|capfirst }}">
+                            {% endif %}
+                              <label class="color-label text-center" for="color{{ forloop.counter }}">{{ p_variation.title|capfirst }}</label><br>
+                            {% endfor %}
+                        </div>
+                        {% endif %}              
+                        {% endif %}
+                            <div class="details-filter-row details-row-size">
+                                <label for="qty">Quantity:</label>
+                                <div class="ml-5 product-details-quantity">
+                                <input name="quantity" type="number" id="qty" class="form-control" value="1" min="1" max="{{object.stock_quantity}}" step="1" data-decimals="0" required>
+                                </div>
+                            </div>
+
+                            <div class="d-flex">
+                                <input style="background-color:#eb5525; color: #fff;" class="btn-product btn-cart mx-1" type="submit" onclick="this.form.action='{{ object.get_add_to_cart_url }}'; this.form.submit(); return false;" value="Add To Cart">
+                                <input class="btn-product btn-cart mx-1 bg-info text-white border-0" type="submit" onclick="this.form.action='{{object.get_buy_now_url}}'; this.form.submit(); return false;" value="Buy Now">
+                            </div><!-- End .product-details-action -->
+                    </form>
+                    {% endif %}
+
+                            <div class="product-details-footer">
+                                <div class="product-cat">
+                                    <span class='text-dark h6'>Category:</span>
+                                    <a href="#">{{ object.categoris.category_name }}</a>,
+                                </div><!-- End .product-cat -->
+                                
+                            </div><!-- End .product-details-footer -->
+                            <!-- Button trigger modal -->
+                            
+                            <div class='d-flex'>
+                                 <h5 class='my-auto mr-5'>Share</h5>
+                                <button type="button" class="border-0 bg-white display-4 text-dark" data-toggle="modal" data-target="#exampleModalCenter">
+                                    <i class="fa-solid fa-share-nodes"></i>
+                                </button>
+                            </div>
+
+                                
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content col-11 col-md-10 mx-auto">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Share</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body mx-auto py-5 text-center">
+                                            <div id="shareIcons"></div>
+                                            
+                                            <div class="copy-text">
+                                                <input type="text" class="text" value="{{request.build_absolute_uri}}" />
+                                                <button><i class="fa fa-clone"></i></button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    </div>
+                                </div>
+                        </div><!-- End .product-details -->
+                    </div><!-- End .col-md-6 -->
+                </div><!-- End .row -->
+            </div><!-- End .product-details-top -->
+
+            <div class="product-details-tab">
+                <ul class="nav nav-pills justify-content-center" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab" role="tab" aria-controls="product-desc-tab" aria-selected="true">Description</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab" aria-controls="product-info-tab" aria-selected="false">Additional information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab" aria-selected="false">Shipping & Returns</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel" aria-labelledby="product-desc-link">
+                        <div class="product-desc-content">
+                            <p style='color:black;'>{{ object.discription|safe }}</p>
+                        </div><!-- End .product-desc-content -->
+                    </div><!-- .End .tab-pane -->
+                    <div class="tab-pane fade" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
+                        <div class="product-desc-content">
+                            <p style='color:black;'>{{ object.aditional_discription }}</p>
+                        </div><!-- End .product-desc-content -->
+                    </div><!-- .End .tab-pane -->
+                    <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel" aria-labelledby="product-shipping-link">
+                        <div class="product-desc-content">
+                            <p style='color:black;'>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our <a href="#">Delivery information</a><br>
+                            We hope you’ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our <a href="#">Returns information</a></p>
+                        </div><!-- End .product-desc-content -->
+                    </div><!-- .End .tab-pane -->
+                </div><!-- End .tab-content -->
+            </div><!-- End .product-details-tab -->
+
+            <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
+
+            <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                data-owl-options='{
+                    "nav": false, 
+                    "dots": true,
+                    "margin": 20,
+                    "loop": false,
+                    "responsive": {
+                        "0": {
+                            "items":1
+                        },
+                        "480": {
+                            "items":2
+                        },
+                        "768": {
+                            "items":3
+                        },
+                        "992": {
+                            "items":4
+                        },
+                        "1200": {
+                            "items":4,
+                            "nav": true,
+                            "dots": false
+                        }
+                    }
+                }'>
+                                               
+                 {% for related in related_product %}
+                 <div class="product product-7 text-center">
+                    <figure class="product-media">
+                        <span class="product-label label-new">New</span>
+                        <a href="{% url 'product-detail' related.slug %}">
+                            <img src="{{ related.image.url }}" alt="Product image" class="product-image" >
+                        </a>
+                    </figure><!-- End .product-media -->
+
+                    <div class="product-body">
+                        <div class="product-cat">
+                            <a href="#">{{ related.categoris.category_name }}</a>
+                        </div><!-- End .product-cat -->
+                        <h3 class="product-title"><a href="{% url 'product-detail' related.slug %}">{{ related.product_name }}</a></h3><!-- End .product-title -->
+                        <div class="product-price">
+                            {% if related.discount_price %}
+                            <span class="new-price">৳{{ related.discount_price }} </span>
+                            <span class="old-price"><del>Was ৳{{ related.price }} </del></span>
+                            {% else %}
+                            ৳{{ related.price }} 
+                            {% endif %}
+                        </div><!-- End .product-price -->
+                        <div class="ratings-container justify-content-center">
+                            <div class="ratings">       
+                                {% if related.get_avg_rating %}
+                                <div class="ratings-val" style="width:{{related.get_avg_rating}}%;"></div><!-- End .ratings-val -->           
+                                {% endif %}
+                                <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->                                  
+                            </div><!-- End .ratings -->
+                            {% if related.get_rating_count %}
+                            <span class="ratings-text">( {{ related.get_rating_count }} )</span>
+                                {% else %}
+                            <span class="ratings-text">(0)</span>
+                        {% endif %}
+                        </div><!-- End .rating-container -->
+                    </div><!-- End .product-body -->
+                </div><!-- End .product -->
+                 {% endfor %}
+            </div><!-- End .owl-carousel -->
+
+
+            <!-- Customer reviews -->
+            <div class="container" id="rate_id">
+                <h4>Product Review( {{ object.get_rating_count }}  )</h4>
+                {% for p in product.get_review_list %}
+                <div class="card shadow p-3 my-3">
+                    <div class="row">
+                        <div class="col-6 d-flex">
+                            <img src="{{ p.user.profile.image.url }}" style="height: 50px;"/>
+                            <p class="p-2 my-auto">by {{ p.user.first_name }}</p>
+                            <p class="p-2 my-auto" style='color:#39aa5b;font-weight: 500;'><i class="fa-solid fa-shield-heart"></i></i> Verified Purchase</p>
+                            
+                            
+                        </div>
+                        <div class="col-6">
+                            <div class="reviews float-right text-warning">
+                                {% if p.rating == 1 %}
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                {% elif p.rating == 2 %}
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                {% elif p.rating == 3 %}
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                {% elif p.rating == 4 %}
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                {% elif p.rating == 5 %}
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                {% endif %}
+
+                                <p>{{ p.created_on }}</p>
+                            </div>                      
+                        </div>
+                    </div>
+                    <div class="my-3">
+                        <p>{{ p.review }}</p>
+                    </div>
+                    
+                    
+                    {% if p.image %}
+                    <div class="my-3">
+                        <img src="{{ p.image.url }}" alt="" style="width: 300px;"> 
+                    </div> 
+                    {% endif %}
+                        
+                    
+                </div>
+                {% endfor %}
+                    
+            </div>
+        </div><!-- End .container -->
+        
+    </div><!-- End .page-content -->
+
+</main><!-- End .main -->
+
+
+
+{% endblock %}
+
+
+{% block script %}
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials.min.js"></script>
+
+<script>
+    $("#shareIcons").jsSocials({
+        url: "https://evazu.com/product/detail/{{object.slug}}",
+       
+        showLabel: false,
+        showCount: false,
+        shares: ["email", "twitter", "facebook", "linkedin", "pinterest", "whatsapp"]
+    });
+</script>
+
+    <script>
+        let copyText = document.querySelector(".copy-text");
+            copyText.querySelector("button").addEventListener("click", function () {
+                let input = copyText.querySelector("input.text");
+                input.select();
+                document.execCommand("copy");
+                copyText.classList.add("active");
+                window.getSelection().removeAllRanges();
+                setTimeout(function () {
+                    copyText.classList.remove("active");
+                }, 2500);
+            });
+    </script>
+{% endblock script %}

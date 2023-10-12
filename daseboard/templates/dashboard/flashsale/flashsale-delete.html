@@ -1,0 +1,26 @@
+{% extends 'dashboard/base.html' %}
+    
+{% block dashboard %}
+  
+<div class="content-wrapper">
+<div class="container-full">
+<div class="row mt-4">
+    <div class="col-12 mx-auto ">
+        <div class="mt-5">
+        <h3 style="text-align: center;">Are You sure you want to delete ( {{ flashsale.title }} ) Flashsale</h3>
+
+        </div>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div style="text-align: center;">
+                <a class="btn btn-sm btn-info" href="{% url 'flashsale-list' %}">Cancel</a>
+                <input class="btn btn-sm btn-danger" type="submit" name="Confirm" value="Delete">
+            </div>
+        </form>
+    </div>
+    
+</div>
+</div>
+    
+</div>
+{% endblock dashboard %}

@@ -1,0 +1,134 @@
+{% extends 'store/base.html' %}
+
+
+{% block content %}
+ <div class="page-wrapper">
+    <main class="main">
+        <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+            <div class="container">
+                <h1 class="page-title">Shipping Address</h1>
+            </div><!-- End .container -->
+        </div><!-- End .page-header -->
+        <nav aria-label="breadcrumb" class="breadcrumb-nav">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                </ol>
+            </div><!-- End .container -->
+        </nav><!-- End .breadcrumb-nav -->
+
+        <div class="page-content">
+            <div class="checkout">
+                {% if order.items.all %} 
+                <div class="container-fluid">
+                    <form action="#" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <h2 class="checkout-title">Shipping Address</h2><!-- End .checkout-title -->
+                                <label>Full Name *</label>
+                                {{ form.full_name }}
+
+                                <label>Phone *</label>
+                                {{ form.phone }}
+                                
+                                <label>Choice Shipping Area *</label>
+                                <div class="border bg-light px-3 pt-1 mb-1">
+                                    {{ form.shiping_area }}
+                                </div>
+                                <label>Full_address *</label>
+                                {{ form.full_address }}
+
+                                <label>Order notes (optional)</label>
+                                {{ form.order_note }}
+
+                            </div><!-- End .col-lg-9 -->
+                            <aside class="col-lg-5">
+                                <div class="summary">
+                                    <h3 class="summary-title">Your Cart Summary</h3><!-- End .summary-title -->
+
+                                    <table class="table table-summary">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-6">Product</th>
+                                                <th class="col-3" >Total</th>
+                                                <th class="col-3">Action</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            
+                                            {% for p in order.items.all %}
+                                            <tr>
+                                                <td><a href="#">{{ p.item.product_name }},<br>                                          
+                                                {% if p.item.discount_price %}
+                                                    {{ p.item.discount_price }} TK                                              
+                                                {% else %}
+                                                    {{ p.item.price }} TK
+                                                {% endif %}	 
+                                                    X {{ p.quantity }} 
+                                                </a>
+                                                </td>
+                                                <td>{{ p.get_subtotal }} TK</td>
+                                                <td class="remove-col"><a href="{% url 'remove-form-cart' p.item.slug %}" class="btn-remove"><i class="icon-close"></i></a></td>
+                                            </tr>
+
+                                            {% endfor %}
+
+                                            <tr class="summary-subtotal col-12">
+                                                <td>Total Item Price:</td>
+                                                <td colspan="4"> {{ order.get_total }} TK</td>
+                                            </tr><!-- End .summary-subtotal -->
+                                            <tr class="col-12">
+                                                <td>Shipping Charge</td>
+                                                <td colspan="4" class="col-9" style="text-align: left ; ">
+                                                    <p>Inside Dhaka 80 TK</p>
+                                                    <p>Outside Dhaka 95 TK</p>
+                                                    <p>Only Chittagong District 50 TK</p>
+                                                </td>
+                                            </tr>
+                                            {% if order.coupon %}
+                                            <tr>
+                                                <td>Coupon : {{order.coupon.code}}</td>
+                                                <td>- {{ order.coupon.amount }} TK</td>
+                                            </tr>
+                                            {% endif %}
+                                        </tbody>
+                                    </table><!-- End .table table-summary -->
+                                    <div class="card">
+                                            <div class="card-header" id="heading-3">
+                                                <h2 class="card-title">
+                                                    {{ payment_method.payment_option }}
+                                                </h2>
+                                            </div><!-- End .card-header -->
+                                            <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
+                                                <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
+                                                </div><!-- End .card-body -->
+                                            </div><!-- End .collapse -->
+                                        </div><!-- End .card -->
+                                    <button style="background-color: #eb5525; color: white;" type="submit" class="btn  btn-order btn-block">
+                                        <span class="">CONTINUE</span>
+                                    </button>
+                                </div><!-- End .summary -->
+                            </aside><!-- End .col-lg-3 -->
+                        </div><!-- End .row -->
+                    </form>
+                </div><!-- End .container -->
+                {% else %}
+                  <h2 class="text-center text-warning">You have no active order</h2>
+                {% endif %}
+                
+            </div><!-- End .checkout -->
+        </div><!-- End .page-content -->
+    </main><!-- End .main -->
+
+</div><!-- End .page-wrapper -->
+<button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+
+
+ 
+{% endblock  %}
+    

@@ -1,0 +1,130 @@
+
+
+
+
+{% extends 'other_vendors/base.html' %}
+    
+{% block dashboard %}
+  
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" style="min-height: 342px; margin-right: 0;">
+	  <div class="row">
+      <section>
+        <div class="container mt-5 ">
+          <div class="row">
+            <div class="col-6 col-lg-3   ">
+              <div class="card text-dark bg-light mb-3 shadow pt-3 pb-3" style="max-width: 24rem; border-radius: 10px;">
+      
+                <a href="#">
+                  <div class="card-body">
+                    <p class="mb-1 text-center ">Start to sell</p>
+                    <h6 class="text-center">Manage Address Book </h6>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="card text-dark bg-light mb-3 shadow pt-3 pb-3" style="max-width: 24rem; border-radius: 10px;">
+      
+                <a href="#">
+                  <div class="card-body">
+                    <p class="mb-1 text-center ">safeguard your account</p>
+                    <h6 class="text-center">Verify ID Information</h6>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="card text-dark bg-light mb-3 shadow pt-3 pb-3" style="max-width: 24rem; border-radius: 10px;">
+      
+                <a href="#">
+                  <div class="card-body">
+                    <p class="mb-1 text-center ">To recelve money</p>
+                    <h6 class="text-center">Fill in Bank Information</h6>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="card text-dark bg-light mb-3 shadow pt-3 pb-3" style="max-width: 24rem; border-radius: 10px;">
+      
+                <div class="card-body">
+                  <p class="mb-1 text-center ">Order Package info title</p>
+                  <h6 class="text-center">Order Package info</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <section class="py-2 bg-light">
+        <div class="container">
+          <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-lg-12 col-xl-11">
+              <div class="card text-black mt-2" style="border-radius: 10px;">
+                <div class="card-body p-md-1">    
+                  <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-6  ">
+                      
+                      <p class="text-center h4 fw-bold mb-1 mx-1 mx-md-4 mt-4"> Seller Account </p>
+                      
+                        <div>
+                          <div class="form-group row">
+                            <label for="sillerId" class="col-sm-4 col-form-label">Id Seller</label>
+                            <div class="col-sm-8">
+                              <h4  readonly class="form-control-plaintext" >{{ user.id }}</h4>
+                            </div>
+                          </div>
+        
+                          <div class="form-group row">
+                            <label for="inputName" class="col-sm-4 col-form-label">Full Name</label>
+                            <div class="col-sm-8">
+                              <h4>{{ user.vendorinformation.first_and_last_name }}</h4>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="inputEmail" class="col-sm-4 col-form-label">Contact Email</label>
+                            <div class="col-sm-8">
+                              <h4>{{ user.email }}</h4>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="inputShopName" class="col-sm-4 col-form-label">Shop Name</label>
+                            <div class="col-sm-8">
+                              <h4>{{ user.vendorinformation.shop_name }}</h4>
+                            </div>
+                          </div>
+        
+                          <div class="form-group row">
+                            <label for="inputPhone" class="col-sm-4 col-form-label">Phone Number</label>
+                            <div class="col-sm-8">
+                              <h4>{{ user.vendorinformation.phone }}</h4>
+                            </div>
+                          </div>
+                          <div class="text-center  bg-warning ">
+                            
+                            
+                            {% if not user.vendorinformation.is_verified == True %}
+                              <a href="{% url 'vendor_full_info' %}">Verify Your Account</a>
+                            {% endif %}
+                              
+                            
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </section>
+    </div>
+  </div>
+  <!-- /.content-wrapper -->
+
+
+
+  {% endblock dashboard %}
+	
