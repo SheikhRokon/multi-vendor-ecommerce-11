@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import *
-
+from django.contrib.auth.decorators import login_required
 
 
 urlpatterns =[
@@ -19,11 +19,11 @@ urlpatterns =[
     path('add-to-cart/<slug>/', add_to_cart, name='add-to-cart'),
     path('buy-now/<slug>/', buy_now, name='buy-now'),
     path('remove-form-cart/<slug>/', remove_form_cart, name='remove-form-cart'),
-    path("wish_list/", wish_list, name="wish-list"),
+    path("wish_list/",login_required(wish_list,login_url='/customer-login/'), name="wish-list"),
     path('add_to_wishlist/<slug>', add_to_wishlist, name='add-to-wishlist'),
     path('delete_wish_list/<slug>', delete_wish_list, name='delete-wish-list'),
     path('add-coupon/', AddCouponView.as_view(), name='add-coupon'),
-    path("cart_summary", CartSummary, name="cart-summary"),
+    path("cart_summary",login_required(CartSummary,login_url='/customer-login/'), name="cart-summary"),
     path("my-review", myreview, name="my-review"),
     path('ordered/product/review/<int:pk>/', review, name='order-item-review'),
     path("order_summary", OrderSummary, name="order-summary"),
