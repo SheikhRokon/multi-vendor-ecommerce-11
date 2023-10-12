@@ -5,44 +5,6 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import *
 
 class RegisterForm(UserCreationForm):
-    # phone = forms.CharField(max_length=30,label='',
-    #            widget=forms.TextInput(attrs={
-    #             "class":"form-control",
-    #             'autofocus':None,
-    #             'id':'phone',
-    #             "placeholder":"Enter your phone number .."
-    #            }) 
-    #            )
-    # first_name = forms.CharField(max_length=30,label='',
-    #            widget=forms.TextInput(attrs={
-    #                "class":"form-control",
-    #                "placeholder":"Enter your full name.."
-    #            }) 
-    #            )
-    # email = forms.EmailField(required=False,label='',
-    #         widget=forms.TextInput(attrs={
-    #             "class":"form-control",
-    #             "placeholder":"Enter your email..(optional)"
-    #         })
-    #         )
-    # password1 = forms.CharField(max_length=30,label='',
-    #            widget=forms.PasswordInput(attrs={
-    #                "class":"form-control",
-    #                "placeholder":"Password"
-    #            }) 
-    #            )
-    # password2 = forms.CharField(max_length=30,label='',
-    #            widget=forms.PasswordInput(attrs={
-    #                "class":"form-control",
-    #                "placeholder":"Password confirmation"
-    #            }) 
-    #            )
-
-    # terms_and_conditions = forms.CharField(max_length=30,label='By signing up you agree to our terms and conditions.',
-    #            widget=forms.CheckboxInput(attrs={
-    #                "class":"form-check-input tc_checkbox",          
-    #            }) 
-    #            )
 
     class Meta:
         model=User
