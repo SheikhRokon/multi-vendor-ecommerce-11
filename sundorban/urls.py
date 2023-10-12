@@ -6,14 +6,14 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
+    # path('accounts/', include('allauth.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('store.urls')),
     path('', include('paymentApp.urls')),
     path('', include('userapp.urls')),
     path('', include('daseboard.urls')),
     path('', include('other_vendors.urls')),
-    path('oauth/', include('social_django.urls', namespace='social')), 
+    # path('oauth/', include('social_django.urls', namespace='social')), 
 
 ]
 

@@ -35,6 +35,9 @@ def customer_login(request):
         if user is not None and user.is_customer == True:
             login(request, user)
             return redirect('profile-dashboard')
+        elif user is not None and user.is_vendor == True: 
+            login(request, user)
+            return redirect('dashboard-home')
     return render(request, 'userapp/login.html')
 
 

@@ -1,19 +1,19 @@
 {% extends "store/base.html" %}
 {% load crispy_forms_tags %}
-{% load socialaccount %}
-{% providers_media_js %}
+
 {% load static %}
 
 
 
 {% block css %}
 <style>
-  #div_id_username, #div_id_password{
+  #div_id_username,
+  #div_id_password {
     margin-bottom: 0 !important;
   }
 </style>
 {% endblock css %}
-  
+
 
 
 {% block content %}
@@ -30,15 +30,15 @@
                   <h3>Log In</h3>
                   <hr class="mt-1 mb-3">
                   {% csrf_token %}
-      
+
                   <div class="form-group">
-                      <input type="email" class="form-control" name="email" placeholder="E-mail address" required>
+                    <input type="email" class="form-control" name="email" placeholder="E-mail address" required>
                   </div>
                   <div class="form-group">
-                      <input type="password" class="form-control" name="password" placeholder="Password" required>
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
                   </div>
                   <button type="submit" class="btn btn-primary btn-lg btn-block">Log In</button>
-              </form>
+                </form>
                 <!-- <form action="" method="post">
                   {% csrf_token %}
                   {{ form|crispy }}
@@ -56,11 +56,11 @@
                 </form> -->
                 <div class="py-2">
                   Doesn't have any account? <a class="ml-2" href="{% url 'vendor_registaion_step_1' %}">Sign Up </a>Now.
-                </small>
+                  </small>
+                </div>
+
               </div>
-                
-              </div>
-              
+
               <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
                   class="img-fluid" alt="Sample image">
@@ -74,3 +74,9 @@
 </section>
 
 {% endblock content %}
+
+
+{% comment %}
+{% load socialaccount %}
+{% providers_media_js %}
+{% endcomment %}

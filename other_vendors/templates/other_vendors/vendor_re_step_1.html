@@ -1,7 +1,5 @@
 {% extends "store/base.html" %}
-{% load crispy_forms_tags %}
-{% load socialaccount %}
-{% providers_media_js %}
+
 {% load static %}
 
 
@@ -10,50 +8,57 @@
   <div class="container my-4 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-lg-12 col-xl-11 shadow p-3">
-          <h3 class="mb-4">Vendor Registration</h3>
-          <div class="card-body">
-            <div class="row justify-content-center">
-              <div class="col-md-10 col-lg-6 col-xl-7 order-2 order-lg-1">
-                <form method="POST" action="" >
-                  {% csrf_token %}
-                  <fieldset class="form-group">
-                    <div class="form-group row">
-                      <label for="inputName" class="col-sm-4 col-form-label" >Your Email</label>
-                      <div class="col-sm-8">
-                        <input type="email" name="email" class="form-control" placeholder="Your Email">
-                      </div>
+        <h3 class="mb-4">Vendor Registration</h3>
+        <div class="card-body">
+          <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-6 col-xl-7 order-2 order-lg-1">
+              <form method="POST" action="">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                  <div class="form-group row">
+                    <label for="inputName" class="col-sm-4 col-form-label">Your Email</label>
+                    <div class="col-sm-8">
+                      <input type="email" name="email" class="form-control" placeholder="Your Email">
                     </div>
-                    
-                    <div class="form-group row">
-                      <label for="inputName" class="col-sm-4 col-form-label" >Password</label>
-                      <div class="col-sm-8">
-                        <input type="password" name="password1" class="form-control" placeholder="">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="inputName" class="col-sm-4 col-form-label" >Confirm Password</label>
-                      <div class="col-sm-8">
-                        <input type="password" name="password2" class="form-control" placeholder="">
-                      </div>
-                    </div>
-                    
-                  </fieldset>
-                  <div class="form-group mx-auto">
-                    <button style="background-color: #eb5525; color: white;" class="btn col-12"
-                      type="submit">submit</button>
                   </div>
 
-                </form>
-              </div>
-              <div class="col-md-10 col-lg-6 col-xl-5 d-flex align-items-center order-1 order-lg-2">
+                  <div class="form-group row">
+                    <label for="inputName" class="col-sm-4 col-form-label">Password</label>
+                    <div class="col-sm-8">
+                      <input type="password" name="password1" class="form-control" placeholder="">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputName" class="col-sm-4 col-form-label">Confirm Password</label>
+                    <div class="col-sm-8">
+                      <input type="password" name="password2" class="form-control" placeholder="">
+                    </div>
+                  </div>
 
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                  class="img-fluid" alt="Sample image">
-              </div>
+                </fieldset>
+                <div class="form-group mx-auto">
+                  <button style="background-color: #eb5525; color: white;" class="btn col-12"
+                    type="submit">submit</button>
+                </div>
+
+              </form>
             </div>
+            <div class="col-md-10 col-lg-6 col-xl-5 d-flex align-items-center order-1 order-lg-2">
+
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                class="img-fluid" alt="Sample image">
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 {% endblock content %}
+
+
+{% comment %}
+{%providers_media_js %}
+{% load crispy_forms_tags %}
+{% load socialaccount %}
+{% endcomment %}

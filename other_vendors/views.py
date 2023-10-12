@@ -16,7 +16,8 @@ def vendor_registaion_step_1(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_customer = True
+            user.is_vendor = True
+            print(user)
             user.save()
             messages.success(request,' Registration Successfully')
             return redirect('vendor_login')

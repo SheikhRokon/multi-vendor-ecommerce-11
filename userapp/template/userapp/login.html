@@ -1,6 +1,4 @@
 {% extends "store/base.html" %}
-{% load socialaccount %}
-{% providers_media_js %}
 {% load static %}
 
 
@@ -13,7 +11,7 @@
                     <h3>Log In</h3>
                     <hr class="mt-1 mb-3">
                     {% csrf_token %}
-        
+
                     <div class="form-group">
                         <input type="email" class="form-control" name="email" placeholder="E-mail address" required>
                     </div>
@@ -25,9 +23,13 @@
                 <div class="my-3 text-center">
                     <a href="{% url 'password_reset' %}">Forgotten password?</a>
                 </div>
-                
-                <a style="color: #eb5525; border: 1px solid #eb5525; " class="btn btn-block my-1" href="{% provider_login_url 'google'%}"><img src="{% static 'store/images/demos/demo-13/google.png' %}" alt="" style="height: 25px; margin-right: 5px;"> Login with Google</a>
-                <a style="color: #eb5525; border: 1px solid #eb5525; " class="btn btn-block my-1" href="{% url 'social:begin' 'facebook' %}"><i style="font-size: 20px; color: rgb(103, 103, 255);" class="fa-brands fa-facebook"></i>  Login with Facebook</a>
+
+                <a style="color: #eb5525; border: 1px solid #eb5525; " class="btn btn-block my-1" href="#"><img
+                        src="{% static 'store/images/demos/demo-13/google.png' %}" alt=""
+                        style="height: 25px; margin-right: 5px;"> Login with Google</a>
+                <a style="color: #eb5525; border: 1px solid #eb5525; " class="btn btn-block my-1" href="#"><i
+                        style="font-size: 20px; color: rgb(103, 103, 255);" class="fa-brands fa-facebook"></i> Login
+                    with Facebook</a>
                 <div class="my-3 fs-6">
                     Doesn't have any account? <a class="ml-2" href="{% url 'register' %}">Sign Up</a> Now.
                 </div>
@@ -36,3 +38,11 @@
     </div>
 </section>
 {% endblock content %}
+
+{% comment %}
+{% load socialaccount %}
+{% providers_media_js %}
+
+{% provider_login_url 'google'%}
+{% url 'social:begin' 'facebook' %}
+{% endcomment %}
