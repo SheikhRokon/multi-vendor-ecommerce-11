@@ -905,7 +905,7 @@ def terms_condition_update(request,pk):
             messages.success(request, 'Successfully update')
             return redirect('terms_condition-list')
     else:
-        form =PrivacyTermsAndConditionsFormPolicyForm(instance=terms_condition)
+        form =TermsAndConditionsForm(instance=terms_condition)
     context={
         'form':form,
     }
@@ -1199,8 +1199,11 @@ def aboutus_delete(request, pk):
 @daseboard_required
 def all_order(request):
     try:
-        order =Order.objects.filter(ordered=True).order_by('-id')
+        user = request.user
+        order_vendor =Order.objects.filter(user=user,ordered=True).order_by('-id') # Order vendor 
+        order =Order.objects.filter(ordered=True).order_by('-id') # Superadmin order
         context={
+            'order_vendor':order_vendor,
             'order':order,
         }
         return render(request, 'dashboard/order/order-list.html', context)
@@ -1215,9 +1218,16 @@ def OrderDetails(request,pk):
     order.order_read_status = True
     order.save()
     order_items = OrderItem.objects.filter(order=order)
+    
+    user = request.user
+    order_d_vendor = Order.objects.get(user=user, pk=pk)
+    order_d_vendor.order_read_status = True
+    order_d_vendor.save()
+    order_items_vendor = OrderItem.objects.filter(user=user,order=order)
     context={
             'order':order,
             'order_items':order_items,
+            'order_items_vendor':order_items_vendor,
         }
     return render(request, 'dashboard/order/order-details.html',context)
 
