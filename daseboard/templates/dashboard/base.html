@@ -527,62 +527,55 @@
               </div>
             </div>
           </div>
+
+          {% if request.user.is_vendor and request.user.is_active %}
           <div class="box no-shadow box-bordered border-light">
             <div class="media-list media-list-hover">
-              <div class="card col-12 col-md-12  p-2 mx-auto border shadow">
+              <div class="card col-12 col-md-12  p-2 py-3 mx-auto border shadow">
                 <div class="mx-auto">
                   <img class="rounded-circle account-img mx-auto mb-2" src="{{ user.profile.image.url }}"
                     style="height: 100px;">
                 </div>
-                <div class="card-body profile">
-                  <h5 class="text-center">{{ user.first_name }} {{ user.last_name }}</h5>
+                <div class="card-body p-0 profile">
+                  <h5 class="text-center">{{ user.vendorinformation.first_and_last_name }}</h5>
                   <div class="row  mx-auto mt-4">
-                    <div class="col-2 ">
+                    <div class="col-4 ">
+                      <label>Id Seller </label>
+                    </div>
+                    <div class="col-8 ps-0 ">
+                      <p>: {{ user.id }}</p>
+                    </div>
+                  </div>
+                  <div class="row  mx-auto">
+                    <div class="col-4 ">
                       <label>Email </label>
                     </div>
-                    <div class="col-10">
+                    <div class="col-8 ps-0">
                       <p>: {{ user.email }}</p>
                     </div>
                   </div>
                   <div class="row  mx-auto">
-                    <div class="col-6 ">
-                      <label>Date Of Birthday</label>
+                    <div class="col-4 ">
+                      <label>Shop Name</label>
                     </div>
-                    <div class="col-6">
-                      <p>: {{ user.profile.date_of_birthday }}</p>
+                    <div class="col-8 ps-0">
+                      <p>: {{ user.vendorinformation.shop_name }}</p>
                     </div>
                   </div>
                   <div class="row  mx-auto">
-                    <div class="col-6 ">
+                    <div class="col-4 ">
                       <label>Phone</label>
                     </div>
-                    <div class="col-6">
-                      <p>: {{ user.profile.phone }}</p>
+                    <div class="col-8 ps-0">
+                      <p>: {{ user.vendorinformation.phone }}</p>
                     </div>
                   </div>
-                  <div class="row  mx-auto">
-                    <div class="col-6 ">
-                      <label>permanent Address</label>
-                    </div>
-                    <div class="col-6">
-                      <p>: {{ user.profile.permanent_address }}</p>
-                    </div>
+                  {% if not user.vendorinformation.is_verified == True %}
+                  <div class="text-center">
+                    <a class="btn btn-warning btn-sm" href="{% url 'vendor_full_info' %}">Verify Your Account</a>
                   </div>
-                  <div class="row  mx-auto">
-                    <div class="col-6 ">
-                      <label>Present Address</label>
-                    </div>
-                    <div class="col-6">
-                      <p>: {{ user.profile.present_address }}</p>
-                    </div>
-                  </div>
+                  {% endif %}
 
-
-                  <div class="d-flex">
-                    <a class="btn btn-warning btn-sm " href="{% url 'profile-update' %}">Update Profile</a>
-                    <a class="btn btn-warning btn-sm ml-5" href="{% url 'profile-dashboard' %}">Profile
-                      dashboard</a>
-                  </div>
                   {% comment %}
                   <div class="d-flex">
                     <a class="btn btn-warning btn-sm " href="{% url 'profile-update' %}">Update Profile</a>
@@ -595,6 +588,9 @@
               </div>
             </div>
           </div>
+          {% endif %}
+
+
         </div>
       </div>
     </div>
