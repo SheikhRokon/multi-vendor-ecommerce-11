@@ -22,7 +22,8 @@ from django.contrib.auth import get_user_model
 def dashboard_home(request):
     user = request.user
     total_customer = User.objects.count()
-    all_product_count = Product.objects.filter(user=user).count()
+    all_product_count = Product.objects.filter().count()
+    vendor_product_count = Product.objects.filter(user=user).count()
     total_order =Order.objects.filter(user=user, ordered=True).count()
     pending_order =Order.objects.filter(user=user,ordered=True,order_status='pending').count()
     processing_order =Order.objects.filter(user=user,ordered=True,order_status='processing').count()
@@ -37,6 +38,7 @@ def dashboard_home(request):
         'processing_order':processing_order,
         'on_the_way_order':on_the_way_order,
         'complete_order':complete_order,
+        'vendor_product_count':vendor_product_count,
     }
     return render(request, 'dashboard/index.html', context)
 
