@@ -24,16 +24,16 @@ urlpatterns =[
     path('delete_wish_list/<slug>', delete_wish_list, name='delete-wish-list'),
     path('add-coupon/', AddCouponView.as_view(), name='add-coupon'),
     path("cart_summary",login_required(CartSummary,login_url='/customer-login/'), name="cart-summary"),
-    path("my-review", myreview, name="my-review"),
+    path("my-review",login_required(myreview,login_url='/customer-login/'), name="my-review"),
     path('ordered/product/review/<int:pk>/', review, name='order-item-review'),
-    path("order_summary", OrderSummary, name="order-summary"),
+    path("order_summary",login_required(OrderSummary,login_url='/customer-login/'), name="order-summary"),
     path("order_details/<int:pk>", OrderDetails, name="order-detail"),
     path('ordered/product/detail/<int:pk>/', Order_Item_Details, name='order-item-detail'),
     path("PrductQuantityIncrement/<slug>", PrductQuantityIncrement.as_view(), name="Prduct-Quantity-Increment"),
     path("PrductQuantityDecrementr/<slug>", PrductQuantityDecrementr.as_view(), name="Prduct-Quantity-Decrementr"),
 
 
-    path('profile-dashboard', profile_dashboard, name='profile-dashboard'),
+    path('profile-dashboard', login_required(profile_dashboard,login_url='/customer-login/'), name='profile-dashboard'),
     path('campaign/products/<pk>/', campaign_product_filtering, name='campaign-product'),
     path('order_pdf_view/<pk>',render_order_pdf_view, name='render-order-pdf-view'),
 
