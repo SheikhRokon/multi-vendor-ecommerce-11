@@ -24,7 +24,8 @@ def dashboard_home(request):
     total_customer = User.objects.count()
     all_product_count = Product.objects.filter().count()
     vendor_product_count = Product.objects.filter(user=user).count()
-    total_order =Order.objects.filter(user=user, ordered=True).count()
+    total_order =Order.objects.filter(ordered=True).count()
+    my_product_order = Order.objects.filter(user=user,ordered=True).count()
     pending_order =Order.objects.filter(user=user,ordered=True,order_status='pending').count()
     processing_order =Order.objects.filter(user=user,ordered=True,order_status='processing').count()
     on_the_way_order =Order.objects.filter(user=user,ordered=True,order_status='on the way').count()
@@ -34,11 +35,13 @@ def dashboard_home(request):
         'total_customer':total_customer,
         'all_product_count':all_product_count,
         'total_order':total_order,
+        'my_product_order':my_product_order,
         'pending_order':pending_order,
         'processing_order':processing_order,
         'on_the_way_order':on_the_way_order,
         'complete_order':complete_order,
         'vendor_product_count':vendor_product_count,
+        
     }
     return render(request, 'dashboard/index.html', context)
 
