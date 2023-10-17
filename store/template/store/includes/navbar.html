@@ -45,22 +45,6 @@
 
 
 <header class="header header-10 header-intro-clearance desktop">
-  <div class="header-top py-3">
-    <div class="container">
-      <div class="header-left">
-        <a style='font-weight: 500;' href="tel:0189xxxxxxx"><i class="icon-phone"></i> PHONE: +880189xxxxxxx</a>
-      </div><!-- End .header-left -->
-      <div class="header-right">
-        <a style='border-right:1px solid #878787; font-weight: 500;' class="pr-4" target="_blank" href="#">FB
-          GROUP</a>
-        <a style='border-right:1px solid #878787;font-weight: 500;' class="px-4" target="_blank" href="#">FB
-          PAGE</a>
-        <a style='font-weight: 500;' class="pl-3" target="_blank">PAY NOW</a>
-      </div><!-- End .header-right -->
-    </div><!-- End .container -->
-  </div>
-  <!-- End .header-top -->
-
   <div class="header-middle sticky-header mx-auto ">
     <div class="container">
       <div class="header-left py-auto">
@@ -383,55 +367,10 @@
 </style>
 <!-- mobile responsive start -->
 <header class="header header-10 header-intro-clearance mobile">
-  <div class="fixed-top">
-    <div class="header-top">
-      <div class="container py-3">
-        <div class="header-left">
-          <a style='font-weight: 500;' href="tel:0189xxxxxxx"><i class="icon-phone"></i> PHONE:
-            +880189xxxxxxx</a>
-        </div><!-- End .header-left -->
-        <div class="header-right">
-          <a style='border-right:1px solid #878787;font-weight: 500;' class="pr-3" target="_blank"
-            href="https://www.facebook.com/groups/866400194107477/?ref=share_group_link">FB GROUP</a>
-          <a style='border-right:1px solid #878787;font-weight: 500;' class="px-3" target="_blank"
-            href="https://www.facebook.com/Evazu.com.bd/">FB PAGE</a>
-          <a style='font-weight: 500;' class="pl-3" target="_blank">PAY NOW</a>
-        </div><!-- End .header-right -->
-      </div><!-- End .container -->
-    </div><!-- End .header-top -->
-    <div class="header-middle">
-      <div class="container-fluid" style="height: 70px; background-color: white;">
-        <div class="row">
-          <div class="col-4">
-            <div class="header-left">
-              <a href="{% url 'home' %}" class="logo">
-                <img src="{% static 'store/images/eranian.png' %}" alt="Eranian">
-              </a>
-            </div><!-- End .header-left -->
-          </div>
-        </div>
 
-        <div class="col-8">
-          <div class="header-right">
-            <div class="wrap">
-              <div class="barra">
-                <div class="barraContainer">
-                  <form action="{% url 'search' %}" method="GET">
-                    <input type="text" name="q" class="buscar" placeholder="What are you looking for" required>
-                    <i class="fa fa-search"></i>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div><!-- End .header-right -->
-        </div>
-
-      </div><!-- End .container -->
-    </div><!-- End .header-middle -->
-  </div>
-  <div class="header-bottom col-12" style="margin-top: 112px;border-top: 1px solid #eb5525;">
+  <div class="header-bottom col-12" style="border-top: 1px solid #eb5525;">
     <div class="row d-flex">
-      <div class="col-5 col-md-4">
+      <div class="col-4 col-md-4">
         <div class="dropdown category-dropdown is-on" data-visible="true">
           <a style="font-size: 10px;" href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" data-display="static" title="Browse Categories">
@@ -478,7 +417,23 @@
           </div><!-- End .dropdown-menu -->
         </div>
       </div>
-      <div class="col-7 col-md-8 mobile-menu my-auto">
+      <div class="col-7">
+        <div class="header-right">
+          <div class="wrap">
+            <div class="barra">
+              <div class="barraContainer">
+                <form action="{% url 'search' %}" method="GET">
+                  <input type="text" name="q" class="buscar" placeholder="What are you looking for" required>
+                  <i class="fa fa-search"></i>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-end ">
+      <div class="col-8 text-right  mobile-menu my-auto">
         <div class="menu-slider">
           {% for cm in request|campaign_menu %}
           <a class='text-white' href="{% url 'campaign-product' cm.pk %}">{{ cm.campaign_name }}</a>
@@ -487,7 +442,10 @@
       </div>
     </div>
   </div>
-</header><!-- End .header -->
+</header>
+<!-- End .header -->
+
+
 
 
 <!-- navbar-bottom -->
@@ -499,8 +457,8 @@
           <div class="row mx-auto">
             <div class="col-2" style="margin-top: 5px;">
               <div class="dropdown user-profile cart-dropdown">
-                <a href="" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"
-                  data-display="static">
+                <a href="{% url 'home' %}" class="dropdown-toggle" role="button" aria-haspopup="true"
+                  aria-expanded="false" data-display="static">
                   <i style="color:#eb5525; font-size: 15px;" class="fa-solid fa-house"></i>
                   <span class="cart-txt">Home</span>
                 </a>
