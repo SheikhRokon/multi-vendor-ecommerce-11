@@ -12,6 +12,15 @@
         <div class="card-body">
           <div class="row justify-content-center">
             <div class="col-md-10 col-lg-6 col-xl-7 order-2 order-lg-1">
+
+              {% if messages %}
+              <ul class="messages text-danger ">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+
               <form method="POST" action="">
                 {% csrf_token %}
                 <fieldset class="form-group">

@@ -17,11 +17,13 @@ def vendor_registaion_step_1(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.is_vendor = True
-            print(user)
             user.save()
             messages.success(request,' Registration Successfully')
             return redirect('vendor_login')
-        
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")   
     form = RegisterForm()
     return render(request, 'other_vendors/vendor_re_step_1.html', {'form': form})
 
@@ -34,7 +36,9 @@ def vendor_login(request):
         if user is not None and user.is_vendor == True: 
             login(request, user)
             return redirect('dashboard-home')
-        return render(request, 'other_vendors/vendor_login.html', {"form": form})
+        else:
+            messages.error(request, 'Invalid credentials or you are not a vendor.')
+            return render(request, 'other_vendors/vendor_login.html', {'form': form})
 
     else:
         return render(request, 'other_vendors/vendor_login.html', {"form": form})
