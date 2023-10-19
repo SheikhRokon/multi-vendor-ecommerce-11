@@ -72,8 +72,10 @@ class CategoryAddForm(forms.ModelForm):
                 'placeholder':'categorie name'
             }) 
             )
-    parent = ModelChoiceField(required=False,queryset=ProductCategory.objects.filter(parent=None),empty_label="Select parent category",widget=forms.Select(attrs={
+    parent = ModelChoiceField(required=False,queryset=ProductCategory.objects.all(),empty_label="Select parent category",widget=forms.Select(attrs={
         'class':'form-control'
+    # parent = ModelChoiceField(required=False,queryset=ProductCategory.objects.filter(parent__isnull=True),empty_label="Select parent category",widget=forms.Select(attrs={
+    #     'class':'form-control'
         }))
     class Meta:
         model = ProductCategory
