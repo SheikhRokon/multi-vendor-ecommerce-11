@@ -130,27 +130,27 @@
                     {% for c in request.user|category %}
                     {% if not c.children.all %}
 
-                    <li class="item-lead"><a href="{% url 'category' c.slug %}">{{c.category_name}}</a></li>
+                    <li class="item-lead p-0 "><a href="{% url 'category' c.slug %}">{{c.category_name}}</a></li>
 
                     {% else %}
-                    <li class="item-lead"><a href="{% url 'category' c.slug %}">{{c.category_name}}</a>
+                    <li class="item-lead p-0 "><a href="{% url 'category' c.slug %}">{{c.category_name}}</a>
                       <ul>
 
                         {% for sub_cate in c.children.all %}
                         {% if not sub_cate.children.all %}
 
-                        <li class="item-lead"><a style="font-size: 15px;" href="{% url 'category' sub_cate.slug %}">{{
-                            sub_cate.category_name }}</a></li>
+                        <li class="item-lead p-0 "><a style="font-size: 13px;"
+                            href="{% url 'category' sub_cate.slug %}">{{sub_cate.category_name }}</a></li>
 
                         {% else %}
-                        <li class="item-lead"><a style="font-size: 15px;" href="{% url 'category' sub_cate.slug %}">{{
-                            sub_cate.category_name }}</a>
+                        <li class="item-lead sp-0 "><a style="font-size: 13px;"
+                            href="{% url 'category' sub_cate.slug %}">{{sub_cate.category_name }}</a>
                           <ul>
 
                             {% for sub_catet in sub_cate.children.all %}
-                            <li class="item-lead"><a style="font-size: 15px;"
-                                href="{% url 'category' sub_catet.slug %}">{{
-                                sub_catet.category_name }}</a></li>
+                            <li class="item-lead "><a style="font-size: 13px;"
+                                href="{% url 'category' sub_catet.slug %}">{{sub_catet.category_name }}</a>
+                            </li>
                             {% endfor %}
                           </ul>
                         </li>
@@ -372,7 +372,7 @@
     <div class="row d-flex">
       <div class="col-4 col-md-4">
         <div class="dropdown category-dropdown is-on" data-visible="true">
-          <a style="font-size: 10px;" href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+          <a style="font-size: 13px;" href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" data-display="static" title="Browse Categories">
             <span style="padding-left: 20px;">All Categories</span>
           </a>
@@ -381,28 +381,26 @@
               <ul class="menu-vertical sf-arrows">
                 {% for c in request.user|category %}
                 {% if not c.children.all %}
-                <li class="item-lead"><a href="{% url 'category' c.slug %}">{{ c.category_name }}</a>
+                <li class="item-lead p-0 "><a href="{% url 'category' c.slug %}">{{ c.category_name }}</a>
                 </li>
                 {% else %}
-                <li class="item-lead"><a href="{% url 'category' c.slug %}">{{ c.category_name }}</a>
+                <li class="item-lead p-0 "><a href="{% url 'category' c.slug %}">{{ c.category_name }}</a>
                   <ul>
 
                     {% for sub_cate in c.children.all %}
                     {% if not sub_cate.children.all %}
 
-                    <li class="item-lead"><a style="font-size: 15px;" href="{% url 'category' sub_cate.slug %}">{{
-                        sub_cate.category_name
-                        }}</a></li>
+                    <li class="item-lead p-0 "><a style="font-size: 13px;"
+                        href="{% url 'category' sub_cate.slug %}">{{sub_cate.category_name}}</a></li>
 
                     {% else %}
-                    <li class="item-lead"><a style="font-size: 15px;" href="{% url 'category' sub_cate.slug %}">{{
-                        sub_cate.category_name
-                        }}</a>
+                    <li class="item-lead p-0 "><a style="font-size: 13px;"
+                        href="{% url 'category' sub_cate.slug %}">{{sub_cate.category_name }}</a>
                       <ul>
 
                         {% for sub_catet in sub_cate.children.all %}
-                        <li class="item-lead"><a style="font-size: 15px;" href="{% url 'category' sub_catet.slug %}">{{
-                            sub_catet.category_name }}</a></li>
+                        <li class="item-lead p-0 "><a style="font-size: 13px;"
+                            href="{% url 'category' sub_catet.slug %}">{{sub_catet.category_name }}</a></li>
                         {% endfor %}
                       </ul>
                     </li>
