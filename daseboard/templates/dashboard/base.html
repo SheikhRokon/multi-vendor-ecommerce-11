@@ -165,7 +165,7 @@
             <a href="#" class="dropdown-toggle p-0 text-dark hover-primary ms-md-30 ms-10" data-bs-toggle="dropdown"
               title="User">
               <span class="ps-30 d-md-inline-block d-none">Hello,</span>
-              <strong class="d-md-inline-block d-none">{{request.user.username }}</strong><img
+              <strong class="d-md-inline-block d-none">{{request.user.email }}</strong><img
                 src="{{ request.user.profile.image.url }}" class="user-image rounded-circle avatar bg-white mx-10"
                 alt="User Image">
             </a>
@@ -188,47 +188,7 @@
     <section class="sidebar position-relative">
       <div class="multinav">
         <div class="multinav-scroll" style="height: 100%;">
-          {% if request.user.is_vendor and request.user.is_active %}
-          <ul class="sidebar-menu" data-widget="tree">
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-shopping-basket" aria-hidden="true"></i>
-                <span>Product</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-right pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="{% url 'dashboard-product-list' %}"><i class="icon-Commit"><span class="path1"></span><span
-                        class="path2"></span></i>Products List</a>
-                </li>
-                <li><a href="{% url 'category-list' %}"><i class="icon-Commit"><span class="path1"></span><span
-                        class="path2"></span></i>Categories List</a>
-                </li>
-                <li><a href="{% url 'category-add' %}"><i class="icon-Commit"><span class="path1"></span><span
-                        class="path2"></span></i>Add Category</a>
-                </li>
-                <li><a href="{% url 'brand-list' %}"><i class="icon-Commit"><span class="path1"></span><span
-                        class="path2"></span></i>Brand List</a></li>
-                <li><a href="{% url 'brand-add' %}"><i class="icon-Commit"><span class="path1"></span><span
-                        class="path2"></span></i>Add Brand </a></li>
-              </ul>
-            </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-th-list" aria-hidden="true"></i>
-                <span>Order</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-right pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="{% url 'all-order' %}"><i class="icon-Commit"><span class="path1"></span><span
-                        class="path2"></span></i>Order List</a></li>
-              </ul>
-            </li>
-          </ul>
-          {% elif request.user.is_staff and request.user.is_active %}
+          {% if request.user.is_staff and request.user.is_superuser and request.user.is_active %}
           <ul class="sidebar-menu" data-widget="tree">
             <li class="treeview">
               <a href="#">
@@ -317,7 +277,36 @@
                 </li>
               </ul>
             </li>
-
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-users" aria-hidden="true"></i>
+                <span>Vendors User</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'vendor_profile_list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Profile List</a>
+                </li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-users" aria-hidden="true"></i>
+                <span>User</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'user-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>User List</a></li>
+                <li><a href="{% url 'profile-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Profile List</a>
+                </li>
+              </ul>
+            </li>
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-ship" aria-hidden="true"></i>
@@ -459,7 +448,47 @@
               </ul>
             </li>
           </ul>
-          {% else %}
+          {% elif request.user.is_vendor and request.user.is_active %}
+          <ul class="sidebar-menu" data-widget="tree">
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                <span>Product</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'dashboard-product-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Products List</a>
+                </li>
+                <li><a href="{% url 'category-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Categories List</a>
+                </li>
+                <li><a href="{% url 'category-add' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Add Category</a>
+                </li>
+                <li><a href="{% url 'brand-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Brand List</a></li>
+                <li><a href="{% url 'brand-add' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Add Brand </a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-th-list" aria-hidden="true"></i>
+                <span>Order</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'all-order' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Order List</a></li>
+              </ul>
+            </li>
+          </ul>
+          {% elif request.user.is_staff and request.user.is_active %}
           <ul class="sidebar-menu" data-widget="tree">
             <li class="treeview">
               <a href="#">
@@ -548,22 +577,7 @@
                 </li>
               </ul>
             </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-users" aria-hidden="true"></i>
-                <span>User</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-right pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="{% url 'user-list' %}"><i class="icon-Commit"><span class="path1"></span><span
-                        class="path2"></span></i>User List</a></li>
-                <li><a href="{% url 'profile-list' %}"><i class="icon-Commit"><span class="path1"></span><span
-                        class="path2"></span></i>Profile List</a>
-                </li>
-              </ul>
-            </li>
+
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-ship" aria-hidden="true"></i>
@@ -819,6 +833,8 @@
               </div>
             </div>
           </div>
+          {% elif request.user.is_staff and request.user.is_superuser and request.user.is_active %}
+
           {% elif request.user.is_staff and request.user.is_active %}
           <div class="box no-shadow box-bordered border-light">
             <div class="media-list media-list-hover">
@@ -860,6 +876,7 @@
               </div>
             </div>
           </div>
+
           {% endif %}
 
 

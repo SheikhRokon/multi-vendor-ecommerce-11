@@ -1567,10 +1567,13 @@ def video_delete(request, pk):
 @login_required
 @daseboard_required
 def vendor_profile_list(request):
+    user = request.user
     vendor_profile = VendorInformation.objects.all()
+    vendor_product_count = Product.objects.filter(user=user).count()
 
     context={
-        'vendor_profile':vendor_profile
+        'vendor_profile':vendor_profile,
+        'vendor_product_count':vendor_product_count,
     }
     return render(request, 'dashboard/vendor-profile/profile_list.html', context)
 

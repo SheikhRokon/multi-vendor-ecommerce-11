@@ -29,8 +29,8 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Username</th>
-                                            <th>UserType</th>
                                             <th>Name</th>
+                                            <th>Product</th>
                                             <th>Image</th>
                                             <th>Action</th>
                                         </tr>
@@ -43,9 +43,11 @@
                                         <tr>
                                             <td>{{ c.id }}</td>
                                             <td>{{ c.user }}</td>
-                                            <td>{{c.}}</td>
+                                            <td>{{c.first_and_last_name}}</td>
                                             <td>{{ c.first_name }}</td>
-                                            <td><img src="{{ c.profile.image.url }}" alt="" style="height: 40px;"></td>
+                                            <td>{{ c.first_name }}</td>
+                                            <td><img src="{{ c.vendor_image.url }}" alt="" style="height: 40px;">
+                                            </td>
                                             <td><a href="{% url 'user-update' c.pk %}" class="text-info me-10"
                                                     data-bs-toggle="tooltip" data-bs-original-title="Edit">
                                                     <i class="ti-marker-alt"></i>
