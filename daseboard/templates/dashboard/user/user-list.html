@@ -43,7 +43,7 @@
 											<td>{{ c.email }}</td>
 											<td>
 
-												{% if c.is_staff and c.is_active %}
+												{% if c.is_superuser and c.is_staff and c.is_active %}
 												Superuser
 												{% elif c.is_admin %}
 												Admin
@@ -51,6 +51,8 @@
 												Vendor
 												{% elif c.is_customer %}
 												Customer
+												{% elif c.is_staff %}
+												Staff
 												{% endif %}
 
 											</td>
