@@ -228,6 +228,46 @@
               </ul>
             </li>
           </ul>
+          {% elif request.user.is_staff and request.user.is_active %}
+          <ul class="sidebar-menu" data-widget="tree">
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                <span>Product</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'dashboard-product-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Products List</a>
+                </li>
+                <li><a href="{% url 'category-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Categories List</a>
+                </li>
+                <li><a href="{% url 'category-add' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Add Category</a>
+                </li>
+                <li><a href="{% url 'brand-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Brand List</a></li>
+                <li><a href="{% url 'brand-add' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Add Brand </a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-th-list" aria-hidden="true"></i>
+                <span>Order</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'all-order' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Order List</a></li>
+              </ul>
+            </li>
+          </ul>
           {% else %}
           <ul class="sidebar-menu" data-widget="tree">
             <li class="treeview">
@@ -575,6 +615,47 @@
                     <a class="btn btn-warning btn-sm" href="{% url 'vendor_full_info' %}">Verify Your Account</a>
                   </div>
                   {% endif %}
+
+                  {% comment %}
+                  <div class="d-flex">
+                    <a class="btn btn-warning btn-sm " href="{% url 'profile-update' %}">Update Profile</a>
+                    <a class="btn btn-warning btn-sm " href="{% url 'password_change' %}">Change Password</a>
+
+                  </div>
+                  {% endcomment %}
+
+                </div>
+              </div>
+            </div>
+          </div>
+          {% elif request.user.is_staff and request.user.is_active %}
+          <div class="box no-shadow box-bordered border-light">
+            <div class="media-list media-list-hover">
+              <div class="card col-12 col-md-12  p-2 py-3 mx-auto border shadow">
+                <div class="mx-auto">
+                  <img class="rounded-circle account-img mx-auto mb-2" src="{{ user.profile.image.url }}"
+                    style="height: 100px;">
+                </div>
+                <div class="card-body p-0 profile">
+                  <h5 class="text-center">{{ user.vendorinformation.first_and_last_name }}</h5>
+                  <div class="row  mx-auto mt-4">
+                    <div class="col-4 ">
+                      <label>Id Seller </label>
+                    </div>
+                    <div class="col-8 ps-0 ">
+                      <p>: {{ user.id }}</p>
+                    </div>
+                  </div>
+                  <div class="row  mx-auto">
+                    <div class="col-4 ">
+                      <label>Email </label>
+                    </div>
+                    <div class="col-8 ps-0">
+                      <p>: {{ user.email }}</p>
+                    </div>
+                  </div>
+
+
 
                   {% comment %}
                   <div class="d-flex">
