@@ -232,6 +232,37 @@
           <ul class="sidebar-menu" data-widget="tree">
             <li class="treeview">
               <a href="#">
+                <i class="fa fa-flag" aria-hidden="true"></i>
+                <span>Website Logo</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'logo-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Logo List</a></li>
+                <li><a href="{% url 'logo-add' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Add
+                    Logo</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-picture-o" aria-hidden="true"></i>
+                <span>Banner</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'banner-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Banner List</a></li>
+                <li><a href="{% url 'banner-add' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Add Banner</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
                 <i class="fa fa-shopping-basket" aria-hidden="true"></i>
                 <span>Product</span>
                 <span class="pull-right-container">
@@ -265,6 +296,166 @@
               <ul class="treeview-menu">
                 <li><a href="{% url 'all-order' %}"><i class="icon-Commit"><span class="path1"></span><span
                         class="path2"></span></i>Order List</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-th-list" aria-hidden="true"></i>
+                <span>Bkash</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'bkash_payment-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Bkash Payment
+                    List</a>
+                </li>
+                <li><a href="{% url 'bkash_payment_refund-list' %}"><i class="icon-Commit"><span
+                        class="path1"></span><span class="path2"></span></i>Refund Payment
+                    List</a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-ship" aria-hidden="true"></i>
+                <span>Flashsale</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'flashsale-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Flashsale List</a>
+                </li>
+                <li><a href="{% url 'flashsale-add' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Add Flashsale</a>
+                </li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-code" aria-hidden="true"></i>
+                <span>Coupon</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'coupon-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Coupon List</a></li>
+                <li><a href="{% url 'coupon-add' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Add Coupon</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-bullhorn" aria-hidden="true"></i>
+                <span>Campaign</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'campaign-category-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Campaign Categories
+                    List</a></li>
+                <li><a href="{% url 'campaign-category-add' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Add Campaign
+                    Category</a></li>
+                <li><a href="{% url 'campaign-product-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Campaign Product
+                    List</a></li>
+                <li><a href="{% url 'campaign-product-add' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Add Campaign
+                    Product</a>
+                </li>
+
+              </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                <span>Deal Of The Day</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'deal_of_the_day_product-list' %}"><i class="icon-Commit"><span
+                        class="path1"></span><span class="path2"></span></i>Deal Of The Product
+                    List</a></li>
+                <li><a href="{% url 'deal_of_the_day_product-add' %}"><i class="icon-Commit"><span
+                        class="path1"></span><span class="path2"></span></i>Add Deal Of The
+                    Product</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <span>Review & Rating</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'rating-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>User Review & Rating
+                    List</a></li>
+                <li><a href="{% url 'rating-add' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Add New Review &
+                    Rating</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-handshake-o" aria-hidden="true"></i>
+                <span>Contact Data</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'contact-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Contact Data
+                    List</a>
+                </li>
+                <li><a href="{% url 'contact-add' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Add New Contact
+                    Data</a>
+                </li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-snowflake-o" aria-hidden="true"></i>
+                <span>Others Link</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-right pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{% url 'aboutus-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>About Us</a></li>
+                <li><a href="{% url 'privacy_policy-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Privacy-Policy</a>
+                </li>
+                <li><a href="{% url 'terms_condition-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Terms-Condition</a>
+                </li>
+                <li><a href="{% url 'mission-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Mission</a></li>
+                <li><a href="{% url 'vision-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Vision</a></li>
+                <li><a href="{% url 'returns_policy-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Returns-Policy</a>
+                </li>
+                <li><a href="{% url 'shipping_delivery-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                        class="path2"></span></i>Shipping Delivery
+                    Policy</a></li>
               </ul>
             </li>
           </ul>
