@@ -83,7 +83,7 @@ class PriceRange(models.Model):
     def __str__(self):
         return self.price_range
 
-class Product (models.Model):
+class Product(models.Model):
     user = models.ForeignKey(User, related_name='products_models',on_delete=models.CASCADE)
     product_name = models.CharField(max_length=100)
     product_code = models.CharField(max_length = 150)

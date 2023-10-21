@@ -16,6 +16,7 @@ from userapp.forms import *
 from django.views.generic.detail import DetailView
 from django.contrib.auth import get_user_model
 from other_vendors.models import VendorInformation
+from other_vendors.forms import *
 
 # Create your views here.
 @login_required
@@ -1353,13 +1354,13 @@ def profile_list(request):
 @daseboard_required
 def profile_add(request):
     if request.method == 'POST':
-        form=ProfileForm(request.POST)
+        form=UpdateProfileForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request,'successfully add')
             return redirect('profile-list')
     else:
-        form =ProfileForm()
+        form =UpdateProfileForm()
     return render(request,'dashboard/profile/profile-add.html',{'form':form})
 
 
@@ -1367,15 +1368,15 @@ def profile_add(request):
 @daseboard_required
 def profile_update(request,pk):
     profile =get_object_or_404(Profile,pk=pk)
-    form =ProfileForm(request.POST,instance=profile)
+    form =UpdateProfileForm(request.POST,instance=profile)
     if request.method == 'POST':
-        form = ProfileForm(request.POST,instance=profile)
+        form = UpdateProfileForm(request.POST,instance=profile)
         if form.is_valid():
             form.save()
             messages.success(request, 'Successfully update')
             return redirect('profile-list')
     else:
-        form =ProfileForm(instance=profile)
+        form =UpdateProfileForm(instance=profile)
     context={
         'form':form,
     }
@@ -1567,15 +1568,40 @@ def video_delete(request, pk):
 @login_required
 @daseboard_required
 def vendor_profile_list(request):
-    user = request.user
     vendor_profile = VendorInformation.objects.all()
-    vendor_product_count = Product.objects.filter(user=user).count()
 
     context={
         'vendor_profile':vendor_profile,
-        'vendor_product_count':vendor_product_count,
     }
     return render(request, 'dashboard/vendor-profile/profile_list.html', context)
+
+
+@login_required
+@daseboard_required
+def vendor_profile_update(request, pk):
+    profile = get_object_or_404(VendorInformation, pk=pk)
+    if request.method == 'POST':
+        form = VendorInformationFormUpdate(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully updated')
+            return redirect('vendor_profile_list')  # Assuming you have defined this URL name
+    else:
+        form = VendorInformationFormUpdate(instance=profile)
+    context = {
+        'form': form,
+    }
+    return render(request, 'dashboard/vendor-profile/profile_update.html', context)
+
+@login_required
+@daseboard_required
+def vendor_profile_delete(request, pk):
+    profile = VendorInformation.objects.get(pk=pk)
+    if request.method == 'POST':
+        profile.delete()
+        messages.success(request, 'Successfully delete')
+        return redirect('vendor_profile_list')
+    return render (request, 'dashboard/vendor-profile/profile-delete.html',{'profile':profile})
 
 
 

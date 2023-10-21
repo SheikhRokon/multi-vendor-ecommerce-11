@@ -39,7 +39,7 @@ class VendorInformation(models.Model):
     phone = models.CharField(max_length=16, blank=True, null=True)
     id_type = models.CharField(max_length=20, choices=ID_type, default='NID')
     first_and_last_name = models.CharField(max_length=25)
-    vendor_image = models.ImageField(upload_to='vendor_image/', blank=True, null=True)
+    vendor_image = models.ImageField(upload_to='vendor_image/',default='no_img.png', blank=True, null=True)
     Nid_number = models.CharField(max_length=20)
     NID_copy_1 = models.FileField()
     NID_copy_2 = models.FileField()

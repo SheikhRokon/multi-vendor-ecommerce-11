@@ -179,6 +179,8 @@ urlpatterns = [
     path('create_redx_parcel/<pk>', create_redx_parcel,name='create-redx-parcel'),
     
     #vendor profile 
-    path('dashboard/vendor_profile_list/',vendor_profile_list,name='vendor_profile_list')
+    path('dashboard/vendor_profile_list/',vendor_profile_list,name='vendor_profile_list'),
+    path('dashboard/vendor_profile_update/<int:pk>',vendor_profile_update , name='profile-update'),
+    path('dashboard/vendor_profile_delete/<int:pk>', vendor_profile_delete, name='profile-delete'),
 
 ]

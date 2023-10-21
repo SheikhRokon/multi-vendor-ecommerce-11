@@ -36,7 +36,6 @@
                                         </tr>
                                     </thead>
 
-
                                     <tbody>
 
                                         {% for c in vendor_profile %}
@@ -44,15 +43,14 @@
                                             <td>{{ c.id }}</td>
                                             <td>{{ c.user }}</td>
                                             <td>{{c.first_and_last_name}}</td>
-                                            <td>{{ c.first_name }}</td>
-                                            <td>{{ c.first_name }}</td>
+                                            <td class="text-center">{{ c.user.products_models.count }}</td>
                                             <td><img src="{{ c.vendor_image.url }}" alt="" style="height: 40px;">
                                             </td>
-                                            <td><a href="{% url 'user-update' c.pk %}" class="text-info me-10"
+                                            <td><a href="{% url 'profile-update' c.pk %}" class="text-info me-10"
                                                     data-bs-toggle="tooltip" data-bs-original-title="Edit">
                                                     <i class="ti-marker-alt"></i>
                                                 </a>
-                                                <a href="{% url 'user-delete' c.pk %}" class="text-danger"
+                                                <a href="{% url 'profile-delete' c.pk %}" class="text-danger"
                                                     data-bs-original-title="Delete" data-bs-toggle="tooltip">
                                                     <i class="ti-trash"></i>
                                                 </a>

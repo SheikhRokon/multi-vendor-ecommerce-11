@@ -14,6 +14,11 @@ class VendorInformationForm(forms.ModelForm):
         model = VendorInformation
         exclude = ['user','is_verified']
         
+class VendorInformationFormUpdate(forms.ModelForm):
+    class Meta:
+        model = VendorInformation
+        exclude = ['user']
+        
             
             
     
