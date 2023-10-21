@@ -15,6 +15,7 @@ from django.utils.decorators import method_decorator
 from userapp.forms import *
 from django.views.generic.detail import DetailView
 from django.contrib.auth import get_user_model
+from other_vendors.models import VendorInformation
 
 # Create your views here.
 @login_required
@@ -543,7 +544,7 @@ def flashsale_delete(request, pk):
     return render (request, 'dashboard/flashsale/flashsale-delete.html',{'flashsale':flashsale})
 
 
-# start campaign-category part
+
 @login_required
 @daseboard_required
 def campaign_category_list(request):
@@ -1562,8 +1563,16 @@ def video_delete(request, pk):
 
 
 
+# vendor_profile_list
+@login_required
+@daseboard_required
+def vendor_profile_list(request):
+    vendor_profile = VendorInformation.objects.all()
 
-#product
+    context={
+        'vendor_profile':vendor_profile
+    }
+    return render(request, 'dashboard/vendor-profile/profile_list.html', context)
 
 
 

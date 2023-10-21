@@ -177,5 +177,8 @@ urlpatterns = [
 
     #parcel
     path('create_redx_parcel/<pk>', create_redx_parcel,name='create-redx-parcel'),
+    
+    #vendor profile 
+    path('vendor_profile_list/',vendor_profile_list,name='vendor_profile_list')
 
 ]
