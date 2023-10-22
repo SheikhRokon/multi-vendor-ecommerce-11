@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render,redirect
 import json
 from .models import *
 from django.contrib.auth import login
@@ -122,6 +122,22 @@ def vendor_id_verify(request):
 
 def verify_bank_account(request):
     return render(request, 'other_vendors/verify_bank_account.html')
+
+
+
+def vendor_pro_update(request):
+    profile = get_object_or_404(VendorInformation)
+    form = VendorInformationForm(instance=profile) 
+    if request.method == 'POST':
+        form = VendorInformationForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully updated')
+            return redirect('dashboard-home')  
+    context = {
+        'form': form,
+    }
+    return render(request, 'other_vendors/profile_update.html', context)
 
 
 
