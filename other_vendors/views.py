@@ -85,12 +85,7 @@ def vendor_profile_update(request):
 def vendor_registaion_step_2(request):
     return render(request, 'other_vendors/vendor_re_step_2.html')
 
-@login_required
-def vendor_pro(request):
-    return render(request, 'other_vendors/vendor_pro.html')
 
-def vendor_dashvoard(request):
-    return render(request, 'other_vendors/vendor_dashvoard.html')
 
 def vendor_address(request):
     country = Country.objects.all().order_by('name')
@@ -116,13 +111,6 @@ def vendor_address(request):
         'subdistrict_list': subdistrict_list  
     }
     return render(request, 'other_vendors/vendor_address.html', context)
-
-def vendor_id_verify(request):
-    return render(request, 'other_vendors/vendor_id_verify.html')
-
-def verify_bank_account(request):
-    return render(request, 'other_vendors/verify_bank_account.html')
-
 
 
 def vendor_pro_update(request):
