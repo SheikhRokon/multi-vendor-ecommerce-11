@@ -448,7 +448,7 @@
               </ul>
             </li>
           </ul>
-          {% elif request.user.is_vendor and request.user.is_active %}
+          {% elif request.user.is_vendor and request.user.is_active and user.vendorinformation.is_verified == True %}
           <ul class="sidebar-menu" data-widget="tree">
             <li class="treeview">
               <a href="#">
