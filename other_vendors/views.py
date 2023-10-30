@@ -115,9 +115,9 @@ def vendor_address(request):
 
 def vendor_pro_update(request):
     profile = get_object_or_404(VendorInformation)
-    form = VendorInformationForm(request.POST, instance=request.profile) 
+    form = VendorInformationFormUpdate(request.POST, instance=request.profile) 
     if request.method == 'POST':
-        form = VendorInformationForm(request.POST, instance=profile)
+        form = VendorInformationFormUpdate(request.POST, instance=profile)
         if form.is_valid():
             form.save()
             messages.success(request, 'Successfully updated')
