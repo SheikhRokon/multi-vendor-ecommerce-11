@@ -777,8 +777,8 @@
             <div class="media-list media-list-hover">
               <div class="card col-12 col-md-12  p-2 py-3 mx-auto border shadow">
                 <div class="mx-auto">
-                  <img class="rounded-circle account-img mx-auto mb-2" src="{{ user.profile.image.url }}"
-                    style="height: 100px;">
+                  <img class="rounded-circle account-img mx-auto mb-2"
+                    src="{{ user.vendorinformation.vendor_image.url }}" style="height: 100px;">
                 </div>
                 <div class="card-body p-0 profile">
                   <h5 class="text-center">{{ user.vendorinformation.first_and_last_name }}</h5>
@@ -816,7 +816,7 @@
                   </div>
                   {% if not user.vendorinformation.is_verified == True %}
                   <div class="text-center">
-                    <a class="btn btn-warning btn-sm" href="{% url 'vendor_pro_update' %}">Verify Your Account</a>
+                    <a class="btn btn-warning btn-sm" href="{% url 'vendor_full_info' %}">Verify Your Account</a>
                   </div>
                   {% endif %}
 
@@ -839,8 +839,8 @@
             <div class="media-list media-list-hover">
               <div class="card col-12 col-md-12  p-2 py-3 mx-auto border shadow">
                 <div class="mx-auto">
-                  <img class="rounded-circle account-img mx-auto mb-2" src="{{ user.profile.image.url }}"
-                    style="height: 100px;">
+                  <img class="rounded-circle account-img mx-auto mb-2"
+                    src="{{ user.vendorinformation.vendor_image.url }}" style="height: 100px;">
                 </div>
                 <div class="card-body p-0 profile">
                   <h5 class="text-center">{{ user.vendorinformation.first_and_last_name }}</h5>

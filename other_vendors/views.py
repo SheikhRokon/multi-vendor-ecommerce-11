@@ -64,7 +64,7 @@ def vendor_profile_update(request):
             vendor_profile.user = request.user
             vendor_profile.save()
             messages.success(request, 'Profile Updated Successfully')
-            return redirect('vendor_pro')
+            return redirect('dashboard-home')
 
     else:
         if vendor_profile:
@@ -115,7 +115,7 @@ def vendor_address(request):
 
 def vendor_pro_update(request):
     profile = get_object_or_404(VendorInformation)
-    form = VendorInformationForm(instance=profile) 
+    form = VendorInformationForm(request.POST, instance=request.profile) 
     if request.method == 'POST':
         form = VendorInformationForm(request.POST, instance=profile)
         if form.is_valid():
