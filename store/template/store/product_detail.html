@@ -201,8 +201,7 @@
 									  <input type="radio" class="size-variation" id="size{{ forloop.counter }}" hidden name="size"
 										value="{{ p_variation.title|capfirst }}">
 									{% endif %}
-									  <label class="size-label text-center" for="size{{ forloop.counter }}">{{
-										p_variation.title|capfirst }}</label><br>
+									  <label class="size-label text-center" for="size{{ forloop.counter }}">{{	priation.title|capfirst }}</label><br>
 									{% endfor %}
 								</div>
 								{% endif %}
@@ -217,8 +216,7 @@
 									  <input type="radio" name="color" class="color-variation" id="color{{ forloop.counter }}" hidden
 										name="color" value="{{ p_variation.title|capfirst }}">
 									{% endif %}
-									  <label class="color-label text-center" for="color{{ forloop.counter }}">{{p_variation.title|capfirst
-										}}</label><br>
+									  <label class="color-label text-center" for="color{{ forloop.counter }}">{{p_variation.title|capfirst}}</label><br>
 									{% endfor %}
 								</div>
 								{% endif %}
