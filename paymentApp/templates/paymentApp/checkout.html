@@ -1,196 +1,219 @@
 {% extends 'store/base.html' %}
 {% load static %}
 {% block head %}
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://scripts.sandbox.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout-sandbox.js"></script>
 {% endblock head %}
 
 {% block content %}
- <div class="page-wrapper">
-    <main class="main">
-        <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
-            <div class="container">
-                <h1 class="page-title">Checkout</h1>
-            </div><!-- End .container -->
-        </div><!-- End .page-header -->
-        <nav aria-label="breadcrumb" class="breadcrumb-nav">
-            <div class="container">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Checkout</li>
-                </ol>
-            </div><!-- End .container -->
-        </nav><!-- End .breadcrumb-nav -->
+<div class="page-wrapper">
+  <main class="main">
+    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+      <div class="container">
+        <h1 class="page-title">Checkout</h1>
+      </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+        </ol>
+      </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
 
-        <div class="page-content">
-            <div class="checkout">
-                {% if order.items.all %} 
-                <div class="container-fluid">
-                    <form action="#" method="POST">
-                        {% csrf_token %}
-                        <div class="row">
-                            <div class="col-lg-7">
-                                <table class="table table-cart">
-                                    <thead>
-                                        <tr>
-                                            <th>Product</th>
-                                            <th>Price</th>
-                                            <th>Quantity</th>
-                                            <th>Total</th>
-                                        </tr>
-                                    </thead>
-            
-                                    <tbody>
-                                    {% for p in order.items.all %}
-                                    <tr>
-                                        <td class="product-col">
-                                            <div class="product">
-                                                <figure class="product-media">
-                                                    <a href="#">
-                                                        <img src="{{ p.item.image.url }}" alt="Product image">
-                                                    </a>
-                                                </figure>
-            
-                                                <h3 class="product-title">
-                                                    <a href="#">{{ p.item.product_name }}</a>
-                                                </h3><!-- End .product-title -->
-                                            </div><!-- End .product -->
-                                        </td>										
-                                        {% if p.item.discount_price %}
-                                            <td class="price-col">{{ p.item.discount_price }}</td>
-                                        {% else %}
-                                        <td class="price-col">{{ p.item.price }}</td>
-                                        {% endif %}	
-            
-                                        <td class="quantity-col">
-                                            <div class="cart-product-quantity">                                   
-                                                <p style='color:black;'>{{ p.quantity }}</p>
-                                            </div><!-- End .cart-product-quantity -->
-                                        </td>
-                                        <td class="total-col text-dark">{{ p.get_subtotal }}<br><span>
-                                             {% if p.item.discount_price %}
-                                              saving(Tk{{ p.saving_price }})<br>{{ p.saving_percent|floatformat:"2" }}% 
-                                             {% endif %}</span>
-                                            </td>
-                                            
-                                    </tr>                                           
-                                    {% endfor %}
-            
-            
-                                    </tbody>
-                                </table><!-- End .table table-wishlist -->
-            
+    <div class="page-content">
+      <div class="checkout">
+        {% if order.items.all %}
+        <div class="container-fluid">
+          <form action="#" method="POST">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-lg-7">
+                <table class="table table-cart">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Price</th>
+                      <th>Color</th>
+                      <th>Quantity</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {% for p in order.items.all %}
+                    <tr>
+                      <td class="product-col">
+                        <div class="product">
+                          <figure class="product-media">
+                            <a href="#">
+                              <img src="{{ p.item.image.url }}" alt="Product image">
+                            </a>
+                          </figure>
+
+                          <h3 class="product-title">
+                            <a href="#">{{ p.item.product_name }}</a>
+                          </h3><!-- End .product-title -->
+                        </div><!-- End .product -->
+                      </td>
+                      {% if p.item.discount_price %}
+                      <td class="price-col">{{ p.item.discount_price }}</td>
+                      {% else %}
+                      <td class="price-col">{{ p.item.price }}</td>
+                      {% endif %}
+
+                      {% for q in p.variation.all %}
+                      {% if q.category == 'color' %}
+                      <td>{{ q.title }}</td>
+                      {% endif %}
+                      {% endfor %}
+
+                      <td class="quantity-col">
+                        <div class="cart-product-quantity">
+                          <p style='color:black;'>{{ p.quantity }}</p>
+                        </div><!-- End .cart-product-quantity -->
+                      </td>
+                      <td class="total-col text-dark">{{ p.get_subtotal }}<br><span>
+                          {% if p.item.discount_price %}
+                          saving(Tk{{ p.saving_price }})<br>{{ p.saving_percent|floatformat:"2" }}%
+                          {% endif %}</span>
+                      </td>
+
+                    </tr>
+                    {% endfor %}
+
+
+                  </tbody>
+                </table><!-- End .table table-wishlist -->
+
+              </div>
+              <aside class="col-lg-5 ">
+                <div class="summary shadow">
+                  <h3 style="background-color: #eb5525; color: white; text-align: center;" class="summary-title py-3">
+                    Proceed to Pay</h3><!-- End .summary-title -->
+
+                  <table class="table table-summary">
+                    <h6>Shipping Information</h6>
+                    <thead>
+                      <tr>
+                        <p class="col-12 text-left"><i class="fa fa-user mr-2">
+
+                          </i> {{ order.shipping_address.full_name}}</p>
+                        <p class="col-12 text-left"> <i class="fa fa-phone mr-2">
+
+                          </i> {{ order.shipping_address.phone }}
+                        </p>
+                        <p class="col-12 text-left"><i class="fa fa-location mr-2">
+                          </i>{{order.shipping_address.shiping_area }}</p>
+                        <p class="col-12 text-left"> <i class="fa fa-house mr-2">
+                          </i>{{order.shipping_address.full_address }}</p>
+
+                        {% if order.shipping_address.order_note %}
+                        <p class="col-12 text-left"><i class="fa fa-list mr-2">
+
+                          </i> {{ order.shipping_address.order_note}}</p>
+                        {% endif %}
+
+
+                      </tr>
+                    </thead>
+
+                    <tbody>
+
+                      <tr class="summary-subtotal">
+                        <td colspan="4" class="col-12 text-left">Order Summary</td>
+                      </tr><!-- End .summary-subtotal -->
+                      <tr class="col-12">
+                        <td colspan="4">
+                          <div class="row">
+                            <div class="col-4 text-left">
+                              <p>Total Item Price</p>
                             </div>
-                            <aside class="col-lg-5 ">
-                                <div class="summary shadow">
-                                    <h3 style="background-color: #eb5525; color: white; text-align: center;" class="summary-title py-3">Proceed to Pay</h3><!-- End .summary-title -->
+                            <div class="col-8">
+                              <p>{{ order.get_total }} TK</p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-4 text-left">
+                              <p>Delivery Fee</p>
+                            </div>
+                            <div class="col-8">
+                              {% if order.shipping_address.shiping_area == 'Inside Dhaka' %}
+                              <p>+ 80 TK</p>
+                              {% elif order.shipping_address.shiping_area == 'Outside Dhaka' %}
+                              <p>+ 95 TK</p>
+                              {% elif order.shipping_address.shiping_area == 'Only Chittagong District' %}
+                              <p>+ 50 TK</p>
+                              {% endif %}
+                            </div>
+                          </div>
+                          {% if order.coupon %}
+                          <div class="row">
+                            <div class="col-4 text-left">
+                              <p>Coupon</p>
+                            </div>
+                            <div class="col-8">
+                              <p>- {{ order.coupon.amount }} TK</p>
+                            </div>
+                          </div>
+                          {% endif %}
+                        </td>
+                      </tr>
+                      <tr class="summary-total">
+                        <td>
+                          <div class="row">
+                            <div class="col-4 text-left">
+                              Total
+                            </div>
+                            <div class="col-8">
+                              {{ order.total }}
+                            </div>
+                          </div>
+                        </td>
+                      </tr><!-- End .summary-total -->
+                    </tbody>
+                  </table><!-- End .table table-summary -->
+                  <div class="card">
+                    <div class="card-header mb-2" id="heading-3">
+                      <h2 class="card-title">
+                        <!-- {{ payment_method.payment_option }} -->
+                        <label for="id_payment_option_0"><input type="radio" name="payment_option"
+                            value="Cash On Delivery" class="collapsed" required="" id="id_payment_option_0">
+                          Cash On Delivery</label>
+                        <label for="bKash_button" class="d-flex my-1">
+                          <input type="radio" name="payment_option" value="Bkash" class="collapsed mr-1" required=""
+                            id="bKash_button">
+                          <img class="my-auto" src="{% static 'store/images/BKash_Logo-700x287.png' %}"
+                            style='height:30px;'>
+                        </label>
+                      </h2>
+                      <!-- <button id="bKash_button">Pay with bKash</button> -->
+                    </div><!-- End .card-header -->
+                    <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
+                      <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer
+                        adipiscing elit. Donec odio. Quisque volutpat mattis eros.
+                      </div><!-- End .card-body -->
+                    </div><!-- End .collapse -->
+                  </div><!-- End .card -->
+                  <button style="background-color: #eb5525; color: white;" type="submit"
+                    class="btn btn-outline-primary-2 btn-order btn-block">
+                    <span>Place Order</span>
 
-                                    <table class="table table-summary">
-                                        <h6>Shipping Information</h6>
-                                        <thead>
-                                            <tr>
-                                                <p class="col-12 text-left"><i class="fa fa-user mr-2"></i> {{ order.shipping_address.full_name }}</p>
-                                                <p class="col-12 text-left"> <i class="fa fa-phone mr-2"></i> {{ order.shipping_address.phone }}</p>
-                                                <p class="col-12 text-left"><i class="fa fa-location mr-2"></i>{{ order.shipping_address.shiping_area }}</p>
-                                                <p class="col-12 text-left"> <i class="fa fa-house mr-2"></i>{{ order.shipping_address.full_address }}</p>
-                                                
-                                                {% if order.shipping_address.order_note %}
-                                                <p class="col-12 text-left"><i class="fa fa-list mr-2"></i> {{ order.shipping_address.order_note }}</p>
-                                                {% endif %}
-                                                    
-                                                
-                                            </tr>
-                                        </thead>
+                  </button>
+                </div><!-- End .summary -->
+              </aside><!-- End .col-lg-3 -->
+            </div><!-- End .row -->
+          </form>
+        </div><!-- End .container -->
+        {% else %}
+        <h2 class="text-center text-warning">You have no active order</h2>
+        {% endif %}
 
-                                        <tbody>
-                                            
-                                            <tr class="summary-subtotal">
-                                                <td colspan="4" class="col-12 text-left">Order Summary</td>
-                                            </tr><!-- End .summary-subtotal -->
-                                            <tr class="col-12">
-                                                <td colspan="4">
-                                                <div class="row">
-                                                    <div class="col-4 text-left">
-                                                        <p>Total Item Price</p>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <p>{{ order.get_total }} TK</p>                                
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-4 text-left">
-                                                        <p>Delivery Fee</p>
-                                                    </div>
-                                                    <div class="col-8">
-                                                    {% if order.shipping_address.shiping_area == 'Inside Dhaka' %}
-                                                       <p>+ 80 TK</p>
-                                                    {% elif order.shipping_address.shiping_area == 'Outside Dhaka' %} 
-                                                    <p>+ 95 TK</p>
-                                                    {% elif order.shipping_address.shiping_area == 'Only Chittagong District' %} 
-                                                    <p>+ 50 TK</p> 
-                                                    {% endif %}                 
-                                                    </div>
-                                                </div>
-                                                {% if order.coupon %}
-                                                <div class="row">
-                                                    <div class="col-4 text-left">
-                                                        <p>Coupon</p>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <p>- {{ order.coupon.amount }} TK</p>                                
-                                                    </div>
-                                                </div>
-                                                {% endif %}
-                                            </td>
-                                            </tr>
-                                            <tr class="summary-total">
-                                                <td>
-                                                    <div class="row">
-                                                        <div class="col-4 text-left">
-                                                            Total
-                                                        </div>
-                                                        <div class="col-8">
-                                                            {{ order.total }}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr><!-- End .summary-total -->
-                                        </tbody>
-                                    </table><!-- End .table table-summary -->
-                                    <div class="card">
-                                            <div class="card-header mb-2" id="heading-3">
-                                                <h2 class="card-title">                                                                         
-                                                    <!-- {{ payment_method.payment_option }} -->
-                                                    <label for="id_payment_option_0"><input type="radio" name="payment_option" value="Cash On Delivery" class="collapsed" required="" id="id_payment_option_0">
-                                                        Cash On Delivery</label>
-                                                    <label for="bKash_button" class="d-flex my-1">
-                                                        <input type="radio" name="payment_option" value="Bkash" class="collapsed mr-1" required="" id="bKash_button">
-                                                        <img class="my-auto" src="{% static 'store/images/BKash_Logo-700x287.png' %}" style='height:30px;'>
-                                                    </label>
-                                                </h2>
-                                                <!-- <button id="bKash_button">Pay with bKash</button> -->
-                                            </div><!-- End .card-header -->
-                                            <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
-                                                <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
-                                                </div><!-- End .card-body -->
-                                            </div><!-- End .collapse -->
-                                        </div><!-- End .card -->
-                                    <button style="background-color: #eb5525; color: white;" type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
-                                        <span >Place Order</span>
-
-                                    </button>
-                                </div><!-- End .summary -->
-                            </aside><!-- End .col-lg-3 -->
-                        </div><!-- End .row -->
-                    </form>
-                </div><!-- End .container -->
-                {% else %}
-                  <h2 class="text-center text-warning">You have no active order</h2>
-                {% endif %}
-                
-            </div><!-- End .checkout -->
-        </div><!-- End .page-content -->
-    </main><!-- End .main -->
+      </div><!-- End .checkout -->
+    </div><!-- End .page-content -->
+  </main><!-- End .main -->
 
 </div><!-- End .page-wrapper -->
 <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
@@ -199,74 +222,73 @@
 
 
 <script>
-    // var price = document.getElementById('10').value;
-    // console.log(price);
+  // var price = document.getElementById('10').value;
+  // console.log(price);
 
-    var paymentID = '';
-    bKash.init({
-      paymentMode: 'checkout', //fixed value ‘checkout’
-      //paymentRequest format: {amount: AMOUNT, intent: INTENT}
-      //intent options
-      //1) ‘sale’ – immediate transaction (2 API calls)
-      //2) ‘authorization’ – deferred transaction (3 API calls)
-      paymentRequest: {
-        amount: '{{ order.total }}', //max two decimal points allowed
-        intent: 'sale'
-      },
-      createRequest: function(request) { //request object is basically the paymentRequest object, automatically pushed by the script in createRequest method
-       console.log("create working !!")
-        $.ajax({
-          url: "{% url 'bkash-payment' %}",
-          type: 'GET',
-          data: JSON.stringify(request),
-          contentType: 'application/json',
-          success: function(data) {
-            console.log('test')
-            console.log(data)
-            if (data && data.paymentID != null) {
-              paymentID = data.paymentID;
-              bKash.create().onSuccess(data); //pass the whole response data in bKash.create().onSucess() method as a parameter
-            } else {
-              bKash.create().onError();
-            }
-          },
-          error: function() {
+  var paymentID = '';
+  bKash.init({
+    paymentMode: 'checkout', //fixed value ‘checkout’
+    //paymentRequest format: {amount: AMOUNT, intent: INTENT}
+    //intent options
+    //1) ‘sale’ – immediate transaction (2 API calls)
+    //2) ‘authorization’ – deferred transaction (3 API calls)
+    paymentRequest: {
+      amount: '{{ order.total }}', //max two decimal points allowed
+      intent: 'sale'
+    },
+    createRequest: function (request) { //request object is basically the paymentRequest object, automatically pushed by the script in createRequest method
+      console.log("create working !!")
+      $.ajax({
+        url: "{% url 'bkash-payment' %}",
+        type: 'GET',
+        data: JSON.stringify(request),
+        contentType: 'application/json',
+        success: function (data) {
+          console.log('test')
+          console.log(data)
+          if (data && data.paymentID != null) {
+            paymentID = data.paymentID;
+            bKash.create().onSuccess(data); //pass the whole response data in bKash.create().onSucess() method as a parameter
+          } else {
             bKash.create().onError();
           }
-        });
-      },
-      executeRequestOnAuthorization: function() {
-        console.log("execute working !!")
-        $.ajax({
-          url: '{% url "execute-bkash" %}',
-          type: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify({
-            "paymentID": paymentID
-          }),
-          success: function(data) {
+        },
+        error: function () {
+          bKash.create().onError();
+        }
+      });
+    },
+    executeRequestOnAuthorization: function () {
+      console.log("execute working !!")
+      $.ajax({
+        url: '{% url "execute-bkash" %}',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          "paymentID": paymentID
+        }),
+        success: function (data) {
 
-           console.log("execute response " , data)
+          console.log("execute response ", data)
 
-            if (data && data.paymentID != null) {
-              console.log("trxID: ",data.trxID)
-               window.location.href = '{% url "order-summary" %}'; // Your redirect route when successful payment
-            } else {
-                console.log("error ");
-                window.location.href = '{% url "Check-Out" %}'; // Your redirect route when fail payment
-                bKash.execute().onError();
-            }
-          },
-          error: function() {
+          if (data && data.paymentID != null) {
+            console.log("trxID: ", data.trxID)
+            window.location.href = '{% url "order-summary" %}'; // Your redirect route when successful payment
+          } else {
+            console.log("error ");
+            window.location.href = '{% url "Check-Out" %}'; // Your redirect route when fail payment
             bKash.execute().onError();
           }
-        });
-      },
-      onClose: function(){
-        window.location.href='/';  // Your redirect route when cancel payment
-      },
+        },
+        error: function () {
+          bKash.execute().onError();
+        }
       });
+    },
+    onClose: function () {
+      window.location.href = '/';  // Your redirect route when cancel payment
+    },
+  });
 </script>
- 
-{% endblock  %}
-    
+
+{% endblock %}

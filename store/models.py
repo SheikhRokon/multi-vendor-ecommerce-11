@@ -242,7 +242,7 @@ Order_Status = (
     ('cancel','cancel')
 )
 
-class Order(models.Model): 
+class  Order(models.Model): 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) 
     items = models.ManyToManyField(OrderItem)
     ordered_date = models.DateTimeField()
