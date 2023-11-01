@@ -4,12 +4,6 @@
 
 <div class="wrapper">
 	<div id="loader"></div>
-
-
-
-
-
-
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<div class="container-full">
@@ -145,7 +139,7 @@
 						</div>
 					</div>
 				</div>
-				{% else %}
+				{% elif request.user.is_superuser and request.user.is_staff and request.user.is_active %}
 				<div class="row">
 					<div class="col-xxxl-3 col-md-6 col-12">
 						<div class="box box-body py-5">
