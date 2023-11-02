@@ -12,7 +12,7 @@
 <body>
 
   <div class="logo" style="margin-bottom: 30px;text-align: center;">
-    <img src="{{logo.image.path}}" alt="" style="width: 200px; ">
+    <img src="{{logo.image.path}}" alt="" style="height: 80px; width:auto">
   </div>
   <table repeat="1">
     <tr>
@@ -44,11 +44,11 @@
       <tr style="padding-bottom: 5px;">
         <th scope="col">SN</th>
         <th scope="col" style="text-align: left;">Product</th>
-        <th scope="col" style="text-align: left;">Qty</th>
+        <th scope="col" style="text-align: center;">Qty</th>
         <th scope="col" style="text-align: left;">Color</th>
         <th scope="col" style="text-align: left;">Size</th>
-        <th scope="col" style="text-align: left;">Unit Price</th>
-        <th scope="col" style="text-align: left;">Total Price</th>
+        <th scope="col" style="text-align: left;">Price</th>
+        <th scope="col" style="text-align: left;"> Total Price</th>
       </tr>
     </thead>
     <tbody>
@@ -58,7 +58,7 @@
         <th scope="row">#{{ forloop.counter }}</th>
         <td><img src="{{ p.item.image.path }}" alt="" style="height: 32px; width: 32px;">{{p.item.product_name }}</td>
         <td>
-          <p style="padding: 15px;">{{ p.quantity }}</p>
+          <p style="padding: 15px; text-align: center">{{ p.quantity }}</p>
         </td>
         {% for q in p.variation.all %}
         <td>
@@ -76,7 +76,11 @@
           </div>
         </td>
         {% endfor %}
-        <td>TK {{ p.item.price }}</td>
+        {% if p.item.discount_price %}
+        <td class="price-col">{{ p.item.discount_price }}</td>
+        {% else %}
+        <td class="price-col">{{ p.item.price }}</td>
+        {% endif %}
         <td>TK {{ p.get_subtotal }}</td>
       </tr>
       {% endfor %}
@@ -132,7 +136,7 @@
     <h3 style="text-align: center; margin-top: 40px ;">Shiping Information</h3>
     <tr>
       <th style="border-right: 1px solid #2222; text-align: left;">Name</th>
-      <th style="text-align: right;">{{order.shipping_address.full_name}}</th>
+      <th style="text-align: right;">{{ order.shipping_address.full_name}}</th>
     </tr>
     <tr>
       <th style="border-right: 1px solid #2222; text-align: left;">Phone</th>
