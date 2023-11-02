@@ -45,6 +45,8 @@
         <th scope="col">SN</th>
         <th scope="col" style="text-align: left;">Product</th>
         <th scope="col" style="text-align: left;">Qty</th>
+        <th scope="col" style="text-align: left;">Color</th>
+        <th scope="col" style="text-align: left;">Size</th>
         <th scope="col" style="text-align: left;">Unit Price</th>
         <th scope="col" style="text-align: left;">Total Price</th>
       </tr>
@@ -55,7 +57,25 @@
       <tr style="margin-top: 20px; border-bottom: 0.1px solid rgb(238, 227, 227); padding-top: 5px; ">
         <th scope="row">#{{ forloop.counter }}</th>
         <td><img src="{{ p.item.image.path }}" alt="" style="height: 32px; width: 32px;">{{p.item.product_name }}</td>
-        <td>{{ p.quantity }}</td>
+        <td>
+          <p style="padding: 15px;">{{ p.quantity }}</p>
+        </td>
+        {% for q in p.variation.all %}
+        <td>
+          <div>
+            {% if q.category == 'color' %}
+            <span class="color-col">{{ q.title }}</span>
+            {% endif %}
+          </div>
+        </td>
+        <td>
+          <div>
+            {% if q.category == 'size' %}
+            <span class="color-col">{{ q.title }}</span>
+            {% endif %}
+          </div>
+        </td>
+        {% endfor %}
         <td>TK {{ p.item.price }}</td>
         <td>TK {{ p.get_subtotal }}</td>
       </tr>
