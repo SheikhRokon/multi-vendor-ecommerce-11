@@ -30,14 +30,16 @@
           <form action="#" method="POST">
             {% csrf_token %}
             <div class="row">
-              <div class="col-lg-7">
+              <div class="col-lg-9">
                 <table class="table table-cart">
                   <thead>
                     <tr>
-                      <th>Product</th>
-                      <th>Price</th>
-                      <th>Color</th>
-                      <th>Quantity</th>
+                      <th class="pr-3 pr-lg-5">Image</th>
+                      <th class="pr-3 pr-lg-5">Name</th>
+                      <th class="pr-0 pr-lg-5">Color</th>
+                      <th class="pr-0 pr-lg-5">Size</th>
+                      <th class="pr-0 pr-lg-5">Quantity</th>
+                      <th class="pr-0 pr-lg-5">Price</th>
                       <th>Total</th>
                     </tr>
                   </thead>
@@ -52,79 +54,88 @@
                               <img src="{{ p.item.image.url }}" alt="Product image">
                             </a>
                           </figure>
-
-                          <h3 class="product-title">
-                            <a href="#">{{ p.item.product_name }}</a>
-                          </h3><!-- End .product-title -->
-                        </div><!-- End .product -->
+                        </div>
                       </td>
+                      <td>
+                        <h6><a href="#">{{ p.item.product_name }}</a></h6>
+                      </td>
+
+                      {% for q in p.variation.all %}
+                      <td>
+                        <div>
+                          {% if q.category == 'color' %}
+                          <span class="color-col">{{ q.title }}</span>
+                          {% endif %}
+                        </div>
+                      </td>
+                      <td>
+                        <div>
+                          {% if q.category == 'size' %}
+                          <span class="color-col">{{ q.title }}</span>
+                          {% endif %}
+                        </div>
+                      </td>
+                      {% endfor %}
+
+                      <td class="quantity-col">
+                        <div class="cart-product-quantity">
+                          <p style="color:black; text-align: center;">{{ p.quantity }}</p>
+                        </div>
+                      </td>
+
                       {% if p.item.discount_price %}
                       <td class="price-col">{{ p.item.discount_price }}</td>
                       {% else %}
                       <td class="price-col">{{ p.item.price }}</td>
                       {% endif %}
 
-                      {% for q in p.variation.all %}
-                      {% if q.category == 'color' %}
-                      <td>{{ q.title }}</td>
-                      {% endif %}
-                      {% endfor %}
-
-                      <td class="quantity-col">
-                        <div class="cart-product-quantity">
-                          <p style='color:black;'>{{ p.quantity }}</p>
-                        </div><!-- End .cart-product-quantity -->
-                      </td>
-                      <td class="total-col text-dark">{{ p.get_subtotal }}<br><span>
+                      <td class="total-col text-dark">
+                        {{ p.get_subtotal }}<br>
+                        <span>
                           {% if p.item.discount_price %}
                           saving(Tk{{ p.saving_price }})<br>{{ p.saving_percent|floatformat:"2" }}%
-                          {% endif %}</span>
+                          {% endif %}
+                        </span>
                       </td>
-
                     </tr>
                     {% endfor %}
-
-
                   </tbody>
-                </table><!-- End .table table-wishlist -->
+                </table>
 
               </div>
-              <aside class="col-lg-5 ">
-                <div class="summary shadow">
-                  <h3 style="background-color: #eb5525; color: white; text-align: center;" class="summary-title py-3">
-                    Proceed to Pay</h3><!-- End .summary-title -->
 
+              <aside class="col-lg-3">
+                <div class="summary shadow">
+                  <h3 class="summary-title py-3" style="background-color: #eb5525; color: white; text-align: center;">
+                    Proceed to Pay
+                  </h3>
                   <table class="table table-summary">
                     <h6>Shipping Information</h6>
                     <thead>
                       <tr>
-                        <p class="col-12 text-left"><i class="fa fa-user mr-2">
-
-                          </i> {{ order.shipping_address.full_name}}</p>
-                        <p class="col-12 text-left"> <i class="fa fa-phone mr-2">
-
-                          </i> {{ order.shipping_address.phone }}
+                        <p class="col-12 text-left">
+                          <i class="fa fa-user mr-2"></i> {{ order.shipping_address.full_name}}
                         </p>
-                        <p class="col-12 text-left"><i class="fa fa-location mr-2">
-                          </i>{{order.shipping_address.shiping_area }}</p>
-                        <p class="col-12 text-left"> <i class="fa fa-house mr-2">
-                          </i>{{order.shipping_address.full_address }}</p>
-
+                        <p class="col-12 text-left">
+                          <i class="fa fa-phone mr-2"></i> {{ order.shipping_address.phone }}
+                        </p>
+                        <p class="col-12 text-left">
+                          <i class="fa fa-location mr-2"></i>{{order.shipping_address.shiping_area }}
+                        </p>
+                        <p class="col-12 text-left">
+                          <i class="fa fa-house mr-2"></i>{{order.shipping_address.full_address }}
+                        </p>
                         {% if order.shipping_address.order_note %}
-                        <p class="col-12 text-left"><i class="fa fa-list mr-2">
-
-                          </i> {{ order.shipping_address.order_note}}</p>
+                        <p class="col-12 text-left">
+                          <i class="fa fa-list mr-2"></i> {{ order.shipping_address.order_note}}
+                        </p>
                         {% endif %}
-
-
                       </tr>
                     </thead>
-
                     <tbody>
-
                       <tr class="summary-subtotal">
                         <td colspan="4" class="col-12 text-left">Order Summary</td>
-                      </tr><!-- End .summary-subtotal -->
+                      </tr>
                       <tr class="col-12">
                         <td colspan="4">
                           <div class="row">
@@ -164,24 +175,21 @@
                       <tr class="summary-total">
                         <td>
                           <div class="row">
-                            <div class="col-4 text-left">
-                              Total
-                            </div>
-                            <div class="col-8">
-                              {{ order.total }}
-                            </div>
+                            <div class="col-4 text-left">Total</div>
+                            <div class="col-8">{{ order.total }}</div>
                           </div>
                         </td>
-                      </tr><!-- End .summary-total -->
+                      </tr>
                     </tbody>
-                  </table><!-- End .table table-summary -->
+                  </table>
                   <div class="card">
                     <div class="card-header mb-2" id="heading-3">
                       <h2 class="card-title">
-                        <!-- {{ payment_method.payment_option }} -->
-                        <label for="id_payment_option_0"><input type="radio" name="payment_option"
-                            value="Cash On Delivery" class="collapsed" required="" id="id_payment_option_0">
-                          Cash On Delivery</label>
+                        <label for="id_payment_option_0">
+                          <input type="radio" name="payment_option" value="Cash On Delivery" class="collapsed"
+                            required="" id="id_payment_option_0">
+                          Cash On Delivery
+                        </label>
                         <label for="bKash_button" class="d-flex my-1">
                           <input type="radio" name="payment_option" value="Bkash" class="collapsed mr-1" required=""
                             id="bKash_button">
@@ -189,30 +197,27 @@
                             style='height:30px;'>
                         </label>
                       </h2>
-                      <!-- <button id="bKash_button">Pay with bKash</button> -->
-                    </div><!-- End .card-header -->
+                    </div>
                     <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
                       <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer
-                        adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-                      </div><!-- End .card-body -->
-                    </div><!-- End .collapse -->
-                  </div><!-- End .card -->
+                        adipiscing elit. Donec odio. Quisque volutpat mattis eros.</div>
+                    </div>
+                  </div>
                   <button style="background-color: #eb5525; color: white;" type="submit"
                     class="btn btn-outline-primary-2 btn-order btn-block">
                     <span>Place Order</span>
-
                   </button>
-                </div><!-- End .summary -->
-              </aside><!-- End .col-lg-3 -->
-            </div><!-- End .row -->
+                </div>
+              </aside>
+            </div>
           </form>
-        </div><!-- End .container -->
+        </div>
         {% else %}
         <h2 class="text-center text-warning">You have no active order</h2>
         {% endif %}
-
-      </div><!-- End .checkout -->
-    </div><!-- End .page-content -->
+      </div>
+    </div>
+    <!-- End .page-content -->
   </main><!-- End .main -->
 
 </div><!-- End .page-wrapper -->
@@ -220,7 +225,7 @@
 
 
 
-
+{% comment %}
 <script>
   // var price = document.getElementById('10').value;
   // console.log(price);
@@ -290,5 +295,9 @@
     },
   });
 </script>
+{% endcomment %}
+
+
+
 
 {% endblock %}
