@@ -753,24 +753,7 @@
               </div>
             </div>
           </div>
-          <div class="box no-shadow box-bordered border-light">
-            <div class="box-header">
-              <h4 class="box-title">Resent Contact Data</h4>
-            </div>
-            <div class="box-body p-5">
-              <div class="media-list media-list-hover">
 
-                {% for c in contact_data_list %}
-                <a class="media media-single mb-10 p-0 rounded-0" href="{% url 'contact-detail' c.pk %}">
-                  <div class="media-body ps-15 bs-5 rounded border-primary">
-                    <p>{{ c.message|truncatechars_html:50 }}</p>
-                    <span class="text-fade">by {{ c.name }}</span>
-                  </div>
-                </a>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
 
           {% if request.user.is_vendor and request.user.is_active %}
           <div class="box no-shadow box-bordered border-light">
@@ -833,6 +816,24 @@
             </div>
           </div>
           {% elif request.user.is_staff and request.user.is_superuser and request.user.is_active %}
+          <div class="box no-shadow box-bordered border-light">
+            <div class="box-header">
+              <h4 class="box-title">Resent Contact Data</h4>
+            </div>
+            <div class="box-body p-5">
+              <div class="media-list media-list-hover">
+
+                {% for c in contact_data_list %}
+                <a class="media media-single mb-10 p-0 rounded-0" href="{% url 'contact-detail' c.pk %}">
+                  <div class="media-body ps-15 bs-5 rounded border-primary">
+                    <p>{{ c.message|truncatechars_html:50 }}</p>
+                    <span class="text-fade">by {{ c.name }}</span>
+                  </div>
+                </a>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
 
           {% elif request.user.is_staff and request.user.is_active %}
           <div class="box no-shadow box-bordered border-light">
