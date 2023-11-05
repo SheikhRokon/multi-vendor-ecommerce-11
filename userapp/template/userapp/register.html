@@ -4,23 +4,31 @@
 
 {% block css %}
 <style>
-    .tc_checkbox{
+    .tc_checkbox {
         margin-top: 6px;
         padding-right: 5px;
     }
-    .form-check-label{
+
+    .form-check-label {
         padding-left: 7px;
     }
-    #hint_id_password1, #hint_id_password2{
+
+    #hint_id_password1,
+    #hint_id_password2 {
         margin-top: 7px;
     }
-    #div_id_password1, #div_id_password2{ margin-bottom: 10px !important;}
-    #hint_id_password1 ul{
+
+    #div_id_password1,
+    #div_id_password2 {
+        margin-bottom: 10px !important;
+    }
+
+    #hint_id_password1 ul {
         margin-bottom: 0;
     }
 </style>
 {% endblock css %}
-    
+
 
 
 {% block content %}
@@ -30,12 +38,23 @@
             <div class="col-sm-10 col-md-6 col-lg-5 shadow p-4">
                 <h4 class="">Create an account.</h4>
                 <hr class="mt-1">
-                <form action=""  method="post">
+                <form action="" method="post">
                     {% csrf_token %}
                     {{ form|crispy }}
 
                     <button class="btn btn-primary btn-block">Create an account.</button>
                 </form>
+                {% if form.errors %}
+                <div class="errors">
+                    <ul>
+                        {% for field in form %}
+                        {% for error in field.errors %}
+                        <li>{{ field.label }}: {{ error }}</li>
+                        {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
                 <div class="my-2">
                     Already have an account?<a href="{% url 'customer-login' %}"> Login </a>Now.
                 </div>
@@ -44,4 +63,3 @@
     </div>
 </section>
 {% endblock %}
-
