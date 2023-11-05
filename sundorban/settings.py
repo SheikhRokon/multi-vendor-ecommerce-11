@@ -74,7 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                
+
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
                 'daseboard.context_processors.order_count',
@@ -83,6 +83,7 @@ TEMPLATES = [
                 'daseboard.context_processors.contact_data_list',
                 'daseboard.context_processors.rating_list_view',
                 'daseboard.context_processors.order_information',
+                'daseboard.context_processors.unverified_vendor_count',
             ],
         },
     },
@@ -141,7 +142,7 @@ AUTH_PASSWORD_VALIDATORS = [
 #     'social_core.backends.facebook.FacebookOAuth2',
 #     'django.contrib.auth.backends.ModelBackend',
 #     'userapp.backends.PhoneAuthenticationBackend',
-#     'allauth.account.auth_backends.AuthenticationBackend',   
+#     'allauth.account.auth_backends.AuthenticationBackend',
 # ]
 
 # Internationalization
@@ -159,9 +160,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT =os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = 'media/'
-MEDIA_ROOT =os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -170,10 +171,9 @@ AUTH_USER_MODEL = 'userapp.User'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'home' 
-LOGIN_URL = 'login' 
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-
 
 
 SITE_ID = 1
@@ -196,10 +196,10 @@ LOGIN_REDIRECT_URL = '/'
 
 # Additional configuration settings
 SOCIALACCOUNT_QUERY_EMAIL = True
-ACCOUNT_LOGOUT_ON_GET= True
+ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
-SOCIALACCOUNT_LOGIN_ON_GET=True
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
 # ssl id
 STORE_ID = 'belal623611b3022c6'
@@ -208,17 +208,14 @@ STORE_PASS = 'belal623611b3022c6@ssl'
 
 SOCIAL_AUTH_FACEBOOK_KEY = '444525337668511'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = 'd8c7381c0aa478cec5cc2c2c64f41007'  # App Secret
-SOCIAL_AUTH_FACEBOOK_API_VERSION ='2.11'
+SOCIAL_AUTH_FACEBOOK_API_VERSION = '2.11'
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-  'fields': 'name, email, age_range'
+    'fields': 'name, email, age_range'
 }
 
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/'
-
-
-
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -228,8 +225,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'password-reset@evazu.com'
 EMAIL_HOST_PASSWORD = 'password-reset'
 DEFAULT_FROM_EMAIL = 'password-reset@evazu.com'
-
-
 
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
@@ -242,9 +237,12 @@ CKEDITOR_CONFIGS = {
             ['Source', '-', 'Bold', 'Italic']
         ],
         'toolbar_YourCustomToolbarConfig': [
-            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
-            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'document', 'items': [
+                'Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': [
+                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': [
+                'Find', 'Replace', '-', 'SelectAll']},
             {'name': 'forms',
              'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
                        'HiddenField']},
@@ -259,7 +257,8 @@ CKEDITOR_CONFIGS = {
             {'name': 'insert',
              'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
             '/',
-            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'styles', 'items': [
+                'Styles', 'Format', 'Font', 'FontSize']},
             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
             {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
             {'name': 'about', 'items': ['About']},
@@ -281,7 +280,7 @@ CKEDITOR_CONFIGS = {
         # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
-            'uploadimage', # the upload image feature
+            'uploadimage',  # the upload image feature
             # your extra plugins here
             'div',
             'autolink',

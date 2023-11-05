@@ -52,6 +52,7 @@ def dashboard_home(request):
         'complete_order': complete_order,
         'vendor_product_count': vendor_product_count,
 
+
     }
     return render(request, 'dashboard/index.html', context)
 
@@ -61,9 +62,15 @@ def dashboard_home(request):
 def product_list(request):
     user = request.user
     User = get_user_model()
+    all_products = Product.objects.all()
     if User.objects.filter(id=user.id).exists():
         products = Product.objects.filter(user=user)
-    return render(request, 'dashboard/product/product-list.html', {'products': products})
+
+    context = {
+        'products': products,
+        'all_products': all_products,
+    }
+    return render(request, 'dashboard/product/product-list.html', context)
 
 
 # product update
