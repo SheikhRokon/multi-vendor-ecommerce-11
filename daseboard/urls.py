@@ -9,7 +9,8 @@ urlpatterns = [
 
     # product
     path('dashboard/product-list', product_list, name='dashboard-product-list'),
-    path('dashboard/all_product_list', all_product_list, name='dashboard-all_product_list'),
+    path('dashboard/all_product_list', all_product_list,
+         name='dashboard-all_product_list'),
     path('dashboard/product/add/', ProductCreate.as_view(), name='create_product'),
     path('dashboard/product-delete/<int:pk>',
          product_delete, name='dashboard-product-delete'),
@@ -24,7 +25,10 @@ urlpatterns = [
 
 
     # order
+    path('dashboard/all_order_list', all_order_list, name='all_order_list'),
     path('dashboard/all-order', all_order, name='all-order'),
+    path('dashboard/all_OrderDetails/<int:pk>',
+         all_OrderDetails, name='all_OrderDetails'),
     path('dashboard/order-details/<int:pk>',
          OrderDetails, name='order-details'),
     path('dashboard/order-update/<int:pk>', order_update, name='order-update'),

@@ -1,0 +1,97 @@
+{% extends 'dashboard/base.html' %}
+
+{% block dashboard %}
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <div class="container-full">
+    <!-- Content Header (Page header) -->
+    <div class="content-header d-flex">
+      <div class="me-auto mt-2">
+        <h4 class="page-title">Order List</h4>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="row">
+        <div class="col-12">
+          <div class="box">
+            <div class="box-body">
+              <div class="table-responsive">
+                <table id="productorder" class="table table-hover no-wrap product-order" data-page-size="10">
+                  <thead>
+                    <tr>
+                      <th>Order-Id</th>
+                      <th>Customer-Name</th>
+                      <th>Vendor ID</th>
+                      <th>Total-Amount</th>
+                      <th>Order-Date</th>
+                      <th>Status</th>
+                      <th>Parcel</th>
+                      <th>action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for p in order %}
+                    <tr>
+                      <td><a href=""><strong>{{ p.orderId }}</strong></a></td>
+                      <td>{{ p.user.first_name }} {{ p.user.last_name }}</td>
+                      <td>{{ p.user.id }}</td>
+                      <td>{{p.total_order_amount }}</td>
+                      <td>{{ p.ordered_date }}</td>
+
+                      {% if p.order_status == 'pending' %}
+                      <td><span class="badge bg-primary">{{p.order_status }}</span></td>
+                      {% elif p.order_status == 'processing' %}
+                      <td><span class="badge bg-info">{{p.order_status }}</span></td>
+                      {% elif p.order_status == 'on the way' %}
+                      <td><span class="badge bg-warning">{{p.order_status }}</span></td>
+                      {% elif p.order_status == 'complete' %}
+                      <td><span class="badge bg-success">{{p.order_status }}</span></td>
+                      {% elif p.order_status == 'cancel' %}
+                      <td><span class="badge bg-danger">{{p.order_status }}</span></td>
+                      {% endif %}
+                      <td>
+                        {% if p.others_transport_trakink_url %}
+                        Others Transport
+                        {% elif p.redx_percel_traking_number %}
+                        Redx Transport
+                        {% else %}
+                        <a href="{% url 'create-redx-parcel' p.pk %}" class="text-info me-10" data-bs-toggle="tooltip"
+                          data-bs-original-title="create">
+                          redx_percel_create
+                        </a>
+                        {% endif %}
+                      </td>
+                      <td>
+                        <a href="{% url 'order-update' p.pk %}" class="text-info me-10" data-bs-toggle="tooltip"
+                          data-bs-original-title="Edit">
+                          <i class="ti-marker-alt"></i>
+                        </a>
+                        <a href="{% url 'all_OrderDetails' p.pk %}" class="text-primary" data-bs-original-title="View"
+                          data-bs-toggle="tooltip">
+                          <i class="ti-eye"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<!-- /.content-wrapper -->
+
+
+
+{% endblock dashboard %}

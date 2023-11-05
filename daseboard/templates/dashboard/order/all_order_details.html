@@ -25,8 +25,7 @@
                                 <img class="me-10 rounded-circle avatar avatar-xl b-2 border-primary"
                                     src="{{ order.user.profile.image.url }}" alt="">
                                 <div>
-                                    <h4 class="mb-0">{{ order.user.first_name }}
-                                        {{ order.user.last_name}}</h4>
+                                    <h4 class="mb-0">{{ order.user.first_name }} {{ order.user.last_name }}</h4>
                                     <span class="fs-14 text-info">Customer</span>
                                 </div>
                             </div>
@@ -58,7 +57,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for p in order_items_vendor %}
+                                        {% for p in order_items %}
                                         <tr>
                                             <td><img src="{{ p.item.image.url }}" alt="" width="80"></td>
                                             <td>
@@ -74,7 +73,7 @@
                                             <td width="70">
                                                 {{ p.quantity }}
                                             </td>
-                                            <td width="100" align="center" class="fw-900">৳{{ p.get_subtotal }}</td>
+                                            <td width="100" class="fw-900">৳{{ p.get_subtotal }}</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -165,8 +164,7 @@
                                 </tbody>
                             </table><!-- End .table table-summary -->
 
-                            <p style="color:black; text-align: center;">Payment Method -
-                                {{ order.payment_option}}</p>
+                            <p style="color:black; text-align: center;">Payment Method - {{order.payment_option}}</p>
                         </div><!-- End .summary -->
                     </div>
                     <div class="box">
@@ -191,7 +189,7 @@
                                                     <p>Phone number</p>
                                                 </div>
                                                 <div class="col-6" style="text-align:right ;">
-                                                    <p>{{ order.shipping_address.phone}}</p>
+                                                    <p>{{order.shipping_address.phone}}</p>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -199,7 +197,7 @@
                                                     <p>Full address</p>
                                                 </div>
                                                 <div class="col-6" style="text-align:right ;">
-                                                    <p>{{ order.shipping_address.full_address}} </p>
+                                                    <p>{{order.shipping_address.full_address}} </p>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -207,7 +205,7 @@
                                                     <p>Shiping area</p>
                                                 </div>
                                                 <div class="col-6" style="text-align:right ;">
-                                                    <p>{{ order.shipping_address.shiping_area}}</p>
+                                                    <p>{{order.shipping_address.shiping_area}}</p>
                                                 </div>
                                             </div>
                                             {% if order.shipping_address.order_note %}
@@ -216,7 +214,7 @@
                                                     <p>Order note</p>
                                                 </div>
                                                 <div class="col-6" style="text-align:right ;">
-                                                    <p>{{ order.shipping_address.order_note}}</p>
+                                                    <p>{{order.shipping_address.order_note}}</p>
                                                 </div>
                                             </div>
                                             {% endif %}

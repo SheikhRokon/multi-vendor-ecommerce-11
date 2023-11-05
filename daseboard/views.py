@@ -1283,20 +1283,45 @@ def all_order(request):
 
 @login_required
 @daseboard_required
-def OrderDetails(request, pk):
+def all_order_list(request):
+    try:
+        order = Order.objects.filter(ordered=True).order_by(
+            '-id')  # Superadmin order
+        context = {
+            'order': order,
+        }
+        return render(request, 'dashboard/order/all_order_list.html', context)
+
+    except ObjectDoesNotExist:
+        pass
+
+
+@login_required
+@daseboard_required
+def all_OrderDetails(request, pk):
     order = Order.objects.get(pk=pk)
     order.order_read_status = True
     order.save()
-    order_items = OrderItem.objects.filter(order=order)
 
-    user = request.user
-    order_d_vendor = Order.objects.get(user=user, pk=pk)
-    order_d_vendor.order_read_status = True
-    order_d_vendor.save()
-    order_items_vendor = OrderItem.objects.filter(user=user, order=order)
+    order_items = OrderItem.objects.filter(order=order)
     context = {
         'order': order,
         'order_items': order_items,
+    }
+    return render(request, 'dashboard/order/all_order_details.html', context)
+
+
+@login_required
+@daseboard_required
+def OrderDetails(request, pk):
+    user = request.user
+    order = get_object_or_404(Order, user=user, pk=pk)
+    order.order_read_status = True
+    order.save()
+
+    order_items_vendor = OrderItem.objects.filter(order=order)
+    context = {
+        'order': order,
         'order_items_vendor': order_items_vendor,
     }
     return render(request, 'dashboard/order/order-details.html', context)
