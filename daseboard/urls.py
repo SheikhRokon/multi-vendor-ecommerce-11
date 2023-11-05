@@ -9,6 +9,7 @@ urlpatterns = [
 
     # product
     path('dashboard/product-list', product_list, name='dashboard-product-list'),
+    path('dashboard/all_product_list', all_product_list, name='dashboard-all_product_list'),
     path('dashboard/product/add/', ProductCreate.as_view(), name='create_product'),
     path('dashboard/product-delete/<int:pk>',
          product_delete, name='dashboard-product-delete'),
@@ -244,5 +245,6 @@ urlpatterns = [
          vendor_profile_update, name='profile-update'),
     path('dashboard/vendor_profile_delete/<int:pk>',
          vendor_profile_delete, name='profile-delete'),
+
 
 ]

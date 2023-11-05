@@ -62,15 +62,23 @@ def dashboard_home(request):
 def product_list(request):
     user = request.user
     User = get_user_model()
-    all_products = Product.objects.all()
     if User.objects.filter(id=user.id).exists():
         products = Product.objects.filter(user=user)
 
     context = {
         'products': products,
-        'all_products': all_products,
     }
     return render(request, 'dashboard/product/product-list.html', context)
+
+
+@login_required
+@daseboard_required
+def all_product_list(request):
+    all_product = Product.objects.all()
+    context = {
+        'all_product': all_product,
+    }
+    return render(request, 'dashboard/product/all_product_list.html', context)
 
 
 # product update
