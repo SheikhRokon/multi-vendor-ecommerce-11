@@ -51,7 +51,9 @@
                                     <thead>
                                         <tr>
                                             <th>Image</th>
-                                            <th style="min-width: 300px;">Product Name</th>
+                                            <th>Product Name</th>
+                                            <th>Color</th>
+                                            <th>Size</th>
                                             <th>Price</th>
                                             <th>Quantity</th>
                                             <th style="text-align:center">Total</th>
@@ -64,6 +66,22 @@
                                             <td>
                                                 {{ p.item.product_name }}
                                             </td>
+                                            {% for q in p.variation.all %}
+                                            <td>
+                                                <div>
+                                                    {% if q.category == 'color' %}
+                                                    <span class="color-col">{{ q.title }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    {% if q.category == 'size' %}
+                                                    <span class="color-col">{{ q.title }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                            {% endfor %}
                                             <td>
                                                 {% if p.item.discount_price %}
                                                 ৳{{ p.item.discount_price }}
@@ -71,10 +89,10 @@
                                                 ৳{{ p.item.price }}
                                                 {% endif %}
                                             </td>
-                                            <td width="70">
+                                            <td width="70" class="text-center">
                                                 {{ p.quantity }}
                                             </td>
-                                            <td width="100" align="center" class="fw-900">৳{{ p.get_subtotal }}</td>
+                                            <td width="100" class="fw-900 text-center">৳{{ p.get_subtotal }}</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
