@@ -185,16 +185,24 @@
                   <div class="card">
                     <div class="card-header mb-2" id="heading-3">
                       <h2 class="card-title">
-                        <label for="id_payment_option_0">
+                        <label for="id_payment_option_0" class="d-flex align-items-center my-1">
                           <input type="radio" name="payment_option" value="Cash On Delivery" class="collapsed"
                             required="" id="id_payment_option_0">
-                          Cash On Delivery
+                          <span>Cash On Delivery</span>
+                          <img class="ml-2" src="{% static 'store/images/bkash.jpg' %}" style='height:30px;'
+                            alt="Bkash Logo">
                         </label>
-                        <label for="bKash_button" class="d-flex my-1">
+
+                        <div class="d-flex my-1">
                           <input type="radio" name="payment_option" value="Bkash" class="collapsed mr-1" required=""
                             id="bKash_button">
-                          <img class="my-auto" src="{% static 'store/images/bkash.jpg' %}" style='height:30px;'>
-                        </label>
+                          <label for="bKash_button" class="d-flex align-items-center">
+                            <span>Pay On Bkash</span>
+                            <img class="ml-2" src="{% static 'store/images/bkash.jpg' %}" style='height:30px;'
+                              alt="Bkash Logo">
+                          </label>
+                        </div>
+
                       </h2>
                     </div>
                     <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
