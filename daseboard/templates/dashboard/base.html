@@ -40,7 +40,7 @@
         <!-- logo-->
         <div class="logo-lg">
           {% for l in request|logo %}
-          <span class="light-logo"><img src="{{ l.image.url }}" alt="logo" style="width: 150px;"></span>
+          <span class="light-logo"><img src="{{ l.image.url }}" alt="logo" style="width: 50px;"></span>
           {% endfor %}
         </div>
       </a>
@@ -147,7 +147,7 @@
                   {% for o in order_list %}
 
                   <li>
-                    <a href="{% url 'order-details' o.pk %}">
+                    <a href="#">
                       <i class="fa fa-list text-info"></i>OrderID : {{ o.id }}
                     </a>
                   </li>
@@ -538,9 +538,7 @@
                 <li><a href="{% url 'category-list' %}"><i class="icon-Commit"><span class="path1"></span><span
                         class="path2"></span></i>Categories List</a>
                 </li>
-                <li><a href="{% url 'category-add' %}"><i class="icon-Commit"><span class="path1"></span><span
-                        class="path2"></span></i>Add Category</a>
-                </li>
+
                 <li><a href="{% url 'brand-list' %}"><i class="icon-Commit"><span class="path1"></span><span
                         class="path2"></span></i>Brand List</a></li>
                 <li><a href="{% url 'brand-add' %}"><i class="icon-Commit"><span class="path1"></span><span

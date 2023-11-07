@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'paymentApp',
     'django_countries',
     'crispy_bootstrap5',
-    'social_django',
+    # 'social_django',
     'other_vendors',
 ]
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

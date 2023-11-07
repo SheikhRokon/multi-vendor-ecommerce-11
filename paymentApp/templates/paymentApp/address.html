@@ -2,7 +2,7 @@
 
 
 {% block content %}
- <div class="page-wrapper">
+<div class="page-wrapper">
     <main class="main">
         <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
             <div class="container">
@@ -21,7 +21,7 @@
 
         <div class="page-content">
             <div class="checkout">
-                {% if order.items.all %} 
+                {% if order.items.all %}
                 <div class="container-fluid">
                     <form action="#" method="POST">
                         {% csrf_token %}
@@ -33,7 +33,7 @@
 
                                 <label>Phone *</label>
                                 {{ form.phone }}
-                                
+
                                 <label>Choice Shipping Area *</label>
                                 <div class="border bg-light px-3 pt-1 mb-1">
                                     {{ form.shiping_area }}
@@ -53,26 +53,28 @@
                                         <thead>
                                             <tr>
                                                 <th class="col-6">Product</th>
-                                                <th class="col-3" >Total</th>
+                                                <th class="col-3">Total</th>
                                                 <th class="col-3">Action</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
-                                            
+
                                             {% for p in order.items.all %}
                                             <tr>
-                                                <td><a href="#">{{ p.item.product_name }},<br>                                          
-                                                {% if p.item.discount_price %}
-                                                    {{ p.item.discount_price }} TK                                              
-                                                {% else %}
-                                                    {{ p.item.price }} TK
-                                                {% endif %}	 
-                                                    X {{ p.quantity }} 
-                                                </a>
+                                                <td><a href="#">{{ p.item.product_name }},<br>
+                                                        {% if p.item.discount_price %}
+                                                        {{ p.item.discount_price }} TK
+                                                        {% else %}
+                                                        {{ p.item.price }} TK
+                                                        {% endif %}
+                                                        X {{ p.quantity }}
+                                                    </a>
                                                 </td>
                                                 <td>{{ p.get_subtotal }} TK</td>
-                                                <td class="remove-col"><a href="{% url 'remove-form-cart' p.item.slug %}" class="btn-remove"><i class="icon-close"></i></a></td>
+                                                <td class="remove-col"><a
+                                                        href="{% url 'remove-form-cart' p.item.slug %}"
+                                                        class="btn-remove"><i class="icon-close"></i></a></td>
                                             </tr>
 
                                             {% endfor %}
@@ -82,11 +84,9 @@
                                                 <td colspan="4"> {{ order.get_total }} TK</td>
                                             </tr><!-- End .summary-subtotal -->
                                             <tr class="col-12">
-                                                <td>Shipping Charge</td>
+                                                <td>Delivery Charge</td>
                                                 <td colspan="4" class="col-9" style="text-align: left ; ">
-                                                    <p>Inside Dhaka 80 TK</p>
-                                                    <p>Outside Dhaka 95 TK</p>
-                                                    <p>Only Chittagong District 50 TK</p>
+                                                    <p>All Bangladesh 130 TK</p>
                                                 </td>
                                             </tr>
                                             {% if order.coupon %}
@@ -98,17 +98,21 @@
                                         </tbody>
                                     </table><!-- End .table table-summary -->
                                     <div class="card">
-                                            <div class="card-header" id="heading-3">
-                                                <h2 class="card-title">
-                                                    {{ payment_method.payment_option }}
-                                                </h2>
-                                            </div><!-- End .card-header -->
-                                            <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
-                                                <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
-                                                </div><!-- End .card-body -->
-                                            </div><!-- End .collapse -->
-                                        </div><!-- End .card -->
-                                    <button style="background-color: #eb5525; color: white;" type="submit" class="btn  btn-order btn-block">
+                                        <div class="card-header" id="heading-3">
+                                            <h2 class="card-title">
+                                                {{ payment_method.payment_option }}
+                                            </h2>
+                                        </div><!-- End .card-header -->
+                                        <div id="collapse-3" class="collapse" aria-labelledby="heading-3"
+                                            data-parent="#accordion-payment">
+                                            <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor sit
+                                                amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis
+                                                eros.
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .collapse -->
+                                    </div><!-- End .card -->
+                                    <button style="background-color: #eb5525; color: white;" type="submit"
+                                        class="btn  btn-order btn-block">
                                         <span class="">CONTINUE</span>
                                     </button>
                                 </div><!-- End .summary -->
@@ -117,9 +121,9 @@
                     </form>
                 </div><!-- End .container -->
                 {% else %}
-                  <h2 class="text-center text-warning">You have no active order</h2>
+                <h2 class="text-center text-warning">You have no active order</h2>
                 {% endif %}
-                
+
             </div><!-- End .checkout -->
         </div><!-- End .page-content -->
     </main><!-- End .main -->
@@ -129,6 +133,5 @@
 
 
 
- 
-{% endblock  %}
-    
+
+{% endblock %}

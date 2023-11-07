@@ -108,11 +108,13 @@
 					<table class="table table-cart table-mobile">
 						<thead>
 							<tr>
-								<th>Product</th>
-								<th>Price</th>
-								<th>Quantity</th>
-								<th>Total</th>
-								<th>Action</th>
+								<th class="pr-4 pr-lg-5">Product</th>
+								<th class="pr-4 pr-lg-5">Color</th>
+								<th class="pr-4 pr-lg-5">Size</th>
+								<th class="pr-4 pr-lg-5">Price</th>
+								<th class="pr-4 pr-lg-5">Quantity</th>
+								<th class="pr-4 pr-lg-5">Total</th>
+								<th class="pr-4 pr-lg-5">Action</th>
 							</tr>
 						</thead>
 
@@ -127,12 +129,29 @@
 											</a>
 										</figure>
 
-										<h3 class="product-title">
+										<h3 class="product-title col-sm-12 col-md-6 col-lg-6">
 											<a href="{% url 'product-detail' p.item.slug %}">
 												{{ p.item.product_name}}</a>
 										</h3><!-- End .product-title -->
 									</div><!-- End .product -->
 								</td>
+
+								{% for q in p.variation.all %}
+								<td>
+									<div>
+										{% if q.category == 'color' %}
+										<span class="color-col text-dark  text-center">{{ q.title }}</span>
+										{% endif %}
+									</div>
+								</td>
+								<td>
+									<div>
+										{% if q.category == 'size' %}
+										<span class="color-col text-dark  text-center">{{ q.title }}</span>
+										{% endif %}
+									</div>
+								</td>
+								{% endfor %}
 								<td style="color:rgb(0 0 0);">
 									{% if p.item.discount_price %}
 									৳{{ p.item.discount_price }}
