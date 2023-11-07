@@ -152,11 +152,11 @@
                             </div>
                             <div class="col-8">
                               {% if order.shipping_address.shiping_area == 'Inside Dhaka' %}
-                              <p>+ 80 TK</p>
+                              <p>+ 130 TK</p>
                               {% elif order.shipping_address.shiping_area == 'Outside Dhaka' %}
-                              <p>+ 95 TK</p>
+                              <p>+ 130 TK</p>
                               {% elif order.shipping_address.shiping_area == 'Only Chittagong District' %}
-                              <p>+ 50 TK</p>
+                              <p>+ 130 TK</p>
                               {% endif %}
                             </div>
                           </div>
@@ -193,8 +193,7 @@
                         <label for="bKash_button" class="d-flex my-1">
                           <input type="radio" name="payment_option" value="Bkash" class="collapsed mr-1" required=""
                             id="bKash_button">
-                          <img class="my-auto" src="{% static 'store/images/BKash_Logo-700x287.png' %}"
-                            style='height:30px;'>
+                          <img class="my-auto" src="{% static 'store/images/bkash.jpg' %}" style='height:30px;'>
                         </label>
                       </h2>
                     </div>

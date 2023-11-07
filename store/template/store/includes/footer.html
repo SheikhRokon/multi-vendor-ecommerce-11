@@ -1,24 +1,29 @@
 {% load static %}
 {% load logo %}
 <style>
-    .footer-middle{
+    .footer-middle {
         background-color: #313154 !important;
     }
-    .footer-middle h4{
+
+    .footer-middle h4 {
         color: white !important;
 
     }
-    .footer-middle a, .footer-middle p{
+
+    .footer-middle a,
+    .footer-middle p {
         color: white;
         font-size: 11px;
         font-weight: 400;
     }
-    .footer-bottom p{
+
+    .footer-bottom p {
         color: black !important;
         font-weight: 400;
         font-size: 11px;
     }
-    .payment-img img{
+
+    .payment-img img {
         height: 20px;
         padding-top: 2px;
         margin-right: 2px;
@@ -30,15 +35,17 @@
             <div class="row">
                 <div class="col-6 col-lg-3">
                     <h4 class="widget-title">Contact Us</h4>
-                    <p>Call us 9am-11pm (Everyday)</p>
-                    <a href="tel:01345xxxxxx"> Phone : +8801345xxxxxx</a>
-                    <p>Location : xyz, Dhaka, Bangladesh.</p> <br/><br/>
-                    
-                    
-                    <p class="d-flex payment-img"><img class="my-auto" src="{% static 'store/images/bkash.jpg' %}" alt=""> Bkash (Merchant) +8801705xxxxxx</p>
-                    <p class="d-flex payment-img"><img class="my-auto" src="{% static 'store/images/nagad.jpg' %}" alt=""> Nagad (Merchant) +8801805xxxxxx</p>
-                    <p class="d-flex payment-img"><img class="my-auto" src="{% static 'store/images/rocket.jpg' %}" alt=""> Rocket (Merchant) +8801805xxxxxx</p>
-                    <p class="d-flex payment-img"><img class="my-auto" src="{% static 'store/images/bkash.jpg' %}" alt=""> Bkash (Personal) +8801805xxxxxx</p>               
+                    <p>Call us 11am-11pm (Everyday)</p>
+                    <a href="tel:8801601233844"> Phone : +8801601233844</a>
+                    <p>Location : Chittagong,Bangladesh</p> <br /><br />
+
+
+                    <p class="d-flex payment-img"><img class="my-auto" src="{% static 'store/images/bkash.jpg' %}"
+                            alt=""> Bkash (Merchant) +8801701069706</p>
+                    <p class="d-flex payment-img"><img class="my-auto" src="{% static 'store/images/nagad.jpg' %}"
+                            alt=""> Nagad (Personal) 8801821111378</p>
+                    <p class="d-flex payment-img"><img class="my-auto" src="{% static 'store/images/bkash.jpg' %}"
+                            alt=""> Bkash (Personal) +8801821111378</p>
                 </div><!-- End .col-sm-6 -->
 
                 <div class="col-6 col-lg-3">
@@ -49,8 +56,8 @@
                             <li><a href="{% url 'about_us' %}">About Us</a></li>
                             <li><a href="{% url 'privacy-policy' %}">Privacy Policy</a></li>
                             <li><a href="{% url 'terms_conditions' %}">Terms and conditions</a></li>
-                            <li><a href="{% url 'mission' %}">Our Mission</a></li>                          
-                            <li><a href="{% url 'vision' %}">Our Vision</a></li>                          
+                            <li><a href="{% url 'mission' %}">Our Mission</a></li>
+                            <li><a href="{% url 'vision' %}">Our Vision</a></li>
                         </ul>
                     </div>
                 </div>
@@ -61,7 +68,7 @@
                         <ul class="widget-list">
                             <li><a href="{% url 'contact-us' %}">Contact us</a></li>
                             <li><a href="{% url 'returns_policy' %}">Returns Policy</a></li>
-                            <li><a href="{% url 'shipping_delivery' %}">Shipping and Delivery</a></li>                                                     
+                            <li><a href="{% url 'shipping_delivery' %}">Shipping and Delivery</a></li>
                         </ul>
                     </div>
                 </div>
@@ -75,21 +82,27 @@
                     </div>
                 </div>
             </div>
-            </div>
-
         </div>
+
+    </div>
     </div>
 
     <div class="footer-bottom mb-5 mb-md-1 ">
         <div class="container">
-            <p class="footer-copyright">Copyright &copy; {% now 'Y' %}, All Rights Reserved. Developed By Universe Soft Care</p><!-- End .footer-copyright -->
+            <p class="footer-copyright">Copyright &copy; {% now 'Y' %}, All Rights Reserved. Developed By Universe Soft
+                Care</p><!-- End .footer-copyright -->
             <div class="social-icons social-icons-color">
                 <span class="social-label">Social Media</span>
-                <a href="#" class="social-icon social-facebook" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
-                <a href="#" class="social-icon social-twitter" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
-                <a href="#" class="social-icon social-instagram" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
-                <a href="#" class="social-icon social-youtube" title="Youtube" target="_blank"><i class="icon-youtube"></i></a>
-                <a href="#" class="social-icon social-pinterest" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+                <a href="#" class="social-icon social-facebook" title="Facebook" target="_blank"><i
+                        class="icon-facebook-f"></i></a>
+                <a href="#" class="social-icon social-twitter" title="Twitter" target="_blank"><i
+                        class="icon-twitter"></i></a>
+                <a href="#" class="social-icon social-instagram" title="Instagram" target="_blank"><i
+                        class="icon-instagram"></i></a>
+                <a href="#" class="social-icon social-youtube" title="Youtube" target="_blank"><i
+                        class="icon-youtube"></i></a>
+                <a href="#" class="social-icon social-pinterest" title="Pinterest" target="_blank"><i
+                        class="icon-pinterest"></i></a>
             </div><!-- End .soial-icons -->
         </div>
     </div><!-- End .footer-bottom -->

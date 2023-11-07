@@ -94,41 +94,41 @@
     <h3 style="text-align: center; margin-top: 40px ;">Order Summary</h3>
     <tr>
       <th style="border-right: 1px solid #2222; text-align: left;">Total Item Price</th>
-      <th style="text-align: right;">৳{{ order.get_total }} </th>
+      <th style="text-align: right;">{{ order.get_total }} tk </th>
     </tr>
     <tr>
       <th style="border-right: 1px solid #2222; text-align: left;">Delivery Fee</th>
       <th style="text-align: right;">
         {% if order.shipping_address.shiping_area == 'Inside Dhaka' %}
-        + ৳80
+        + 130 tk
         {% elif order.shipping_address.shiping_area == 'Outside Dhaka' %}
-        + ৳95
+        + 130 tk
         {% elif order.shipping_address.shiping_area == 'Only Chittagong District' %}
-        + ৳50
+        + 130 tk
         {% endif %}
       </th>
     </tr>
     {% if order.coupon %}
     <tr>
       <th style="border-right: 1px solid #2222; text-align: left;">Coupon Discount Amount</th>
-      <th style="text-align: right;">- ৳{{ order.coupon.amount }} </th>
+      <th style="text-align: right;">- {{ order.coupon.amount }} tk </th>
     </tr>
     {% endif %}
     <tr>
       <th style="border-right: 1px solid #2222; text-align: left;">Total Amount</th>
-      <th style="text-align: right;">৳{{ order.total_order_amount }} </th>
+      <th style="text-align: right;"> {{ order.total_order_amount }} tk </th>
     </tr>
     <tr>
       <th style="border-right: 1px solid #2222; text-align: left;">Paid Amount</th>
-      <th style="text-align: right;"> ৳{{ order.paid_amount }} </th>
+      <th style="text-align: right;"> {{ order.paid_amount }} tk </th>
     </tr>
     <tr>
       <th style="border-right: 1px solid #2222; text-align: left;">Due Amount</th>
-      <th style="text-align: right;">৳{{ order.due_amount }} </th>
+      <th style="text-align: right;"> {{ order.due_amount }} tk</th>
     </tr>
     <tr>
       <th style="border-right: 1px solid #2222; text-align: left;">Payment Method</th>
-      <th style="text-align: right;">৳{{order.payment_option}}</th>
+      <th style="text-align: right;"> {{order.payment_option}}</th>
     </tr>
   </table>
 
