@@ -18,7 +18,7 @@ urlpatterns =[
     path('products/price-range-filtering/<pk>/', pricerangefiltering, name='pricerange-filtering'),
     path('add-to-cart/<slug>/', login_required(add_to_cart,login_url='/customer-login/'), name='add-to-cart'),
     path('buy-now/<slug>/',login_required(buy_now,login_url='/customer-login/') , name='buy-now'),
-    path('remove-form-cart/<slug>/', remove_form_cart, name='remove-form-cart'),
+    path('remove-form-cart/<slug>/', remove_from_cart, name='remove-form-cart'),
     path("wish_list/",login_required(wish_list,login_url='/customer-login/'), name="wish-list"),
     path('add_to_wishlist/<slug>',login_required(add_to_wishlist,login_url='/customer-login/'), name='add-to-wishlist'),
     path('delete_wish_list/<slug>', delete_wish_list, name='delete-wish-list'),
@@ -31,8 +31,8 @@ urlpatterns =[
     path('ordered/product/detail/<int:pk>/', Order_Item_Details, name='order-item-detail'),
     path("PrductQuantityIncrement/<slug>", PrductQuantityIncrement.as_view(), name="Prduct-Quantity-Increment"),
     path("PrductQuantityDecrementr/<slug>", PrductQuantityDecrementr.as_view(), name="Prduct-Quantity-Decrementr"),
-
-
+    
+   
     path('profile-dashboard', login_required(profile_dashboard,login_url='/customer-login/'), name='profile-dashboard'),
     path('campaign/products/<pk>/', campaign_product_filtering, name='campaign-product'),
     path('order_pdf_view/<pk>',render_order_pdf_view, name='render-order-pdf-view'),
