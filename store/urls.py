@@ -31,8 +31,8 @@ urlpatterns =[
     path('ordered/product/detail/<int:pk>/', Order_Item_Details, name='order-item-detail'),
     path("PrductQuantityIncrement/<slug>", PrductQuantityIncrement.as_view(), name="Prduct-Quantity-Increment"),
     path("PrductQuantityDecrementr/<slug>", PrductQuantityDecrementr.as_view(), name="Prduct-Quantity-Decrementr"),
-
-
+    
+   
     path('profile-dashboard', login_required(profile_dashboard,login_url='/customer-login/'), name='profile-dashboard'),
     path('campaign/products/<pk>/', campaign_product_filtering, name='campaign-product'),
     path('order_pdf_view/<pk>',render_order_pdf_view, name='render-order-pdf-view'),
