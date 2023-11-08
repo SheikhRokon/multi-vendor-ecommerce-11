@@ -101,6 +101,10 @@
 			</div>
 		</div>
 		<div class="col-md-9">
+			{% if out_of_stock %}
+				<h5 class="text-danger text-center">Please remove out of stock products from this card</h5>
+			{% else %}
+			{% endif %}
 			<h5>Cart Summary</h5>
 			{% if order.items.all %}
 			<div class="row">
@@ -113,6 +117,7 @@
 								<th class="pr-4 pr-lg-5">Size</th>
 								<th class="pr-4 pr-lg-5">Price</th>
 								<th class="pr-4 pr-lg-5">Quantity</th>
+								<th class="pr-4 pr-lg-5">Stock</th>
 								<th class="pr-4 pr-lg-5">Total</th>
 								<th class="pr-4 pr-lg-5">Action</th>
 							</tr>
@@ -169,6 +174,11 @@
 												class="fa-solid fa-plus"></i></a>
 									</div><!-- End .cart-product-quantity -->
 								</td>
+								{% if p.item.stock_quantity > 0 %}
+									<td class=""><p class="in-stock">In stock</p></td>
+								{% else %}
+									<td class=""><p class="out-of-stock">Out of stock</p></td>
+								{% endif %}
 								<td style="color:rgb(0 0 0);">৳{{ p.get_subtotal }} <span>
 										{% if p.item.discount_price %}
 										saving(৳{{ p.saving_price }} )<br>{{ p.saving_percent|floatformat:"2" }}%
@@ -220,8 +230,21 @@
 							</tbody>
 						</table><!-- End .table table-summary -->
 
-						<a style="background-color:#eb5525 ;color: white;" href="{% url 'address' %}"
-							class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
+						
+						{% if out_of_stock %}
+							<p class="text-danger text-center">Please remove out of stock products from this card</p>
+						{% else %}
+							<a style="background-color:#eb5525; color: white;" href="{% url 'address' %}" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
+						{% endif %}
+
+					
+
+					
+
+
+							
+
+						
 					</div><!-- End .summary -->
 
 					<a style="background-color:white ;color: #eb5525;" href="{% url 'shop' %}"

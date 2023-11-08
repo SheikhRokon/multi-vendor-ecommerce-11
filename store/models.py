@@ -92,17 +92,13 @@ class PriceRange(models.Model):
 
 
 class Product(models.Model):
-    user = models.ForeignKey(
-        User, related_name='products_models', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='products_models', on_delete=models.CASCADE)
     product_name = models.CharField(max_length=100)
     product_code = models.CharField(max_length=150)
     slug = models.SlugField(max_length=100, blank=True, null=True, unique=True)
-    categoris = models.ForeignKey(
-        ProductCategory, verbose_name='Product Category', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='ProductImg',
-                              default='ProductImg/noimg.jpg')
-    hover_image = models.ImageField(
-        upload_to='ProductImg', default='noimg.jpg', blank=True, null=True)
+    categoris = models.ForeignKey( ProductCategory, verbose_name='Product Category', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='ProductImg', default='ProductImg/noimg.jpg')
+    hover_image = models.ImageField(upload_to='ProductImg', default='noimg.jpg', blank=True, null=True)
     price = models.IntegerField()
     discount_price = models.IntegerField(blank=True, null=True)
     product_purchase_price = models.IntegerField()
@@ -111,12 +107,9 @@ class Product(models.Model):
     aditional_discription = RichTextField(blank=True, null=True)
     stock_quantity = models.PositiveIntegerField()
     show_status = models.BooleanField(default=False)
-    flash_sale_add_and_expire_date = models.DateTimeField(
-        blank=True, null=True)
-    brand = models.ForeignKey(
-        Brand, on_delete=models.CASCADE, blank=True, null=True)
-    price_range = models.ForeignKey(
-        PriceRange, on_delete=models.CASCADE, blank=True, null=True)
+    flash_sale_add_and_expire_date = models.DateTimeField(blank=True, null=True)
+    brand = models.ForeignKey( Brand, on_delete=models.CASCADE, blank=True, null=True)
+    price_range = models.ForeignKey(PriceRange, on_delete=models.CASCADE, blank=True, null=True)
     meta_title = models.CharField(blank=True, null=True, max_length=100)
     meta_keyword = models.CharField(blank=True, null=True, max_length=100)
 
@@ -217,8 +210,7 @@ class Variation(models.Model):
     item = models.ForeignKey(Product, on_delete=models.CASCADE)
     category = models.CharField(max_length=130, choices=VAR_CATEGORIES)
     title = models.CharField(max_length=130)
-    image_for_color = models.ImageField(
-        upload_to='ColorImage', blank=True, null=True)
+    image_for_color = models.ImageField( upload_to='ColorImage', blank=True, null=True)
     active = models.BooleanField(default=True)
     objects = VariationManager()
 
@@ -267,31 +259,23 @@ Order_Status = (
 
 
 class Order(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     items = models.ManyToManyField(OrderItem)
     ordered_date = models.DateTimeField()
-    order_complate_date = models.DateTimeField(
-        auto_now=False, auto_now_add=False, blank=True, null=True)
-    order_status = models.CharField(
-        max_length=150, choices=Order_Status, default='pending')
-    total_order_amount = models.CharField(
-        max_length=150, blank=True, null=True)
+    order_complate_date = models.DateTimeField( auto_now=False, auto_now_add=False, blank=True, null=True)
+    order_status = models.CharField( max_length=150, choices=Order_Status, default='pending')
+    total_order_amount = models.CharField(max_length=150, blank=True, null=True)
     paid_amount = models.CharField(max_length=150, default=0)
     due_amount = models.CharField(max_length=150, default=0)
     ordered = models.BooleanField(default=False)
     orderId = models.CharField(max_length=150, blank=True, null=True)
     paymentId = models.CharField(max_length=150, blank=True, null=True)
-    coupon = models.ForeignKey(
-        'Coupon', on_delete=models.SET_NULL, blank=True, null=True)
-    shipping_address = models.ForeignKey(
-        ShipingAddress, on_delete=models.CASCADE, blank=True, null=True)
+    coupon = models.ForeignKey('Coupon', on_delete=models.SET_NULL, blank=True, null=True)
+    shipping_address = models.ForeignKey( ShipingAddress, on_delete=models.CASCADE, blank=True, null=True)
     payment_option = models.CharField(max_length=150)
     order_read_status = models.BooleanField(default=False)
-    redx_percel_traking_number = models.CharField(
-        max_length=150, blank=True, null=True)
-    others_transport_trakink_url = models.URLField(
-        max_length=200, blank=True, null=True)
+    redx_percel_traking_number = models.CharField( max_length=150, blank=True, null=True)
+    others_transport_trakink_url = models.URLField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.user.email

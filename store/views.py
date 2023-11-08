@@ -335,10 +335,12 @@ def CartSummary(request):
     try:
         # order_item = OrderItem.objects.filter(item.stock_quantity > 0)
         order = Order.objects.get(user=request.user, ordered=False)
+        out_of_stock = any(item.item.stock_quantity <= 0 for item in order.items.all())
         form = CouponCodeForm(request.POST or None)
         context = {
             'order': order,
             'form': form,
+            'out_of_stock': out_of_stock,
         }
         return render(request, 'store/cart_summary.html', context)
 
