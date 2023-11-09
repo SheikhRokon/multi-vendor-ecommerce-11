@@ -87,7 +87,6 @@ class CheckOutView(View):
     def post(self, request, *args, **kwargs):
         payment_obj = Order.objects.filter(user=request.user, ordered=False).first()
         if payment_obj is not None:
-            payment_form = PaymentMethodForm(instance=payment_obj)
             if request.method == 'POST':
                 pay_form = PaymentMethodForm(request.POST, instance=payment_obj)
                 if pay_form.is_valid():
@@ -114,9 +113,8 @@ class CheckOutView(View):
                         messages.success(request, "Your order was successful")
                         return redirect('order-summary')
                     elif pay_method.payment_option == 'Bkash':
-                        # Handle bKash payment option
-                        # You may render a template or return an HttpResponse
-                        return redirect('bkash-payment')  # Replace with your bKash template
+                    #   return format_html('<button id="bKash_button">{}</button>')
+                        return redirect('bkash-payment')
                     else:
                         return redirect('Check-Out')
             else:
@@ -130,12 +128,12 @@ class CheckOutView(View):
 
 import requests
 from django.views.decorators.csrf import csrf_exempt
-app_key = "5nej5keguopj928ekcj3dne8p"
-app_secret = "1honf6u1c56mqcivtc9ffl960slp4v2756jle5925nbooa46ch62"
+app_key = "4f6o0cjiki2rfm34kfdadl1eqq"
+app_secret = "2is7hdktrekvrbljjh44ll3d9l1dtjo4pasmjvs5vl5qr3fug4b"
 
 
 def grant_token_function():
-    token_url = "https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/token/grant"
+    token_url = "https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/token/grant"
 
     payload = {
     "app_key":f"{app_key}",
@@ -145,8 +143,8 @@ def grant_token_function():
     headers = {
         "Content-Type":"application/json",
         "Accept":"application/json",
-        "username":"testdemo",
-        "password":"test%#de23@msdao"
+        "username":"sandboxTokenizedUser02",
+        "password":"sandboxTokenizedUser02@12345"
     }
 
     token_response = requests.post(token_url, json=payload, headers=headers)
@@ -156,7 +154,6 @@ def grant_token_function():
     return id_tokens
 
 id_token = grant_token_function()
-# print(id_token)
 
 def pay(request): 
     return render(request, 'bkash-payment.html')
@@ -167,10 +164,14 @@ from django.http import JsonResponse
 @csrf_exempt
 def create_bkash_payment(request, *args, **kwargs):
     id_token = grant_token_function()
-    create_url = "https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/payment/create"
+    create_url = "https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/create"
     order = Order.objects.get(user=request.user, ordered=False)
+    
     payload = json.dumps({
-        "amount":f"{order.total()}",
+        "mode": "0011",
+        "payerReference": "N/A",
+        "callbackURL":"http://127.0.0.1:8000/execute_bkash",
+        "amount":"1",
         "currency": "BDT",
         "intent": "sale",
         "merchantInvoiceNumber":f"{order.id}",
@@ -192,35 +193,41 @@ def create_bkash_payment(request, *args, **kwargs):
     # return render(request, 'bkash-payment1.html',{'response':response})
     
     PaymentId=response['paymentID'] 
-    createTime=response['createTime']
-    orgName = response['orgName']
+    createTime=response['paymentCreateTime']
+    # orgName = response['orgName']
     transactionStatus = response['transactionStatus']
     amount = response['amount']
     currency = response['currency']
     intent = response['intent']
     merchantInvoiceNumber = response['merchantInvoiceNumber']
     
-    BkashPayment.objects.create(user=request.user,paymentID =  PaymentId, createTime=createTime,orgName=orgName,  transactionStatus =  transactionStatus , amount=amount, currency= currency,  intent= intent,merchantInvoiceNumber=merchantInvoiceNumber )
+    BkashPayment.objects.create(user=request.user,paymentID =  PaymentId, createTime=createTime, transactionStatus =  transactionStatus , amount=amount, currency= currency,  intent= intent,merchantInvoiceNumber=merchantInvoiceNumber )
     
-    return JsonResponse(response)
+    return redirect(response['bkashURL'])
 
 @login_required
 @csrf_exempt
 def execute_bkash_payment(request):
     id_token = grant_token_function()
-    length = BkashPayment.objects.filter(user=1).count()
-    Id = BkashPayment.objects.filter(user=1)[length-1].paymentID    
-    url = f"https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/payment/execute/{Id}"
-
-    headers = {
-        "accept": "application/json",
-        "Authorization": f"{id_token}",
-        "X-APP-Key": "5nej5keguopj928ekcj3dne8p"
+    length = BkashPayment.objects.filter(user=request.user).count()
+    Id = BkashPayment.objects.filter(user=request.user)[length-1].paymentID
+    print(Id)
+    url = f"https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/execute"
+    
+    payload = {
+        "paymentID":f"{Id}",
     }
 
-    response_create = requests.post(url, headers=headers)
+    headers = {
+        "Accept": "application/json",
+        "Authorization": f"{id_token}",
+        "X-APP-Key": f"{app_key}"
+    }
+
+    response_create = requests.post(url, json=payload, headers=headers)
 
     response=json.loads(response_create.content)
+    print(response)
 
     # if(array_key_exists("errorCode",$arr) && $arr['errorCode'] != '0000'){
     #     Session::put('errorMessage', $arr['errorMessage']);
@@ -229,17 +236,20 @@ def execute_bkash_payment(request):
         text = response.get('errorMessage')
         messages.error(request, f"{text}")    
     else:
-        paymentID=response.get('paymentID') 
+        paymentID=response.get('paymentID')
+        print(paymentID)
         createTime=response.get('createTime')
-        updateTime = response.get('updateTime')
+        # updateTime = response.get('updateTime')
         trxID = response.get('trxID')
         transactionStatus = response.get('transactionStatus')
         amount = response.get('amount')
         currency = response.get('currency')
         intent = response.get('intent')
+        paymentExecuteTime = response.get('paymentExecuteTime')
         merchantInvoiceNumber = response.get('merchantInvoiceNumber')
         customerMsisdn = response.get('customerMsisdn')
-        BkashPaymentExecute.objects.create(user=request.user,paymentID = paymentID, createTime=createTime,updateTime=updateTime,trxID=trxID, transactionStatus =  transactionStatus , amount=amount, currency= currency,  intent= intent,merchantInvoiceNumber=merchantInvoiceNumber, customerMsisdn=customerMsisdn )
+        # customerMsisdn = response.get('payerReference')
+        BkashPaymentExecute.objects.create(user=request.user, paymentID=paymentID, createTime=paymentExecuteTime, trxID=trxID, transactionStatus=transactionStatus , amount=amount, currency=currency,  intent=intent, merchantInvoiceNumber=merchantInvoiceNumber, customerMsisdn=customerMsisdn)
         
 
         order_qs = Order.objects.filter(user=request.user, ordered=False)
@@ -266,6 +276,7 @@ def execute_bkash_payment(request):
         order.save()
         
         messages.success(request, "Your Payment successful done")
+        return redirect('/')
 
     return JsonResponse(response)
 
