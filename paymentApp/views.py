@@ -85,6 +85,8 @@ class CheckOutView(View):
             return redirect('/')
 
     def post(self, request, *args, **kwargs):
+        global pay_method
+        
         payment_obj = Order.objects.filter(user=request.user, ordered=False).first()
         if payment_obj is not None:
             if request.method == 'POST':
@@ -92,26 +94,26 @@ class CheckOutView(View):
                 if pay_form.is_valid():
                     pay_method = pay_form.save()
                     if pay_method.payment_option == 'Cash On Delivery':
-                        order_qs = Order.objects.filter(user=request.user, ordered=False)
-                        order = order_qs.first()
-                        order.ordered = True
-                        order.orderId = order.id
-                        order.total_order_amount = order.total()
-                        order.due_amount = order.total_paid_amount()
-                        order.paymentId = pay_method.payment_option
+                        # order_qs = Order.objects.filter(user=request.user, ordered=False)
+                        # order = order_qs.first()
+                        # order.ordered = True
+                        # order.orderId = order.id
+                        # order.total_order_amount = order.total()
+                        # order.due_amount = order.total_paid_amount()
+                        # order.paymentId = pay_method.payment_option
 
-                        order_items = OrderItem.objects.filter(user=request.user, ordered=False)
-                        for order_item in order_items:
-                            order_item.ordered = True
-                            stock_manage = order_item.item.stock_quantity - order_item.quantity
-                            order_item.save()
-                            get_prd = Product.objects.get(id=order_item.item.id)
-                            get_prd.stock_quantity = stock_manage
-                            get_prd.save()
+                        # order_items = OrderItem.objects.filter(user=request.user, ordered=False)
+                        # for order_item in order_items:
+                        #     order_item.ordered = True
+                        #     stock_manage = order_item.item.stock_quantity - order_item.quantity
+                        #     order_item.save()
+                        #     get_prd = Product.objects.get(id=order_item.item.id)
+                        #     get_prd.stock_quantity = stock_manage
+                        #     get_prd.save()
 
-                        order.save()
-                        messages.success(request, "Your order was successful")
-                        return redirect('order-summary')
+                        # order.save()
+                        # messages.success(request, "Your order was successful")
+                        return redirect('bkash-payment')
                     elif pay_method.payment_option == 'Bkash':
                     #   return format_html('<button id="bKash_button">{}</button>')
                         return redirect('bkash-payment')
@@ -163,19 +165,31 @@ from django.http import JsonResponse
 @login_required
 @csrf_exempt
 def create_bkash_payment(request, *args, **kwargs):
+    global pay_method
     id_token = grant_token_function()
     create_url = "https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/create"
     order = Order.objects.get(user=request.user, ordered=False)
     
-    payload = json.dumps({
-        "mode": "0011",
-        "payerReference": "N/A",
-        "callbackURL":"http://127.0.0.1:8000/execute_bkash",
-        "amount":"1",
-        "currency": "BDT",
-        "intent": "sale",
-        "merchantInvoiceNumber":f"{order.id}",
-    })
+    if pay_method.payment_option == 'Cash On Delivery':
+        payload = json.dumps({
+            "mode": "0011",
+            "payerReference": "N/A",
+            "callbackURL":"http://127.0.0.1:8000/execute_bkash",
+            "amount":"1",
+            "currency": "BDT",
+            "intent": "sale",
+            "merchantInvoiceNumber":f"{order.id}",
+        })
+    else:
+        payload = json.dumps({
+            "mode": "0011",
+            "payerReference": "N/A",
+            "callbackURL":"http://127.0.0.1:8000/execute_bkash",
+            "amount":"2",
+            "currency": "BDT",
+            "intent": "sale",
+            "merchantInvoiceNumber":f"{order.id}",
+        })   
 
     headers = {
         "Accept": "application/json",
@@ -201,13 +215,14 @@ def create_bkash_payment(request, *args, **kwargs):
     intent = response['intent']
     merchantInvoiceNumber = response['merchantInvoiceNumber']
     
-    BkashPayment.objects.create(user=request.user,paymentID =  PaymentId, createTime=createTime, transactionStatus =  transactionStatus , amount=amount, currency= currency,  intent= intent,merchantInvoiceNumber=merchantInvoiceNumber )
+    BkashPayment.objects.create(user=request.user,paymentID = PaymentId, createTime=createTime, transactionStatus =  transactionStatus , amount=amount, currency= currency,  intent= intent,merchantInvoiceNumber=merchantInvoiceNumber )
     
     return redirect(response['bkashURL'])
 
 @login_required
 @csrf_exempt
 def execute_bkash_payment(request):
+    
     id_token = grant_token_function()
     length = BkashPayment.objects.filter(user=request.user).count()
     Id = BkashPayment.objects.filter(user=request.user)[length-1].paymentID
@@ -237,7 +252,7 @@ def execute_bkash_payment(request):
         messages.error(request, f"{text}")    
     else:
         paymentID=response.get('paymentID')
-        print(paymentID)
+        # print(paymentID)
         createTime=response.get('createTime')
         # updateTime = response.get('updateTime')
         trxID = response.get('trxID')
@@ -251,33 +266,56 @@ def execute_bkash_payment(request):
         # customerMsisdn = response.get('payerReference')
         BkashPaymentExecute.objects.create(user=request.user, paymentID=paymentID, createTime=paymentExecuteTime, trxID=trxID, transactionStatus=transactionStatus , amount=amount, currency=currency,  intent=intent, merchantInvoiceNumber=merchantInvoiceNumber, customerMsisdn=customerMsisdn)
         
+        if pay_method.payment_option == 'Cash On Delivery': 
+            print('Cash On Delivery')
+            order_qs = Order.objects.filter(user=request.user, ordered=False)
+            order = order_qs.first()
+            order.ordered = True
+            order.orderId = order.id
+            order.total_order_amount = order.total()
+            order.due_amount = order.total_paid_amount()
+            order.paymentId = pay_method.payment_option
 
-        order_qs = Order.objects.filter(user=request.user, ordered=False)
-        order = order_qs[0]
-        order.ordered = True
-        order.orderId = order.id
-        order.total_order_amount = order.total()
-        order.paid_amount = order.total()
-        order.paymentId = 'Bkash'
-        
+            order_items = OrderItem.objects.filter(user=request.user, ordered=False)
+            for order_item in order_items:
+                order_item.ordered = True
+                stock_manage = order_item.item.stock_quantity - order_item.quantity
+                order_item.save()
+                get_prd = Product.objects.get(id=order_item.item.id)
+                get_prd.stock_quantity = stock_manage
+                get_prd.save()
 
-        order_items = OrderItem.objects.filter(user=request.user, ordered=False)
-        for order_item in order_items:
-            order_item.ordered = True
-            stock_manage = order_item.item.stock_quantity - order_item.quantity
-            # print(stock_manage)
-            # order_item.item.stock_quantity = stock_manage
-            order_item.save()
-            # print(order_item.item.id)
-            get_prd = Product.objects.get(id=order_item.item.id)
-            get_prd.stock_quantity = stock_manage
-            get_prd.save()
+            order.save()
+            messages.success(request, "Your order was successful")
+            return redirect('/')
+        else:
+            print('bkash')
+            order_qs = Order.objects.filter(user=request.user, ordered=False)
+            order = order_qs[0]
+            order.ordered = True
+            order.orderId = order.id
+            order.total_order_amount = order.total()
+            order.paid_amount = order.total()
+            order.paymentId = 'Bkash'
+            
 
-        order.save()
-        
-        messages.success(request, "Your Payment successful done")
-        return redirect('/')
+            order_items = OrderItem.objects.filter(user=request.user, ordered=False)
+            for order_item in order_items:
+                order_item.ordered = True
+                stock_manage = order_item.item.stock_quantity - order_item.quantity
+                # print(stock_manage)
+                # order_item.item.stock_quantity = stock_manage
+                order_item.save()
+                # print(order_item.item.id)
+                get_prd = Product.objects.get(id=order_item.item.id)
+                get_prd.stock_quantity = stock_manage
+                get_prd.save()
 
+            order.save()
+            
+            messages.success(request, "Your Payment successful done")
+            return redirect('/')
+            
     return JsonResponse(response)
 
 
