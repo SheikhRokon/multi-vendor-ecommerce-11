@@ -163,8 +163,7 @@ def deal_of_the_day(request):
 @login_required
 def add_to_cart(request, slug):
     item = get_object_or_404(Product, slug=slug)
-    order_item_qs = OrderItem.objects.filter(
-        item=item, user=request.user, ordered=False)
+    order_item_qs = OrderItem.objects.filter(item=item, user=request.user, ordered=False)
     product = Product.objects.get(slug=slug)
     item_var = []  # item variation
     if request.method == 'POST':
