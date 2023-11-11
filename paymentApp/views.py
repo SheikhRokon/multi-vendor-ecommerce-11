@@ -175,7 +175,7 @@ def create_bkash_payment(request, *args, **kwargs):
             "mode": "0011",
             "payerReference": "N/A",
             "callbackURL":"http://127.0.0.1:8000/execute_bkash",
-            "amount":"1",
+            "amount":f"{order.only_shiping_charge_payment()}",
             "currency": "BDT",
             "intent": "sale",
             "merchantInvoiceNumber":f"{order.id}",
@@ -185,7 +185,7 @@ def create_bkash_payment(request, *args, **kwargs):
             "mode": "0011",
             "payerReference": "N/A",
             "callbackURL":"http://127.0.0.1:8000/execute_bkash",
-            "amount":"2",
+            "amount":f"{order.total()}",
             "currency": "BDT",
             "intent": "sale",
             "merchantInvoiceNumber":f"{order.id}",
@@ -273,7 +273,8 @@ def execute_bkash_payment(request):
             order.ordered = True
             order.orderId = order.id
             order.total_order_amount = order.total()
-            order.due_amount = order.total_paid_amount()
+            order.due_amount = order.total_paid_amount() - order.only_shiping_charge_payment()
+            order.paid_amount = order.only_shiping_charge_payment()
             order.paymentId = pay_method.payment_option
 
             order_items = OrderItem.objects.filter(user=request.user, ordered=False)
