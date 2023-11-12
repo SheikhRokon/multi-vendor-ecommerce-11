@@ -241,18 +241,23 @@ def execute_bkash_payment(request):
 
     response_create = requests.post(url, json=payload, headers=headers)
 
-    response=json.loads(response_create.content)
-    print(response)
-
-    # if(array_key_exists("errorCode",$arr) && $arr['errorCode'] != '0000'){
-    #     Session::put('errorMessage', $arr['errorMessage']);
+    try:
+        response = response_create.json()
+    except json.JSONDecodeError:
+        messages.error(request, "Invalid JSON response from bKash.")
+        return JsonResponse({"error": "Invalid JSON response from bKash."})
+   
 
     if response.get('errorCode') and response.get('errorCode') != '0000':
         text = response.get('errorMessage')
-        messages.error(request, f"{text}")    
+        messages.error(request, f"{text}") 
     else:
+        paymentID = response.get('paymentID') 
+        
+        if paymentID is None:      
+            messages.error(request, "PaymentID is missing in the response.")
+            return JsonResponse({"error": "PaymentID is missing in the response"})
         paymentID=response.get('paymentID')
-        # print(paymentID)
         createTime=response.get('createTime')
         # updateTime = response.get('updateTime')
         trxID = response.get('trxID')
@@ -264,10 +269,10 @@ def execute_bkash_payment(request):
         merchantInvoiceNumber = response.get('merchantInvoiceNumber')
         customerMsisdn = response.get('customerMsisdn')
         # customerMsisdn = response.get('payerReference')
+    
         BkashPaymentExecute.objects.create(user=request.user, paymentID=paymentID, createTime=paymentExecuteTime, trxID=trxID, transactionStatus=transactionStatus , amount=amount, currency=currency,  intent=intent, merchantInvoiceNumber=merchantInvoiceNumber, customerMsisdn=customerMsisdn)
         
         if pay_method.payment_option == 'Cash On Delivery': 
-            print('Cash On Delivery')
             order_qs = Order.objects.filter(user=request.user, ordered=False)
             order = order_qs.first()
             order.ordered = True
@@ -288,7 +293,7 @@ def execute_bkash_payment(request):
 
             order.save()
             messages.success(request, "Your order was successful")
-            return redirect('/')
+            return redirect('order-summary')
         else:
             print('bkash')
             order_qs = Order.objects.filter(user=request.user, ordered=False)
@@ -315,7 +320,7 @@ def execute_bkash_payment(request):
             order.save()
             
             messages.success(request, "Your Payment successful done")
-            return redirect('/')
+            return redirect('order-summary')
             
     return JsonResponse(response)
 
