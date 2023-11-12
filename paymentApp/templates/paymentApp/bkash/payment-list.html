@@ -37,7 +37,7 @@
                 <tbody>
                     {% for p in payment_list %}
                     <tr>
-                        <td>{{ p.user.username }}</td>         
+                        <td>{{ p.user }}</td>         
                         <td>{{p.paymentID }}</td>
                         <td>{{ p.amount }}</td>
                         <td>{{ p.transactionStatus }}</td>                    

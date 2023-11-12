@@ -328,7 +328,7 @@ def execute_bkash_payment(request):
 @login_required
 @daseboard_required
 def bkash_payment_list(request):
-    payment_list = BkashPaymentExecute.objects.all()
+    payment_list = BkashPaymentExecute.objects.all().order_by('-id')
 
     context ={
         'payment_list':payment_list
