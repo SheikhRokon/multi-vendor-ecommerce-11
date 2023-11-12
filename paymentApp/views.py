@@ -166,6 +166,7 @@ from django.http import JsonResponse
 @csrf_exempt
 def create_bkash_payment(request, *args, **kwargs):
     global pay_method
+    global order
     id_token = grant_token_function()
     create_url = "https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/create"
     order = Order.objects.get(user=request.user, ordered=False)
@@ -257,6 +258,7 @@ def execute_bkash_payment(request):
         if paymentID is None:      
             messages.error(request, "PaymentID is missing in the response.")
             return JsonResponse({"error": "PaymentID is missing in the response"})
+        
         paymentID=response.get('paymentID')
         createTime=response.get('createTime')
         # updateTime = response.get('updateTime')
@@ -268,7 +270,7 @@ def execute_bkash_payment(request):
         paymentExecuteTime = response.get('paymentExecuteTime')
         merchantInvoiceNumber = response.get('merchantInvoiceNumber')
         customerMsisdn = response.get('customerMsisdn')
-        # customerMsisdn = response.get('payerReference')
+        customerMsisdn = response.get('payerReference')
     
         BkashPaymentExecute.objects.create(user=request.user, paymentID=paymentID, createTime=paymentExecuteTime, trxID=trxID, transactionStatus=transactionStatus , amount=amount, currency=currency,  intent=intent, merchantInvoiceNumber=merchantInvoiceNumber, customerMsisdn=customerMsisdn)
         
@@ -343,12 +345,12 @@ def bkash_search_transaction(request,trxID):
     trxID = payment_list.trxID
     id_token = grant_token_function()
 
-    url = f'https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/payment/search/{trxID}'
+    url = f'https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/general/searchTransaction{trxID}'
 
     headers = {
         "accept": "application/json",
         "Authorization": f"{id_token}",
-        "X-APP-Key": "5nej5keguopj928ekcj3dne8p"
+        "X-APP-Key": f"{app_key}"
     }
 
     response_create = requests.get(url, headers=headers)
@@ -366,70 +368,102 @@ def bkash_payment_query(request,paymentID):
     paymentID = payment_list.paymentID
     id_token = grant_token_function()
 
-    url = f'https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/payment/query/{paymentID}'
+    url = f'https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/payment/status{paymentID}'
 
     headers = {
         "accept": "application/json",
         "Authorization": f"{id_token}",
-        "X-APP-Key": "5nej5keguopj928ekcj3dne8p"
+        "X-APP-Key": f"{app_key}"
     }
 
     response_create = requests.get(url, headers=headers)
     response=json.loads(response_create.content)
 
-
     print(url)
     print(response)
 
-    return render(request, 'paymentApp/bkash/payment-query.html',{'response':response})
+    return render(request, 'paymentApp/bkash/payment-query.html',{'response': response})
+
 
 @login_required
 @daseboard_required
-def bkash_payment_refund(request,paymentID):
-    payment_list = BkashPaymentExecute.objects.get(paymentID=paymentID)
+def bkash_payment_refund(request, paymentID):
+    global pay_method
+    try:
+        payment_list = BkashPaymentExecute.objects.get(paymentID=paymentID)
+    except BkashPaymentExecute.DoesNotExist:
+        messages.error(request, "Payment not found.")
+        return redirect('bkash_payment-list')
+
+    # Obtain necessary parameters from the request or any other source
     id_token = grant_token_function()
+    url = 'https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/payment/refund'
     
-    url = f'https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/payment/refund'
-
-    payload = json.dumps({
-        "paymentID":request.POST.get('paymentID'),
-        "trxID":request.POST.get('trxID'),
-        "amount":request.POST.get('amount'),
-        "sku": request.POST.get('sku'),
-        "reason": request.POST.get('reason'),
-
-    })
+    sku = request.POST.get('sku')
+    reason = request.POST.get('reason')
+    print(sku, reason)
+    payload = {
+        "paymentID": payment_list.paymentID,
+        "trxID": payment_list.trxID,
+        "amount": payment_list.amount,
+        "sku": sku,
+        "reason": reason,
+    }
+   
     headers = {
         "accept": "application/json",
         "Authorization": f"{id_token}",
-        "X-APP-Key": "5nej5keguopj928ekcj3dne8p"
+        "X-APP-Key": f"{app_key}"  # Make sure to define app_key somewhere in your code
     }
+    try:
+        # Make the refund request to bKash API
+        response_create = requests.post(url, headers=headers, data=json.dumps(payload))
+        response = response_create.json()
 
-    response_create = requests.post(url, headers=headers, data=payload)
-    response=json.loads(response_create.content)
+        if response.get('errorCode') and response.get('errorCode') != '0000':
+            # Handle error case
+            error_message = response.get('errorMessage')
+            messages.error(request, f"{error_message}")
+        else:
+            original_trx_id = payment_list.trxID
+            print(original_trx_id)
 
-    if response.get('errorCode') and response.get('errorCode') != '0000':
-        text = response.get('errorMessage')
-        messages.error(request, f"{text}")
-    else:
-        originalTrxID=response.get('originalTrxID') 
-        refundTrxID=response.get('refundTrxID')
-        transactionStatus = response.get('transactionStatus')
-        amount = response.get('amount')
-        completedTime = response.get('completedTime')
-        currency = response.get('currency')
-        charge = response.get('charge')
+            if original_trx_id is not None:
+                # Create BkashPaymentRefund only if originalTrxID is present
+                refund_trx_id = response.get('refundTrxID')
+                transaction_status = response.get('transactionStatus')
+                amount = response.get('amount')
+                completed_time = response.get('completedTime')
+                currency = response.get('currency')
+                charge = response.get('charge')
 
-        BkashPaymentRefund.objects.create(user=request.user,originalTrxID = originalTrxID, refundTrxID=refundTrxID, transactionStatus =  transactionStatus , amount=amount, currency= currency,  completedTime= completedTime,charge=charge)
-        
-        messages.success(request, "Your Payment refund successful done")
-        return redirect('bkash_payment-list')
+                # Check if all necessary fields are present
+                if refund_trx_id is not None and transaction_status is not None and amount is not None and completed_time is not None and currency is not None and charge is not None:
+                    BkashPaymentRefund.objects.create(
+                        user=request.user,
+                        originalTrxID=original_trx_id,
+                        refundTrxID=refund_trx_id,
+                        transactionStatus=transaction_status,
+                        amount=amount,
+                        currency=currency,
+                        completedTime=completed_time,
+                        charge=charge
+                    )
 
+                    messages.success(request, "Your payment refund was successful.")
+                    return redirect('bkash_payment_list')
+                else:
+                    messages.error(request, "One or more required fields are missing in the response.")
+            else:
+                # Handle case where originalTrxID is missing
+                messages.error(request, "OriginalTrxID is missing in the response.")
+                print("Response:", response)
 
-    print(url)
-    print(response)
+    except requests.RequestException as e:
+        messages.error(request, f"Error in making the refund request: {e}")
 
-    return render(request, 'paymentApp/bkash/refund.html',{'response':response,'payment_list':payment_list})
+    return render(request, 'paymentApp/bkash/refund.html', {'payment_list': payment_list})
+
 
 @login_required
 @daseboard_required
