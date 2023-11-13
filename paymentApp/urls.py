@@ -12,12 +12,12 @@ urlpatterns = [
     path('initiate_payment/', initiate_payment, name='initiate_payment'),
     
     
-    path('bkash_payment', create_bkash_payment, name='bkash-payment'),
-    path('execute_bkash', execute_bkash_payment, name='execute-bkash'),
-    path('bkash_payment_list', bkash_payment_list, name='bkash_payment-list'),
-    path('bkash_search_transaction/<str:trxID>',bkash_search_transaction, name='bkash_search-transaction'),
-    path('bkash_payment_query/<str:paymentID>',bkash_payment_query, name='bkash_payment-query'),
-    path('bkash_payment_refund/<str:paymentID>',bkash_payment_refund, name='bkash_payment-refund'),
-    path('bkash_payment_refund_list', bkash_payment_refund_list, name='bkash_payment_refund-list'),
+    path('bkash_payment/', create_bkash_payment, name='bkash-payment'),
+    path('execute_bkash/', execute_bkash_payment, name='execute-bkash'),
+    path('bkash_payment_list/', bkash_payment_list, name='bkash_payment_list'),
+    path('bkash_search_transaction/<str:trxID>/',bkash_search_transaction, name='bkash_search_transaction'),
+    path('bkash_payment_query/<str:paymentID>/',bkash_payment_query, name='bkash_payment_query'),
+    path('bkash_payment_refund/<str:paymentID>/', bkash_payment_refund, name='bkash_payment_refund'),
+    path('bkash_payment_refund_list/', bkash_payment_refund_list, name='bkash_payment_refund_list'),
 
 ]

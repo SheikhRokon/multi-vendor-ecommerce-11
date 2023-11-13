@@ -37,23 +37,23 @@
                 <tbody>
                     {% for p in payment_list %}
                     <tr>
-                        <td>{{ p.user.username }}</td>         
+                        <td>{{ p.user }}</td>         
                         <td>{{p.paymentID }}</td>
                         <td>{{ p.amount }}</td>
                         <td>{{ p.transactionStatus }}</td>                    
                         <td>{{ p.trxID }}</td>                    
                         <td class="text-center">
-                            <a href="{% url 'bkash_payment-query' p.paymentID %}" class="text-primary" data-bs-original-title="View" data-bs-toggle="tooltip">
+                            <a href="{% url 'bkash_payment_query' p.paymentID %}" class="text-primary" data-bs-original-title="View" data-bs-toggle="tooltip">
                                 <i class="ti-eye"></i>
                             </a>
                         </td>
                         <td class="text-center">
-                          <a href="{% url 'bkash_search-transaction' p.trxID %}" class="text-info" data-bs-original-title="View" data-bs-toggle="tooltip">
+                          <a href="{% url 'bkash_search_transaction' p.trxID %}" class="text-info" data-bs-original-title="View" data-bs-toggle="tooltip">
                               <i class="ti-eye"></i>
                           </a>
                       </td>
                       <td class="text-center">
-                        <a href="{% url 'bkash_payment-refund' p.paymentID %}" class="text-info me-10" data-bs-toggle="tooltip" data-bs-original-title="Edit">
+                        <a href="{% url 'bkash_payment_refund' p.paymentID %}" class="text-info me-10" data-bs-toggle="tooltip" data-bs-original-title="Edit">
                           <i class="ti-marker-alt"></i>
                         </a>
                     </td>

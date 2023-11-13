@@ -388,7 +388,7 @@ def render_order_pdf_view(request, *args, **kwargs):
     # if download korte chai
     # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
     # if display korte chai
-    response['Content-Disposition'] = 'filename="evazu-order-report.pdf"'
+    response['Content-Disposition'] = 'filename="Eranin-order-report.pdf"'
     # find the template and render it.
     template = get_template(template_path)
     html = template.render(context)

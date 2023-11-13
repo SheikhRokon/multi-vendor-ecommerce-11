@@ -147,7 +147,7 @@
                   {% for o in order_list %}
 
                   <li>
-                    <a href="#">
+                    <a href="{% url 'all_OrderDetails' o.pk %}">
                       <i class="fa fa-list text-info"></i>OrderID : {{ o.id }}
                     </a>
                   </li>
@@ -339,11 +339,11 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{% url 'bkash_payment-list' %}"><i class="icon-Commit"><span class="path1"></span><span
+                <li><a href="{% url 'bkash_payment_list' %}"><i class="icon-Commit"><span class="path1"></span><span
                         class="path2"></span></i>Bkash Payment
                     List</a>
                 </li>
-                <li><a href="{% url 'bkash_payment_refund-list' %}"><i class="icon-Commit"><span
+                <li><a href="{% url 'bkash_payment_refund_list' %}"><i class="icon-Commit"><span
                         class="path1"></span><span class="path2"></span></i>Refund Payment
                     List</a>
                 </li>

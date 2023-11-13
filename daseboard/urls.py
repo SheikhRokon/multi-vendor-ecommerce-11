@@ -4,57 +4,43 @@ from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
-    path('dashboard/home', login_required(dashboard_home,
-         login_url='/admin/login/'), name='dashboard-home'),
+    path('dashboard/home', login_required(dashboard_home,login_url='/admin/login/'), name='dashboard-home'),
 
     # product
     path('dashboard/product-list', product_list, name='dashboard-product-list'),
-    path('dashboard/all_product_list', all_product_list,
-         name='dashboard-all_product_list'),
+    path('dashboard/all_product_list', all_product_list,name='dashboard-all_product_list'),
     path('dashboard/product/add/', ProductCreate.as_view(), name='create_product'),
-    path('dashboard/product-delete/<int:pk>',
-         product_delete, name='dashboard-product-delete'),
-    path('dashboard/update/<int:pk>/',
-         ProductUpdate.as_view(), name='product-update'),
+    path('dashboard/product-delete/<int:pk>',product_delete, name='dashboard-product-delete'),
+    path('dashboard/update/<int:pk>/',ProductUpdate.as_view(), name='product-update'),
 
 
-    path('dashboard/delete-image/<int:pk>/',
-         delete_image, name='delete_image'),
-    path('dashboard/delete-variant/<int:pk>/',
-         delete_variant, name='delete_variant'),
+    path('dashboard/delete-image/<int:pk>/', delete_image, name='delete_image'),
+    path('dashboard/delete-variant/<int:pk>/', delete_variant, name='delete_variant'),
 
 
     # order
     path('dashboard/all_order_list', all_order_list, name='all_order_list'),
     path('dashboard/all-order', all_order, name='all-order'),
-    path('dashboard/all_OrderDetails/<int:pk>',
-         all_OrderDetails, name='all_OrderDetails'),
-    path('dashboard/order-details/<int:pk>',
-         OrderDetails, name='order-details'),
+    path('dashboard/all_OrderDetails/<int:pk>', all_OrderDetails, name='all_OrderDetails'),
+    path('dashboard/order-details/<int:pk>',OrderDetails, name='order-details'),
     path('dashboard/order-update/<int:pk>', order_update, name='order-update'),
-    path('dashboard/order-shipping-address-update/<int:pk>',
-         shipping_address_update, name='shippingaddress-update'),
+    path('dashboard/order-shipping-address-update/<int:pk>',shipping_address_update, name='shippingaddress-update'),
 
 
     # category
     path('dashboard/category-list', category_list, name='category-list'),
-    path('dashboard/inactive-category-list',
-         inactive_category_list, name='inactive-category-list'),
+    path('dashboard/inactive-category-list',inactive_category_list, name='inactive-category-list'),
     path('dashboard/category-add', category_add, name='category-add'),
-    path('dashboard/category_update/<slug>',
-         category_update, name='category-update'),
-    path('dashboard/category-delete/<str:slug>',
-         category_delete, name='category-delete'),
+    path('dashboard/category_update/<slug>',category_update, name='category-update'),
+    path('dashboard/category-delete/<str:slug>',category_delete, name='category-delete'),
 
 
     # brand
     path('dashboard/brand-list', brand_list, name='brand-list'),
-    path('dashboard/inactive-brand-list',
-         inactive_brand_list, name='inactive-brand-list'),
+    path('dashboard/inactive-brand-list', inactive_brand_list, name='inactive-brand-list'),
     path('dashboard/brand-add', brand_add, name='brand-add'),
     path('dashboard/brand-update/<slug>', brand_update, name='brand-update'),
-    path('dashboard/brand-delete/<str:slug>',
-         brand_delete, name='brand-delete'),
+    path('dashboard/brand-delete/<str:slug>',brand_delete, name='brand-delete'),
 
 
     # bannerd

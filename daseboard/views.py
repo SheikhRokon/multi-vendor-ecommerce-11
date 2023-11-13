@@ -32,14 +32,10 @@ def dashboard_home(request):
     vendor_product_count = Product.objects.filter(user=user).count()
     total_order = Order.objects.filter(ordered=True).count()
     my_product_order = Order.objects.filter(user=user, ordered=True).count()
-    pending_order = Order.objects.filter(
-        user=user, ordered=True, order_status='pending').count()
-    processing_order = Order.objects.filter(
-        user=user, ordered=True, order_status='processing').count()
-    on_the_way_order = Order.objects.filter(
-        user=user, ordered=True, order_status='on the way').count()
-    complete_order = Order.objects.filter(
-        user=user, ordered=True, order_status='complete').count()
+    pending_order = Order.objects.filter(user=user, ordered=True, order_status='pending').count()
+    processing_order = Order.objects.filter( user=user, ordered=True, order_status='processing').count()
+    on_the_way_order = Order.objects.filter(user=user, ordered=True, order_status='on the way').count()
+    complete_order = Order.objects.filter( user=user, ordered=True, order_status='complete').count()
 
     context = {
         'total_customer': total_customer,
