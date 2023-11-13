@@ -130,12 +130,12 @@ class CheckOutView(View):
 
 import requests
 from django.views.decorators.csrf import csrf_exempt
-app_key = "4f6o0cjiki2rfm34kfdadl1eqq"
-app_secret = "2is7hdktrekvrbljjh44ll3d9l1dtjo4pasmjvs5vl5qr3fug4b"
+app_key = "CUkwm3KsKSvyGA6YINNzpwahtc"
+app_secret = "8xJDdUIJPvhgPJIbwkmSVT5b6CfhXqcAFwfnBhyOe0WVi9JMyp8m"
 
 
 def grant_token_function():
-    token_url = "https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/token/grant"
+    token_url = "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/token/grant"
 
     payload = {
     "app_key":f"{app_key}",
@@ -145,8 +145,8 @@ def grant_token_function():
     headers = {
         "Content-Type":"application/json",
         "Accept":"application/json",
-        "username":"sandboxTokenizedUser02",
-        "password":"sandboxTokenizedUser02@12345"
+        "username":"01701069706",
+        "password":"v^oKwJ9DBS["
     }
 
     token_response = requests.post(token_url, json=payload, headers=headers)
@@ -168,7 +168,7 @@ def create_bkash_payment(request, *args, **kwargs):
     global pay_method
     global order
     id_token = grant_token_function()
-    create_url = "https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/create"
+    create_url = "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/create"
     order = Order.objects.get(user=request.user, ordered=False)
     
     if pay_method.payment_option == 'Cash On Delivery':
@@ -228,7 +228,7 @@ def execute_bkash_payment(request):
     length = BkashPayment.objects.filter(user=request.user).count()
     Id = BkashPayment.objects.filter(user=request.user)[length-1].paymentID
     print(Id)
-    url = f"https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/execute"
+    url = f"https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/execute"
     
     payload = {
         "paymentID":f"{Id}",
@@ -345,7 +345,7 @@ def bkash_search_transaction(request,trxID):
     trxID = payment_list.trxID
     id_token = grant_token_function()
 
-    url = f'https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/general/searchTransaction{trxID}'
+    url = f'https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/general/searchTransaction{trxID}'
 
     headers = {
         "accept": "application/json",
@@ -368,7 +368,7 @@ def bkash_payment_query(request,paymentID):
     paymentID = payment_list.paymentID
     id_token = grant_token_function()
 
-    url = f'https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/payment/status{paymentID}'
+    url = f'https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/payment/status{paymentID}'
 
     headers = {
         "accept": "application/json",
@@ -397,7 +397,7 @@ def bkash_payment_refund(request, paymentID):
 
     # Obtain necessary parameters from the request or any other source
     id_token = grant_token_function()
-    url = 'https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/payment/refund'
+    url = 'https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/payment/refund'
     
     sku = request.POST.get('sku')
     reason = request.POST.get('reason')
