@@ -219,12 +219,12 @@ SOCIAL_AUTH_LOGIN_ERROR_URL = '/'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'mail.evazu.com'
+EMAIL_HOST = '127.0.0.1'
 EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'password-reset@evazu.com'
-EMAIL_HOST_PASSWORD = 'password-reset'
-DEFAULT_FROM_EMAIL = 'password-reset@evazu.com'
+EMAIL_PORT = 8000
+EMAIL_HOST_USER = 'eranianinfo@eranian.com'
+EMAIL_HOST_PASSWORD = '_+^[)jkWUTcv'
+DEFAULT_FROM_EMAIL = 'eranianinfo@eranian.com'
 
 
 CKEDITOR_UPLOAD_PATH = "uploads/"

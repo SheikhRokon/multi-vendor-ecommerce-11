@@ -74,48 +74,53 @@
         <div class="product-flex">
             
             {% for p in products %}
-            <div class="product mx-2 load-product">
-                <figure class="product-media">
-                    {% if p.stock_quantity %}
-                    {% if p.discount_price %}
-                    <span class="product-label label-sale" style="background-color: #eb5525; color:#fff">{{ p.saving_percent|floatformat:"0" }}% Off</span>
-                    {% endif %}
-                    {% else %}
-                    <span class="product-label label-sale" style="background-color: #e70f0f; color:#fff">out of stock</span>
-                    {% endif %}
-                    <a href="{% url 'product-detail' p.slug %}">
-                        <img src="{{  p.image.url }}" alt="Product image" class="product-image">
-                    </a>
-
-                    <div class="product-action-vertical">
-                        <a href="{% url 'add-to-wishlist' p.slug %}" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                    </div><!-- End .product-action-vertical -->
-                </figure><!-- End .product-media -->
-
-                <div class="product-body">
-                    <h3 class="product-title text-center"><a href="{% url 'product-detail' p.slug %}">{{ p.product_name }}</a></h3><!-- End .product-title -->
-                    <div class="product-price pt-1 justify-content-center">
+            <div class="col-lg-3 col-md-3 col-sm-6 load-product">
+                <div  class="m-2 shadow">
+                    <figure class="product-media">
+                        {% if p.stock_quantity %}
                         {% if p.discount_price %}
-                        <span class="new-price">৳{{ p.discount_price }} </span>
-                        <span class="old-price"><del>৳{{ p.price }} </del></span>
-                        {% else %}
-                        ৳{{ p.price }} 
+                        <span class="product-label label-sale" style="background-color: #eb5525; color:#fff">{{ p.saving_percent|floatformat:"0" }}% Off</span>
                         {% endif %}
-                    </div><!-- End .product-price -->
-                    <div class="ratings-container justify-content-center">
-                        <div class="ratings">       
-                            {% if p.get_avg_rating %}
-                            <div class="ratings-val" style="width:{{p.get_avg_rating}}%;"></div><!-- End .ratings-val -->           
-                            {% endif %}
-                            <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->                                  
-                        </div><!-- End .ratings -->
-                        {% if p.get_rating_count %}
-                        <span class="ratings-text">( {{ p.get_rating_count }} )</span>
+                        {% else %}
+                        <span class="product-label label-sale" style="background-color: #e70f0f; color:#fff">out of stock</span>
+                        {% endif %}
+                        <a href="{% url 'product-detail' p.slug %}">
+                            <img src="{{  p.image.url }}" alt="Product image" class="product-image" style="height: 200px;">
+                        </a>
+    
+                        <div class="product-action-vertical">
+                            <a href="{% url 'add-to-wishlist' p.slug %}" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                        </div><!-- End .product-action-vertical -->
+                    </figure><!-- End .product-media -->
+    
+                    <div class="product-body">
+                        <div style="overflow: hidden; height: 50px;">
+                            <h3 class="product-title text-center"><a href="{% url 'product-detail' p.slug %}">{{ p.product_name }}</a></h3>
+                        </div>
+                        <div class="product-price pt-1 justify-content-center">
+                            {% if p.discount_price %}
+                            <span class="new-price">৳{{ p.discount_price }} </span>
+                            <span class="old-price"><del>৳{{ p.price }} </del></span>
                             {% else %}
-                        <span class="ratings-text">(0)</span>
-                    {% endif %}
-                    </div><!-- End .rating-container -->
-                </div><!-- End .product-body -->
+                            ৳{{ p.price }} 
+                            {% endif %}
+                        </div><!-- End .product-price -->
+                        <div class="ratings-container justify-content-center">
+                            <div class="ratings">       
+                                {% if p.get_avg_rating %}
+                                <div class="ratings-val" style="width:{{p.get_avg_rating}}%;"></div><!-- End .ratings-val -->           
+                                {% endif %}
+                                <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->                                  
+                            </div><!-- End .ratings -->
+                            {% if p.get_rating_count %}
+                            <span class="ratings-text">( {{ p.get_rating_count }} )</span>
+                                {% else %}
+                            <span class="ratings-text">(0)</span>
+                        {% endif %}
+                        </div><!-- End .rating-container -->
+                    </div><!-- End .product-body -->
+                </div>
+                
             </div><!-- End .product -->
             {% endfor %}
             

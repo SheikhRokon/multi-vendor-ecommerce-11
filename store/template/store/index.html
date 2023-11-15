@@ -182,7 +182,7 @@
                                 <span class="product-label label-sale" style="background-color: #e70f0f; color:#fff">out of stock</span>
                                 {% endif %}
                                 <a href="{% url 'product-detail' p.slug %}">
-                                    <img src="{{  p.image.url }}" alt="Product image" class="product-image">
+                                    <img src="{{  p.image.url }}" alt="Product image" class="product-image" style="height: 200px;">
                                 </a>
 
                                 <div class="product-action-vertical">
@@ -275,7 +275,7 @@
                             <span class="product-label label-sale" style="background-color: #e70f0f; color:#fff">out of stock</span>
                             {% endif %}
                             <a href="{% url 'product-detail' p.product.slug %}">
-                                <img src="{{  p.product.image.url }}" alt="Product image" class="product-image">
+                                <img src="{{  p.product.image.url }}" alt="Product image" class="product-image" style="height: 200px; widey">
                             </a>
 
                             <div class="product-action-vertical">
@@ -326,7 +326,8 @@
         </div><!-- End .heading -->
         <div class="product-flex">
             {% for p in all_product %}
-            <div class="product mx-2 load-product">
+           <div class="col-lg-3 col-md-3 col-sm-6 load-product" >
+            <div class="m-2 shadow">
                 <figure class="product-media">
                     
                     {% if p.stock_quantity %}
@@ -339,7 +340,7 @@
                         
 
                     <a href="{% url 'product-detail' p.slug %}">
-                        <img src="{{  p.image.url }}" alt="Product image" class="product-image">
+                        <img src="{{  p.image.url }}" alt="Product image" class="product-image" style="height: 200px;">
                     </a>
 
                     <div class="product-action-vertical">
@@ -348,7 +349,9 @@
                 </figure><!-- End .product-media -->
 
                 <div class="product-body">
-                    <h3 class="product-title text-center"><a href="{% url 'product-detail' p.slug %}">{{ p.product_name }}</a></h3><!-- End .product-title -->
+                    <div style="overflow: hidden; height: 50px;">
+                    <h3 class="product-title text-center"><a href="{% url 'product-detail' p.slug %}">{{ p.product_name }}</a></h3>
+                    </div>
                     <div class="product-price pt-1 justify-content-center">
                         {% if p.discount_price %}
                         <span class="new-price">৳{{ p.discount_price }} </span>
@@ -374,6 +377,7 @@
                     </div><!-- End .rating-container -->
                 </div><!-- End .product-body -->
             </div><!-- End .product -->
+           </div>
             {% endfor %}
         </div>
         <a href="" class="loadMore">Load More</a>
