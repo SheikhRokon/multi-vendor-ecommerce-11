@@ -114,179 +114,181 @@
 <main class="main my-5">
   <div class="page-content">
     <div class="container">
-      <div class="product-details-top">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="product-gallery product-gallery-vertical">
-              <div class="row">
-                <figure class="product-main-image">
-                  <img id="product-zoom" src="{{ object.image.url }}" data-zoom-image="{{ object.image.url }}"
-                    alt="product image">
-
-                  <a href="#" id="btn-product-gallery" class="btn-product-gallery">
-                    <i class="icon-arrows"></i>
-                  </a>
-                </figure><!-- End .product-main-image -->
-
-                <div id="product-zoom-gallery" class="product-image-gallery">
-                  <a class="product-gallery-item active" href="#" data-image="{{ object.image.url }}">
-                    <img src="{{ object.image.url }}" alt="product side">
-                  </a>
-
-                  {% for im in img %}
-                  <a class="product-gallery-item" href="#" data-image="{{ im.image.url }}"
-                    data-zoom-image="{{ im.image.url }}">
-                    <img src="{{ im.image.url }}" alt="product cross">
-                  </a>
-                  {% endfor %}
-
-                </div><!-- End .product-image-gallery -->
-              </div><!-- End .row -->
-            </div><!-- End .product-gallery -->
-          </div><!-- End .col-md-6 -->
-
-          <div class="col-md-6">
-            <div class="product-details">
-              <h1 class="product-title">{{ object.product_name }}</h1><!-- End .product-title -->
-              <div class="ratings-container justify-content-start">
-                <div class="ratings">
-                  {% if object.get_avg_rating %}
-                  <a href="#rate_id">
-                    <div class="ratings-val" style="width: {{object.get_avg_rating}}%;"></div>
-                    <span class="ratings-text">( {{ object.get_rating_count }} Reviews )</span>
-                  </a>
-
+      <div class=" pt-0 pl-5 pr-5 pb-1">
+        <div class="product-details-top">
+          <div class="row">
+            <div class="col-md-5">
+              <div class="product-gallery product-gallery-vertical">
+                <div class="row">
+                  <figure class="product-main-image">
+                    <img id="product-zoom" src="{{ object.image.url }}" data-zoom-image="{{ object.image.url }}"
+                      alt="product image">
+  
+                    <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                      <i class="icon-arrows"></i>
+                    </a>
+                  </figure><!-- End .product-main-image -->
+  
+                  <div id="product-zoom-gallery" class="product-image-gallery">
+                    <a class="product-gallery-item active" href="#" data-image="{{ object.image.url }}">
+                      <img src="{{ object.image.url }}" alt="product side">
+                    </a>
+  
+                    {% for im in img %}
+                    <a class="product-gallery-item" href="#" data-image="{{ im.image.url }}"
+                      data-zoom-image="{{ im.image.url }}">
+                      <img src="{{ im.image.url }}" alt="product cross">
+                    </a>
+                    {% endfor %}
+  
+                  </div><!-- End .product-image-gallery -->
+                </div><!-- End .row -->
+              </div><!-- End .product-gallery -->
+            </div><!-- End .col-md-6 -->
+  
+            <div class="col-md-7">
+              <div class="product-details">
+                <h1 class="product-title">{{ object.product_name }}</h1><!-- End .product-title -->
+                <div class="ratings-container justify-content-start">
+                  <div class="ratings">
+                    {% if object.get_avg_rating %}
+                    <a href="#rate_id">
+                      <div class="ratings-val" style="width: {{object.get_avg_rating}}%;"></div>
+                      <span class="ratings-text">( {{ object.get_rating_count }} Reviews )</span>
+                    </a>
+  
+                    {% else %}
+                    <div class="ratings-val" style="width:0%;"></div><!-- End .ratings-val -->
+                    <span class="ratings-text">( 0 Reviews )</span>
+                    {% endif %}
+                  </div><!-- End .ratings -->
+                </div><!-- End .rating-container -->
+  
+  
+  
+                <b>{% if object.discount_price %}
+                  <span class="new-price" style="font-size:30px ;color:#eb5525;">৳{{object.discount_price}} </span>
+                  <br>
+                  <span class="old-price"><del>Was ৳{{ object.price }} </del></span><span>
+                    saving({{object.saving_price }}) {{ object.saving_percent|floatformat:"2" }}%</span>
                   {% else %}
-                  <div class="ratings-val" style="width:0%;"></div><!-- End .ratings-val -->
-                  <span class="ratings-text">( 0 Reviews )</span>
+                  <span style="font-size:30px ;color:#eb5525;">৳{{ object.price }} </span>
                   {% endif %}
-                </div><!-- End .ratings -->
-              </div><!-- End .rating-container -->
-
-
-
-              <b>{% if object.discount_price %}
-                <span class="new-price" style="font-size:30px ;color:#eb5525;">৳{{object.discount_price}} </span>
-                <br>
-                <span class="old-price"><del>Was ৳{{ object.price }} </del></span><span>
-                  saving({{object.saving_price }}) {{ object.saving_percent|floatformat:"2" }}%</span>
+                </b>
+  
+                <!-- End .product-price -->
+                {% if object.sort_discription %}
+                <div>
+                  {{ object.sort_discription|truncatechars_html:200|safe }}
+                </div>
+                {% endif %}
+  
+                {% if not object.stock_quantity %}
+                <div class="mb-3">
+                  <span style="font-size:15px ;" class=" badge badge-danger">out of stock</span>
+                </div>
                 {% else %}
-                <span style="font-size:30px ;color:#eb5525;">৳{{ object.price }} </span>
-                {% endif %}
-              </b>
-
-              <!-- End .product-price -->
-              {% if object.sort_discription %}
-              <div class="product-content">
-                <p>{{ object.sort_discription|truncatechars_html:300|safe }}</p>
-              </div><!-- End .product-content -->
-              {% endif %}
-
-              {% if not object.stock_quantity %}
-              <div class="mb-3">
-                <span style="font-size:15px ;" class=" badge badge-danger">out of stock</span>
-              </div>
-              {% else %}
-              <form action="" method="POST">
-                {% csrf_token %}
-                {% if object.variation_set.all %}
-                {% if object.variation_set.sizes %}
-                <div class="details-filter-row details-row-size">
-                  <label for="size">Size :</label>
-                  {% for p_variation in object.variation_set.sizes %}
-                  {% if forloop.counter == 1 %}
-                  <input type="radio" class="size-variation" id="size{{ forloop.counter }}" hidden name="size"
-                    value="{{ p_variation.title|capfirst }}" checked>
-                  {% else %}
-                  <input type="radio" class="size-variation" id="size{{ forloop.counter }}" hidden name="size"
-                    value="{{ p_variation.title|capfirst }}">
-                  {% endif %}
-                  <label class="size-label text-center"
-                    for="size{{ forloop.counter }}">{{p_variation.title|capfirst}}</label><br>
-                  {% endfor %}
-                </div>
-                {% endif %}
-                {% if object.variation_set.colors %}
-                <div class="details-filter-row details-row-size">
-                  <label for="size">Color:</label>
-                  {% for p_variation in object.variation_set.colors %}
-                  {% if forloop.counter == 1 %}
-                    <input type="radio" name="color" class="color-variation" id="color{{ forloop.counter }}" hidden
-                    name="color" value="{{ p_variation.title|capfirst }}" checked>
-                  {% else %}
-                    <input type="radio" name="color" class="color-variation" id="color{{ forloop.counter }}" hidden
-                    name="color" value="{{ p_variation.title|capfirst }}">
-                  {% endif %}
-                    <label class="color-label text-center"
-                    for="color{{ forloop.counter }}">{{p_variation.title|capfirst}}</label><br>
-                  {% endfor %}
-                </div>
-                {% endif %}
-                {% endif %}
-                <div class="details-filter-row details-row-size">
-                  <label for="qty">Quantity:</label>
-                  <div class="ml-5 product-details-quantity">
-                    <input name="quantity" type="number" id="qty" class="form-control" value="1" min="1"
-                      max="{{object.stock_quantity}}" step="1" data-decimals="0" required>
+                <form action="" method="POST">
+                  {% csrf_token %}
+                  {% if object.variation_set.all %}
+                  {% if object.variation_set.sizes %}
+                  <div class="details-filter-row details-row-size">
+                    <label for="size">Size :</label>
+                    {% for p_variation in object.variation_set.sizes %}
+                    {% if forloop.counter == 1 %}
+                    <input type="radio" class="size-variation" id="size{{ forloop.counter }}" hidden name="size"
+                      value="{{ p_variation.title|capfirst }}" checked>
+                    {% else %}
+                    <input type="radio" class="size-variation" id="size{{ forloop.counter }}" hidden name="size"
+                      value="{{ p_variation.title|capfirst }}">
+                    {% endif %}
+                    <label class="size-label ml-2 text-center"
+                      for="size{{ forloop.counter }}">{{p_variation.title|capfirst}}</label><br>
+                    {% endfor %}
                   </div>
-                </div>
-
-                <div class="d-flex">
-                  <input style="background-color:#eb5525; color: #fff;" class="btn-product btn-cart mx-1" type="submit"
-                    onclick="this.form.action='{{ object.get_add_to_cart_url }}'; this.form.submit(); return false;"
-                    value="Add To Cart">
-                  <input class="btn-product btn-cart mx-1 bg-info text-white border-0" type="submit"
-                    onclick="this.form.action='{{object.get_buy_now_url}}'; this.form.submit(); return false;"
-                    value="Buy Now">
-                </div><!-- End .product-details-action -->
-              </form>
-              {% endif %}
-
-              <div class="product-details-footer">
-                <div class="product-cat">
-                  <span class='text-dark h6'>Category:</span>
-                  <a href="#">{{ object.categoris.category_name }}</a>,
-                </div><!-- End .product-cat -->
-
-              </div><!-- End .product-details-footer -->
-              <!-- Button trigger modal -->
-
-              <div class='d-flex'>
-                <h5 class='my-auto mr-5'>Share</h5>
-                <button type="button" class="border-0 bg-white display-4 text-dark" data-toggle="modal"
-                  data-target="#exampleModalCenter">
-                  <i class="fa-solid fa-share-nodes"></i>
-                </button>
-              </div>
-
-
-              <!-- Modal -->
-              <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content col-11 col-md-10 mx-auto">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Share</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+                  {% endif %}
+                  {% if object.variation_set.colors %}
+                  <div class="details-filter-row details-row-size">
+                    <label for="size">Color:</label>
+                    {% for p_variation in object.variation_set.colors %}
+                    {% if forloop.counter == 1 %}
+                      <input type="radio" name="color" class="color-variation" id="color{{ forloop.counter }}" hidden
+                      name="color" value="{{ p_variation.title|capfirst }}" checked>
+                    {% else %}
+                      <input type="radio" name="color" class="color-variation" id="color{{ forloop.counter }}" hidden
+                      name="color" value="{{ p_variation.title|capfirst }}">
+                    {% endif %}
+                      <label class="color-label text-center"
+                      for="color{{ forloop.counter }}">{{p_variation.title|capfirst}}</label><br>
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+                  {% endif %}
+                  <div class="details-filter-row details-row-size">
+                    <label for="qty">Quantity:</label>
+                    <div class="ml-5 product-details-quantity">
+                      <input name="quantity" type="number" id="qty" class="form-control" value="1" min="1"
+                        max="{{object.stock_quantity}}" step="1" data-decimals="0" required>
                     </div>
-                    <div class="modal-body mx-auto py-5 text-center">
-                      <div id="shareIcons"></div>
-
-                      <div class="copy-text">
-                        <input type="text" class="text" value="{{request.build_absolute_uri}}" />
-                        <button><i class="fa fa-clone"></i></button>
+                  </div>
+  
+                  <div class="d-flex">
+                    <input style="background-color:#eb5525; color: #fff;" class="btn-product btn-cart mx-1" type="submit"
+                      onclick="this.form.action='{{ object.get_add_to_cart_url }}'; this.form.submit(); return false;"
+                      value="Add To Cart">
+                    <input class="btn-product btn-cart mx-1 bg-info text-white border-0" type="submit"
+                      onclick="this.form.action='{{object.get_buy_now_url}}'; this.form.submit(); return false;"
+                      value="Buy Now">
+                  </div><!-- End .product-details-action -->
+                </form>
+                {% endif %}
+  
+                <div class="product-details-footer">
+                  <div class="product-cat">
+                    <span class='text-dark h6'>Category:</span>
+                    <a href="#">{{ object.categoris.category_name }}</a>,
+                  </div><!-- End .product-cat -->
+  
+                </div><!-- End .product-details-footer -->
+                <!-- Button trigger modal -->
+  
+                <div class='d-flex'>
+                  <h5 class='my-auto mr-5'>Share</h5>
+                  <button type="button" class="border-0 bg-white display-4 text-dark" data-toggle="modal"
+                    data-target="#exampleModalCenter">
+                    <i class="fa-solid fa-share-nodes"></i>
+                  </button>
+                </div>
+  
+  
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content col-11 col-md-10 mx-auto">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Share</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
                       </div>
+                      <div class="modal-body mx-auto py-5 text-center">
+                        <div id="shareIcons"></div>
+  
+                        <div class="copy-text">
+                          <input type="text" class="text" value="{{request.build_absolute_uri}}" />
+                          <button><i class="fa fa-clone"></i></button>
+                        </div>
+                      </div>
+  
                     </div>
-
                   </div>
                 </div>
-              </div>
-            </div><!-- End .product-details -->
-          </div><!-- End .col-md-6 -->
-        </div><!-- End .row -->
-      </div><!-- End .product-details-top -->
+              </div><!-- End .product-details -->
+            </div><!-- End .col-md-6 -->
+          </div><!-- End .row -->
+        </div>
+      </div>
 
       <div class="product-details-tab">
         <ul class="nav nav-pills justify-content-center" role="tablist">
@@ -358,11 +360,11 @@
                 }'>
 
         {% for related in related_product %}
-        <div class="product product-7 text-center">
+        <div class="product product-7 text-center shadow ">
           <figure class="product-media">
             <span class="product-label label-new">New</span>
             <a href="{% url 'product-detail' related.slug %}">
-              <img src="{{ related.image.url }}" alt="Product image" class="product-image">
+              <img src="{{ related.image.url }}" alt="Product image" class="product-image" style="height: 200px;">
             </a>
           </figure><!-- End .product-media -->
 
