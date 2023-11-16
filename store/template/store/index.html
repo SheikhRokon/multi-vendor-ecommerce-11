@@ -3,6 +3,8 @@
 {% block content %}
 
 <style>
+
+    
     .load-product{
             display: none;
         }
@@ -37,31 +39,29 @@
     }
 
 .product-flex {
-  display:flex;
-  flex-wrap:wrap;
+  display:grid;
+  grid-template-columns: auto auto auto auto auto;
 }
 
-.product-flex .product {
-    flex: 1 1 calc(20% - 20px);
-    }
-
-
 @media only screen and (max-width: 992px) {
-.product-flex .product {
-    flex: 1 1 calc(25% - 20px);
+.product-flex   {
+    grid-template-columns: auto auto auto auto;
     }
 }
 @media only screen and (max-width: 768px) {
-.product-flex .product {
-  flex: 2 2 calc(33.33% - 20px);
+.product-flex  {
+    grid-template-columns: auto auto   auto;
     }
 }
 
 @media only screen and (max-width: 600px) {
-.product-flex .product {
-    flex: 2 2 calc(50% - 20px);
+.product-flex   {
+    grid-template-columns: auto auto;
     }
-}
+}   
+
+
+
 .nav-item li{
     padding-bottom: -30px;
 }
@@ -326,8 +326,9 @@
         </div><!-- End .heading -->
         <div class="product-flex">
             {% for p in all_product %}
-           <div class="col-lg-3 col-md-3 col-sm-6 load-product" >
-            <div class="m-2 shadow">
+           <!-- <div class="col-lg-2 col-md-2 col-6 load-product" > -->
+           <div class="product mx-2 load-product" >
+            <!-- <div class="m-2 shadow"> -->
                 <figure class="product-media">
                     
                     {% if p.stock_quantity %}
@@ -376,7 +377,7 @@
                             
                     </div><!-- End .rating-container -->
                 </div><!-- End .product-body -->
-            </div><!-- End .product -->
+            <!-- </div> -->
            </div>
             {% endfor %}
         </div>
