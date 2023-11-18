@@ -1263,10 +1263,8 @@ def aboutus_delete(request, pk):
 def all_order(request):
     try:
         user = request.user
-        order_vendor = Order.objects.filter(
-            user=user, ordered=True).order_by('-id')  # Order vendor
-        order = Order.objects.filter(ordered=True).order_by(
-            '-id')  # Superadmin order
+        order_vendor = Order.objects.filter( user=user, ordered=True).order_by('-id')  # Order vendor
+        order = Order.objects.filter(ordered=True).order_by('-id')  # Superadmin order
         context = {
             'order_vendor': order_vendor,
             'order': order,
@@ -1281,8 +1279,7 @@ def all_order(request):
 @daseboard_required
 def all_order_list(request):
     try:
-        order = Order.objects.filter(ordered=True).order_by(
-            '-id')  # Superadmin order
+        order = Order.objects.filter(ordered=True).order_by('-id')  # Superadmin order
         context = {
             'order': order,
         }
@@ -1290,6 +1287,14 @@ def all_order_list(request):
 
     except ObjectDoesNotExist:
         pass
+    
+def returned_order_list(request):
+    return render(request, 'dashboard/order/returned_order_list')
+
+def cancel_order_list(request):
+    return render(request, 'dashboard/order/cancel_order_list.html')
+
+        
 
 
 @login_required
