@@ -1292,7 +1292,8 @@ def all_returned_orders_list(request):
     return render(request, 'dashboard/order/all_returned_order_list.html')    
 
 def all_cancel_orders_list(request):
-    return render(request, 'dashboard/order/all_cancel_order_list.html')
+    cancel_or = Order.objects.filter(cancel_order=True).order_by('id')
+    return render(request, 'dashboard/order/all_cancel_order_list.html',{'cancel_or':cancel_or})
     
 def returned_order_list(request):
     return render(request, 'dashboard/order/returned_order_list.html')

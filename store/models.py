@@ -274,11 +274,16 @@ class Order(models.Model):
     shipping_address = models.ForeignKey( ShipingAddress, on_delete=models.CASCADE, blank=True, null=True)
     payment_option = models.CharField(max_length=150)
     order_read_status = models.BooleanField(default=False)
+    cancel_order = models.BooleanField(default=False)
+    returned_order = models.BooleanField(default=False)
     redx_percel_traking_number = models.CharField( max_length=150, blank=True, null=True)
     others_transport_trakink_url = models.URLField(max_length=200, blank=True, null=True)
 
     def __str__(self):
-        return self.user.email
+        if self.user:
+            return self.items.item.product_name
+        else:
+            return f"Order {self.id} - No User"
 
     def get_purchase_price_total(self):
         total = 0

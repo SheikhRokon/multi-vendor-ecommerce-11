@@ -29,7 +29,7 @@ urlpatterns = [
     
     path('dashboard/order_list/', all_order, name='all-order'),# Seller user 
     path('dashboard/returned_order_list/', returned_order_list, name='returned_order_list'),# Seller user
-    path('dashboard/returned_order_list/', cancel_order_list, name='cancel_order_list'),# Seller user
+    path('dashboard/cancel_order_list/', cancel_order_list, name='cancel_order_list'),# Seller user
 
 
     # category
