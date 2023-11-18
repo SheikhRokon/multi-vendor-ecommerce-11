@@ -1288,8 +1288,14 @@ def all_order_list(request):
     except ObjectDoesNotExist:
         pass
     
+def all_returned_orders_list(request):
+    return render(request, 'dashboard/order/all_returned_order_list.html')    
+
+def all_cancel_orders_list(request):
+    return render(request, 'dashboard/order/all_cancel_order_list.html')
+    
 def returned_order_list(request):
-    return render(request, 'dashboard/order/returned_order_list')
+    return render(request, 'dashboard/order/returned_order_list.html')
 
 def cancel_order_list(request):
     return render(request, 'dashboard/order/cancel_order_list.html')

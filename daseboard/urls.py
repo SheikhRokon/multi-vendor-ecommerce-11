@@ -19,15 +19,17 @@ urlpatterns = [
 
 
     # order
-    path('dashboard/all_order_list', all_order_list, name='all_order_list'),# Super user 
-    path('dashboard/all_OrderDetails/<int:pk>', all_OrderDetails, name='all_OrderDetails'),# Super user 
-    path('dashboard/order-details/<int:pk>',OrderDetails, name='order-details'),# Seller user 
-    path('dashboard/order-update/<int:pk>', order_update, name='order-update'),# Seller user
-    path('dashboard/order-shipping-address-update/<int:pk>',shipping_address_update, name='shippingaddress-update'),# Seller user
+    path('dashboard/all_order_list/', all_order_list, name='all_order_list'),# Super user 
+    path('dashboard/all_returned_orders_list/', all_returned_orders_list, name='all_returned_orders_list'),# Super user 
+    path('dashboard/all_cancel_orders_list/', all_cancel_orders_list, name='all_cancel_orders_list'),# Super user 
+    path('dashboard/all_OrderDetails/<int:pk>/', all_OrderDetails, name='all_OrderDetails'),# Super user 
+    path('dashboard/order-details/<int:pk>/',OrderDetails, name='order-details'),# Seller user 
+    path('dashboard/order-update/<int:pk>/', order_update, name='order-update'),# Seller user
+    path('dashboard/order-shipping-address-update/<int:pk>/',shipping_address_update, name='shippingaddress-update'),# Seller user
     
-    path('dashboard/order_list', all_order, name='all-order'),# Seller user 
-    path('dashboard/returned_order_list', returned_order_list, name='returned_order_list'),# Seller user
-    path('dashboard/cancel_order_list', cancel_order_list, name='cancel_order_list'),# Seller user
+    path('dashboard/order_list/', all_order, name='all-order'),# Seller user 
+    path('dashboard/returned_order_list/', returned_order_list, name='returned_order_list'),# Seller user
+    path('dashboard/returned_order_list/', cancel_order_list, name='cancel_order_list'),# Seller user
 
 
     # category
