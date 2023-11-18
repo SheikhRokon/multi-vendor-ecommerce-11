@@ -219,8 +219,7 @@ class Variation(models.Model):
 
 
 class OrderItem(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
@@ -281,9 +280,12 @@ class Order(models.Model):
 
     def __str__(self):
         if self.user:
-            return self.items.item.product_name
+            item_names = ', '.join(str(item.item.product_name) for item in self.items.all())
+            return f"Order {self.id} - Items: {item_names}"
         else:
             return f"Order {self.id} - No User"
+
+
 
     def get_purchase_price_total(self):
         total = 0
