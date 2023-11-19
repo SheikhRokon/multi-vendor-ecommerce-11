@@ -167,19 +167,19 @@
   
   
                 <b>{% if object.discount_price %}
-                  <span class="new-price" style="font-size:30px ;color:#eb5525;">৳{{object.discount_price}} </span>
+                  <span class="new-price" style="font-size:30px ;color:#eb5525;">{{object.discount_price}}৳ </span>
                   <br>
-                  <span class="old-price"><del>Was ৳{{ object.price }} </del></span><span>
+                  <span class="old-price"><del>Was {{ object.price }} ৳ </del></span><span>
                     saving({{object.saving_price }}) {{ object.saving_percent|floatformat:"2" }}%</span>
                   {% else %}
-                  <span style="font-size:30px ;color:#eb5525;">৳{{ object.price }} </span>
+                  <span style="font-size:30px ;color:#eb5525;">{{ object.price }} ৳ </span>
                   {% endif %}
                 </b>
   
                 <!-- End .product-price -->
                 {% if object.sort_discription %}
                 <div>
-                  {{ object.sort_discription|truncatechars_html:200|safe }}
+                  {{ object.sort_discription|truncatechars_html:50|safe }}
                 </div>
                 {% endif %}
   
@@ -287,80 +287,46 @@
               </div><!-- End .product-details -->
             </div><!-- End .col-md-6 -->
             <div class="col-md-3 summary shadow">
-              <h3 class="summary-title py-3" style="text-align: center;">
+              <h3 class="summary-title py-3" style="text-align: center; color:#eb5525">
                 Delivery Charge
               </h3>
               <table class="table table-summary">
-                <h6>Shipping Information</h6>
-                <thead>
-                  <tr>
-                    <p class="col-12 text-left">
-                      <i class="fa fa-user mr-2"></i> {{ order.shipping_address.full_name}}
-                    </p>
-                    <p class="col-12 text-left">
-                      <i class="fa fa-phone mr-2"></i> {{ order.shipping_address.phone }}
-                    </p>
-                    <p class="col-12 text-left">
-                      <i class="fa fa-location mr-2"></i>{{order.shipping_address.shiping_area }}
-                    </p>
-                    <p class="col-12 text-left">
-                      <i class="fa fa-house mr-2"></i>{{order.shipping_address.full_address }}
-                    </p>
-                    {% if order.shipping_address.order_note %}
-                    <p class="col-12 text-left">
-                      <i class="fa fa-list mr-2"></i> {{ order.shipping_address.order_note}}
-                    </p>
-                    {% endif %}
-                  </tr>
-                </thead>
+                <div class="mb-3">
+                <p class="product-title mb-1"> Cash on delivery</p> 
+                <h4 style="color: #17a2b8;" class="text-center  mb-1">130 ৳</h4>
+                <p class="text-right product-title mb-1">Anywhere in Bangladesh</p>
+                </div>
                 <tbody>
-                  <tr class="summary-subtotal">
-                    <td colspan="4" class="col-12 text-left">Order Summary</td>
-                  </tr>
-                  <tr class="col-12">
-                    <td colspan="4">
-                      <div class="row">
-                        <div class="col-5 text-left">
-                          <p>Total Item Price</p>
-                        </div>
-                        <div class="col-7">
-                          <p>{{ order.get_total }} TK</p>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-4 text-left">
-                          <p>Delivery Fee</p>
-                        </div>
-                        <div class="col-8">
-                          {% if order.shipping_address.shiping_area == 'Inside Dhaka' %}
-                          <p>+ 130 TK</p>
-                          {% elif order.shipping_address.shiping_area == 'Outside Dhaka' %}
-                          <p>+ 130 TK</p>
-                          {% elif order.shipping_address.shiping_area == 'Only Chittagong District' %}
-                          <p>+ 130 TK</p>
-                          {% endif %}
-                        </div>
-                      </div>
-                      {% if order.coupon %}
-                      <div class="row">
-                        <div class="col-4 text-left">
-                          <p>Coupon</p>
-                        </div>
-                        <div class="col-8">
-                          <p>- {{ order.coupon.amount }} TK</p>
-                        </div>
-                      </div>
-                      {% endif %}
-                    </td>
-                  </tr>
+                  
+                  <h3 class="summary-title py-3" style="text-align: center; color:#eb5525">
+                    Returns and Warranty
+                  </h3>
+                  
                   <tr class="summary-total">
-                    <td>
-                      <div class="row">
-                        <div class="col-4 text-left">Total</div>
-                        <div class="col-8">{{ order.total }}</div>
-                      </div>
-                    </td>
-                  </tr>
+                    
+                    <thead>
+                      <tr>
+                        <p class="col-12 text-left">
+                          <i class="fa fa-check-circle mr-2"></i> 100% original
+                        </p>
+                        <p class="col-12 text-left">
+                          <i class="fa fa-check-circle mr-2"></i> Returns within 7 days
+                        </p>
+                        <p class="col-12 text-left">
+                          <i class="fa fa-times-circle-o mr-2"></i> No warranty
+                        </p>
+                       
+                        
+                      </tr>
+                    </thead>
+
+
+                  <h3 class="summary-title py-3 mt-5" style="text-align: center; color:#eb5525">Returns Policy </h3>
+                  
+                  
+                    <div class="text-center"><a style="color: #17a2b8;" href="{% url 'returns_policy' %}">Visit Returns Policy</a></div>
+                    
+               
                 </tbody>
               </table>
               
@@ -455,10 +421,10 @@
             </h3><!-- End .product-title -->
             <div class="product-price">
               {% if related.discount_price %}
-              <span class="new-price">৳{{ related.discount_price }} </span>
-              <span class="old-price"><del>Was ৳{{ related.price }} </del></span>
+              <span class="new-price">{{ related.discount_price }}৳ </span>
+              <span class="old-price"><del>Was {{ related.price }}৳ </del></span>
               {% else %}
-              ৳{{ related.price }}
+              {{ related.price }}৳
               {% endif %}
             </div><!-- End .product-price -->
             <div class="ratings-container justify-content-center">
